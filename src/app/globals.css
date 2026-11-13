@@ -1,26 +1,210 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Design tokens — diekstrak dari computed styles relawannusantara.org (Divi).
+ * Lihat docs/DESIGN_SYSTEM.md.
+ */
+@theme {
+  /* Brand */
+  --color-primary: #006659;
+  --color-primary-600: #01997f;
+  --color-primary-400: #2ca395;
+  --color-accent: #f4a62a;
+  --color-accent-soft: #eec044;
+
+  /* Surfaces */
+  --color-cream: #f8f7f0;
+  --color-surface-muted: #d5d5d5;
+  --color-surface-alt: #f2f6f8;
+  --color-border: #dbdbdb;
+
+  /* Text */
+  --color-ink: #000000;
+  --color-ink-900: #1d1d18;
+  --color-body: #444444;
+  --color-body-strong: #333333;
+  --color-body-soft: #666666;
+  --color-muted: #a5a49a;
+
+  /* Typography */
+  --font-sans: var(--font-poppins-src), ui-sans-serif, system-ui, sans-serif;
+  --font-manrope: var(--font-manrope-src), var(--font-poppins-src), ui-sans-serif, sans-serif;
+
+  /* Layout: Divi row = 80% max 1080px */
+  --container-site: 1080px;
+
+  --radius-card: 10px;
+  --radius-btn: 5px;
+
+  --shadow-card: 0 2px 18px rgba(0, 0, 0, 0.08);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: #ffffff;
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-ink);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility container-site {
+  width: 80%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+
+  @media (max-width: 980px) {
+    width: 90%;
+  }
+}
+
+/* Konten artikel hasil migrasi WordPress (HTML tersanitasi) */
+@layer components {
+  .wp-content {
+    color: var(--color-body-strong);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .wp-content > * + * {
+    margin-top: 1em;
+  }
+  .wp-content p {
+    text-align: justify;
+  }
+  .wp-content h2 {
+    font-size: 30px;
+    margin-top: 1.4em;
+  }
+  .wp-content h3 {
+    font-size: 24px;
+    margin-top: 1.3em;
+  }
+  .wp-content h4 {
+    font-size: 20px;
+    margin-top: 1.2em;
+  }
+  .wp-content a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .wp-content strong,
+  .wp-content b {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+  .wp-content img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-card);
+  }
+  .wp-content figure {
+    margin-block: 1.5em;
+  }
+  .wp-content figcaption {
+    font-size: 13px;
+    color: var(--color-body-soft);
+    text-align: center;
+    margin-top: 0.5em;
+  }
+  .wp-content ul {
+    list-style: disc;
+    padding-left: 1.5em;
+  }
+  .wp-content ol {
+    list-style: decimal;
+    padding-left: 1.5em;
+  }
+  .wp-content li + li {
+    margin-top: 0.35em;
+  }
+  .wp-content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding: 0.5em 1em;
+    font-style: italic;
+    background: var(--color-cream);
+  }
+  .wp-content iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border-radius: var(--radius-card);
+  }
+  .wp-content table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .wp-content th,
+  .wp-content td {
+    border: 1px solid var(--color-border);
+    padding: 0.5em 0.75em;
+    text-align: left;
+  }
+}
+
+/* Template post WordPress: tombol Donasi di header berwarna hijau */
+body:has([data-template="post"]) .donate-btn[data-donate="accent"] {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+@layer components {
+  /* Tombol Divi (et_pb_button) di dalam konten */
+  .wp-content a[data-button] {
+    display: inline-block;
+    border: 2px solid var(--color-primary);
+    border-radius: 3px;
+    padding: 0.3em 1em;
+    color: var(--color-primary);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .wp-content a[data-button]:hover {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  /* Accordion/toggle Divi → <details> */
+  .wp-content details {
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.9em 1.2em;
+  }
+  .wp-content summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  .wp-content details[open] summary {
+    margin-bottom: 0.75em;
+  }
 }

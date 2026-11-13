@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Relawan Nusantara — Next.js
 
-## Getting Started
+Rekonstruksi situs WordPress [relawannusantara.org](https://relawannusantara.org) dengan Next.js 16 (App Router), TypeScript, dan Tailwind CSS 4. Konten WordPress diekspor menjadi file statis (`content/` + `public/wp-content/uploads/`).
 
-First, run the development server:
+## Mulai cepat
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local      # sesuaikan bila perlu
+npm run export                   # ekspor konten & media dari WordPress (wajib sekali)
+npm run dev                      # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Tanpa `npm run export`, aplikasi tetap bisa dibangun tetapi post/halaman WordPress belum ada.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Opsi ekspor
+```bash
+npm run export -- --limit=20 --skip-media   # uji cepat: 20 item per tipe, tanpa unduh media
+EXPORT_CONCURRENCY=4 npm run export          # turunkan paralelisme bila server WP lambat
+```
+Hasil & peringatan: `content/export-report.json`. Ekspor aman dijalankan ulang (media yang sudah ada dilewati).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Skrip
+| Perintah | Fungsi |
+|---|---|
+| `npm run dev` | Development server |
+| `npm run build` / `npm start` | Build & jalankan produksi |
+| `npm run lint` · `npm run typecheck` | ESLint · TypeScript |
+| `npm run export` | Ekspor WordPress → `content/` + media |
 
-## Learn More
+## Environment variables
+Lihat `.env.example`: `NEXT_PUBLIC_SITE_URL`, `CAMPAIGN_ORIGIN` (aplikasi donasi), `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_META_PIXEL_ID`, `WP_ORIGIN`.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy (Vercel)
+1. Jalankan `npm run export`, commit `content/` dan `public/wp-content/`.
+2. Import repo ke Vercel (framework: Next.js), isi environment variables.
+3. Verifikasi di preview URL (preview otomatis `Disallow: /` di robots.txt).
+4. **Jangan pindahkan DNS** sampai QA selesai dan routing aplikasi donasi `/campaign` sudah diputuskan (lihat `docs/TECHNICAL_ARCHITECTURE.md`). WordPress tetap berjalan sampai cut-over.
+5. Rollback: Vercel → Deployments → *Promote* deployment sebelumnya; atau kembalikan DNS ke server WordPress.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Dokumentasi
+`docs/WEBSITE_AUDIT.md` · `docs/DESIGN_SYSTEM.md` · `docs/TECHNICAL_ARCHITECTURE.md` · `docs/IMPLEMENTATION_PLAN.md`
