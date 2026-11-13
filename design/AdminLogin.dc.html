@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Masuk Admin — Relawan Nusantara</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Poppins:ital,wght@1,800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; min-height: 900px; display: flex; flex-wrap: wrap; background: #F5F7F6">
+  <section style="flex: 1 1 520px; background: #0F2E2A; color: #fff; padding: 64px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 40px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <span style="width: 44px; height: 44px; border-radius: 10px; background: #006659; display: flex; align-items: center; justify-content: center; font-weight: 800">RN</span>
+      <span style="font-weight: 800; font-size: 18px">Relawan Nusantara · Admin CMS</span>
+    </div>
+    <div>
+      <p style="margin: 0; font-family: Poppins, sans-serif; font-style: italic; font-weight: 800; font-size: 44px; line-height: 1.1">Bergerak Menjadi Jembatan Kebaikan</p>
+      <p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6; color: #c4dad5; max-width: 460px">Kelola publikasi, halaman, media, dan laporan transparansi Relawan Nusantara dari satu tempat.</p>
+    </div>
+    <p style="margin: 0; font-size: 13px; color: #8fb1aa">© 2026 Yayasan Komite Relawan Nusantara</p>
+  </section>
+
+  <section style="flex: 1 1 480px; display: flex; align-items: center; justify-content: center; padding: 48px 24px; box-sizing: border-box">
+    <form style="width: 100%; max-width: 400px; background: #fff; border-radius: 16px; padding: 40px; box-sizing: border-box; box-shadow: 0 10px 40px rgba(15,46,42,.08); display: flex; flex-direction: column; gap: 18px">
+      <div>
+        <h1 style="margin: 0; font-size: 26px; font-weight: 800">Masuk</h1>
+        <p style="margin: 6px 0 0; font-size: 14px; color: #55615e">Gunakan akun yang diberikan Super Admin.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="email" style="font-size: 13px; font-weight: 700">Email</label>
+        <input id="email" type="email" placeholder="nama@relawannusantara.org" style="height: 46px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 14px; font: 500 15px Manrope, sans-serif">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; justify-content: space-between"><label for="pw" style="font-size: 13px; font-weight: 700">Kata sandi</label><a href="#lupa" style="font-size: 13px; font-weight: 600">Lupa kata sandi?</a></div>
+        <input id="pw" type="password" placeholder="••••••••" style="height: 46px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 14px; font: 500 15px Manrope, sans-serif">
+      </div>
+      <label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="checkbox" style="width: 18px; height: 18px"> Ingat saya di perangkat ini</label>
+      <a href="AdminDashboard.dc.html" style="height: 48px; border-radius: 10px; background: #006659; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 800; font-size: 15px">Masuk</a>
+      <div style="display: flex; align-items: center; gap: 10px; color: #8a9592; font-size: 12px"><span style="flex: 1; height: 1px; background: #e2e7e5"></span>atau<span style="flex: 1; height: 1px; background: #e2e7e5"></span></div>
+      <a href="AdminDashboard.dc.html" style="height: 48px; border-radius: 10px; border: 1px solid #cfd6d4; color: #10201d; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 700; font-size: 15px">Masuk dengan Google Workspace</a>
+      <p style="margin: 0; font-size: 12px; color: #6b7774; text-align: center">Dilindungi verifikasi dua langkah (2FA).</p>
+    </form>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

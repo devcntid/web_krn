@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kelola Beranda — Admin CMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; background: #F5F7F6; display: flex; flex-wrap: wrap; min-height: 1400px">
+  <div style="flex: 0 0 264px"><dc-import name="AdminSidebar" active="beranda" hint-size="264px,1050px"></dc-import></div>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+    <header style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+      <div>
+        <h1 style="margin: 0; font-size: 28px; font-weight: 800">Kelola Beranda</h1>
+        <p style="margin: 4px 0 0; font-size: 14px; color: #55615e">Slider kampanye, statistik, video, dan testimoni.</p>
+      </div>
+      <div style="display: flex; gap: 8px"><button type="button" style="height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #cfd6d4; background: #fff; font: 700 14px Manrope, sans-serif">Pratinjau</button><button type="button" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 0; background: #006659; color: #fff; font: 800 14px Manrope, sans-serif">Terbitkan Perubahan</button></div>
+    </header>
+
+    <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 22px">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+        <h2 style="margin: 0; font-size: 18px; font-weight: 800">Slider kampanye</h2>
+        <div role="tablist" aria-label="Perangkat" style="display: flex; background: #F5F7F6; border-radius: 10px; padding: 4px">
+          <button type="button" role="tab" aria-selected="true" style="height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #fff; font: 800 13px Manrope, sans-serif; box-shadow: 0 1px 3px rgba(0,0,0,.08)">Desktop (4)</button>
+          <button type="button" role="tab" aria-selected="false" style="height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: transparent; font: 700 13px Manrope, sans-serif; color: #55615e">Mobile (3)</button>
+        </div>
+      </div>
+      <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px">
+        <sc-for list="{{slides}}" as="s" hint-placeholder-count="4">
+          <div style="border: 1px solid #e2e7e5; border-radius: 12px; overflow: hidden">
+            <div style="aspect-ratio: 5 / 3; background: #cfd8d4; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #2d4a44; position: relative">BANNER
+              <span style="position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 6px; background: #0F2E2A; color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{s.n}}</span>
+            </div>
+            <div style="padding: 12px">
+              <p style="margin: 0; font-size: 14px; font-weight: 800">{{s.title}}</p>
+              <p style="margin: 4px 0 0; font-size: 12px; color: #55615e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{s.href}}</p>
+              <p style="margin: 8px 0 0; font-size: 12px; color: #55615e">Tayang: {{s.window}}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <button type="button" style="margin-top: 12px; height: 40px; padding: 0 14px; border-radius: 10px; border: 1px dashed #9fb3ae; background: #fff; font: 700 13px Manrope, sans-serif">+ Tambah slide</button>
+    </section>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+      <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 22px">
+        <h2 style="margin: 0; font-size: 18px; font-weight: 800">Jejak Sebaran Kebaikan</h2>
+        <label for="tahun" style="display: block; margin-top: 14px; font-size: 12px; font-weight: 700; color: #55615e">Judul panel</label>
+        <input id="tahun" value="Jejak Sebaran Kebaikan 2026" style="margin-top: 4px; width: 100%; box-sizing: border-box; height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif">
+        <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <sc-for list="{{stats}}" as="st" hint-placeholder-count="4">
+            <div>
+              <label style="display: block; font-size: 12px; font-weight: 700; color: #55615e">{{st.label}}</label>
+              <input value="{{st.value}}" aria-label="{{st.label}}" style="margin-top: 4px; width: 100%; box-sizing: border-box; height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 800 16px Manrope, sans-serif">
+            </div>
+          </sc-for>
+        </div>
+        <label for="yt" style="display: block; margin-top: 16px; font-size: 12px; font-weight: 700; color: #55615e">Video unggulan (YouTube)</label>
+        <input id="yt" value="https://www.youtube.com/watch?v=8n2hpUQ_rCo" style="margin-top: 4px; width: 100%; box-sizing: border-box; height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 500 14px Manrope, sans-serif">
+      </section>
+
+      <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 22px">
+        <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 18px; font-weight: 800">Testimoni</h2><button type="button" style="height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid #cfd6d4; background: #fff; font: 700 13px Manrope, sans-serif">+ Tambah</button></div>
+        <ul style="margin: 14px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{testi}}" as="t" hint-placeholder-count="4">
+            <li style="display: flex; gap: 12px; align-items: center; border: 1px solid #e2e7e5; border-radius: 12px; padding: 10px 12px">
+              <span aria-hidden="true" style="color: #9fb3ae; font-weight: 800">⋮⋮</span>
+              <span style="width: 40px; height: 40px; border-radius: 50%; background: #cfd8d4; flex: none"></span>
+              <span style="flex: 1; min-width: 0"><span style="display: block; font-weight: 800; font-size: 14px">{{t.name}}</span><span style="display: block; font-size: 12px; color: #55615e">{{t.role}}</span></span>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700"><input type="checkbox" checked style="width: 18px; height: 18px"> Tampil</label>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1400}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      slides: [
+        ['Respon 72 Jam', '/campaign/respon-tanggap-bencana'],
+        ['Respon Darurat Karhutla', '/campaign/respon-darurat-karhutla'],
+        ['Bantuan Kemanusiaan Sudan', '/campaign/sedekah-air-pangan-untuk-sudan'],
+        ['Musim Dingin Palestina', '/campaign/hangatkan-palestina-di-tengah-musim-dingin']
+      ].map(([title, href], i) => ({ n: String(i + 1), title, href, window: 'Selalu' })),
+      stats: [['Penerima Manfaat', '287507'], ['Relawan', '3012'], ['Mitra Kebaikan', '50'], ['Jangkauan Wilayah', '109']].map(([label, value]) => ({ label, value })),
+      testi: [
+        ['Ibu Marwah dan Ida Nurmalasari, (7 th)', 'PM Program Pangan Difable'],
+        ['Syafira', 'Siswi MIS Menanga, NTT'],
+        ['Roy Widiartha', 'Kepala Pokja Pengembangan Masyarakat SKK Migas'],
+        ['Nabilah Ayu', 'Penyanyi']
+      ].map(([name, role]) => ({ name, role }))
+    };
+  }
+}
+</script>
+</body>
+</html>

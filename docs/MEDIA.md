@@ -1,57 +1,45 @@
 # MEDIA — penyimpanan gambar
 
-Keputusan (13 Nov 2026):
+**Keputusan (13 Nov 2026, revisi):** SEMUA media disimpan di **Vercel Blob** — baik gambar lama hasil migrasi WordPress maupun gambar baru. Tidak memakai subdomain media.
 
-| Jenis | Lokasi | URL di situs |
+| Jenis | Pathname di Blob | URL |
 |---|---|---|
-| **Gambar lama** (hasil migrasi WordPress, ±1,67 GB, 5.116 file) | Subdomain **media.relawannusantara.org** | `https://media.relawannusantara.org/wp-content/uploads/…` |
-| **Gambar baru** (konten setelah migrasi) | **Vercel Blob** | `https://<store>.public.blob.vercel-storage.com/media/YYYY/MM/…` |
+| Gambar lama (migrasi WordPress, ±1,67 GB, 5.116 file) | `wp-content/uploads/YYYY/MM/nama.jpg` (sama persis dengan WordPress) | `https://<store>.public.blob.vercel-storage.com/wp-content/uploads/…` |
+| Gambar baru (konten setelah migrasi) | `media/YYYY/MM/nama-<acak>.jpg` | `https://<store>.public.blob.vercel-storage.com/media/…` |
 
-Media **tidak** disimpan di repo/deployment (batas unggah Vercel 100 MB Hobby / 1 GB Pro). Folder `public/wp-content/` di-ignore oleh git.
+Media **tidak** disimpan di repo/deployment (batas unggah Vercel 100 MB Hobby / 1 GB Pro). Folder `public/wp-content/` di-ignore oleh git dan hanya dipakai lokal sebagai sumber migrasi.
 
-## 1. Gambar lama → media.relawannusantara.org
+> Biaya: Vercel Blob ditagih per penyimpanan, operasi, dan transfer data. Cek halaman harga Vercel Blob untuk paket Anda sebelum migrasi ±1,7 GB.
 
-Path asli WordPress dipertahankan, jadi konten tidak perlu diubah: aplikasi menambahkan host media saat render (`src/lib/media.ts`).
+## 1. Siapkan Blob store
+1. Vercel Dashboard → **Storage → Create → Blob** → hubungkan ke project `krn` (otomatis menambah `BLOB_READ_WRITE_TOKEN` ke environment Vercel).
+2. Lokal: `vercel env pull .env.local` (atau salin token ke `.env.local`).
 
-1. **DNS**: buat record `media.relawannusantara.org` → server statis (server nginx yang ada, atau bucket R2/S3 dengan custom domain).
-2. **Salin file** (dari folder project hasil `npm run export`), struktur path harus sama:
-   ```bash
-   rsync -avz --progress public/wp-content/uploads/ user@server:/var/www/media/wp-content/uploads/
-   ```
-3. **nginx** (contoh):
-   ```nginx
-   server {
-     server_name media.relawannusantara.org;
-     root /var/www/media;
-     location /wp-content/uploads/ {
-       add_header Cache-Control "public, max-age=31536000, immutable";
-       add_header Access-Control-Allow-Origin "*";
-       try_files $uri =404;
-     }
-     location / { return 404; }
-     # + sertifikat SSL (certbot)
-   }
-   ```
-4. **Environment** di Vercel (dan `.env.local` saat development):
-   ```
-   NEXT_PUBLIC_MEDIA_BASE_URL=https://media.relawannusantara.org
-   ```
-5. Cek: `https://media.relawannusantara.org/wp-content/uploads/2026/05/logo-rn.png` harus tampil.
+## 2. Migrasikan gambar lama (sekali)
+```bash
+npm run export            # bila belum: mengisi public/wp-content/uploads
+npm run media:migrate     # unggah semua file ke Blob dengan path yang sama
+```
+- Bisa dilanjutkan bila terputus (progres di `content/blob-migrated.json`); jalankan ulang perintah yang sama.
+- Bila kena rate-limit: `MEDIA_CONCURRENCY=2 npm run media:migrate`.
+- Di akhir proses dicetak nilai yang harus di-set:
+  ```
+  NEXT_PUBLIC_MEDIA_BASE_URL=https://<store-id>.public.blob.vercel-storage.com
+  ```
+  Set di **Vercel → Settings → Environment Variables** dan di `.env.local`.
 
-URL lama `https://relawannusantara.org/wp-content/uploads/...` (backlink, Google Images) tetap berfungsi setelah cut-over karena di-*rewrite* ke host media (`next.config.ts`).
+Cara kerjanya: konten tetap menyimpan path asli `/wp-content/uploads/...`; `src/lib/media.ts` menambahkan host Blob saat render (komponen `next/image` dan HTML konten). URL lama `https://relawannusantara.org/wp-content/uploads/...` (backlink, Google Images) tetap berfungsi setelah cut-over karena di-*rewrite* ke Blob (`next.config.ts`).
 
-> Development tanpa subdomain: kosongkan `NEXT_PUBLIC_MEDIA_BASE_URL`, file dibaca dari `public/wp-content/uploads` lokal.
+Cek: buka `https://<store-id>.public.blob.vercel-storage.com/wp-content/uploads/2026/05/logo-rn.png`.
 
-## 2. Gambar baru → Vercel Blob
+> Development sebelum migrasi: kosongkan `NEXT_PUBLIC_MEDIA_BASE_URL` → file dibaca dari `public/wp-content/uploads` lokal.
 
-1. Vercel Dashboard → **Storage → Create → Blob** → hubungkan ke project (otomatis menambah `BLOB_READ_WRITE_TOKEN`).
-2. Lokal: `vercel env pull .env.local` (atau salin token).
-3. Unggah:
-   ```bash
-   npm run media:upload -- ~/Downloads/foto-kegiatan.jpg
-   # ✓ ~/Downloads/foto-kegiatan.jpg
-   #   https://xxxx.public.blob.vercel-storage.com/media/2026/11/foto-kegiatan-AbC123.jpg
-   ```
-4. Pakai URL itu di konten (field `featuredImage.src` atau `<img src="…">` di HTML post). `next/image` sudah diizinkan untuk host `*.public.blob.vercel-storage.com`.
+## 3. Gambar baru
+```bash
+npm run media:upload -- ~/Downloads/foto-kegiatan.jpg
+# ✓ ~/Downloads/foto-kegiatan.jpg
+#   https://<store-id>.public.blob.vercel-storage.com/media/2026/11/foto-kegiatan-AbC123.jpg
+```
+Pakai URL itu di konten (`featuredImage.src` atau `<img src="…">`). Saat Admin CMS dibangun, Pustaka Media mengunggah ke Blob store yang sama (client upload, prompt B9 di `docs/BUILD_PLAYBOOK.md`).
 
-Saat Admin CMS dibangun, tombol **Unggah File** di Pustaka Media akan memakai Vercel Blob yang sama (client upload), sehingga alur ini tidak berubah.
+`next/image` sudah mengizinkan host `*.public.blob.vercel-storage.com`.

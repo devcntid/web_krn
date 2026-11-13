@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 import { legacyRedirects } from "./src/config/redirects";
 
-/** Host media eksternal opsional (lihat src/lib/media.ts). */
+/** Host Vercel Blob untuk media lama hasil migrasi (lihat docs/MEDIA.md). */
 const MEDIA_BASE_URL = (process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? "").replace(/\/$/, "");
 const mediaHost = MEDIA_BASE_URL ? new URL(MEDIA_BASE_URL) : null;
 
@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
     localPatterns: [{ pathname: "/wp-content/uploads/**" }],
     remotePatterns: [
       { protocol: "https", hostname: "i.ytimg.com" },
-      // Gambar baru (setelah migrasi) disimpan di Vercel Blob
+      // Semua media (lama & baru) disimpan di Vercel Blob
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
       ...(mediaHost
         ? [{ protocol: mediaHost.protocol.replace(":", "") as "https" | "http", hostname: mediaHost.hostname, pathname: "/wp-content/uploads/**" }]
@@ -53,7 +53,7 @@ const nextConfig: NextConfig = {
         { source: "/", has: [{ type: "query", key: "s" }], destination: "/search/" },
       ],
       afterFiles: [],
-      // URL gambar lama (backlink, Google Images) tetap hidup bila media dipindah ke host lain.
+      // URL gambar lama (backlink, Google Images) diteruskan ke Vercel Blob.
       fallback: MEDIA_BASE_URL
         ? [{ source: "/wp-content/uploads/:path*", destination: `${MEDIA_BASE_URL}/wp-content/uploads/:path*` }]
         : [],

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Aksi Kemanusiaan — Relawan Nusantara</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+.ph{background:#cfd8d4;color:#2d4a44;display:flex;align-items:center;justify-content:center;text-align:center;font:600 13px/1.4 Poppins,sans-serif}
+</style>
+</helmet>
+<div style="font-family: Poppins, sans-serif; color: #000; background: #fff; position: relative">
+  <div style="position: absolute; top: 0; left: 0; right: 0; z-index: 5">
+    <dc-import name="SiteHeader" variant="accent" hint-size="100%,116px"></dc-import>
+  </div>
+
+  <header style="position: relative; min-height: 707px; display: flex; align-items: flex-end; background: #5f6e66">
+    <span class="ph" style="position: absolute; inset: 0; background: #6a7a71; color: rgba(255,255,255,.75)">FOTO HERO · Relawan tanggap bencana di lokasi terdampak</span>
+    <div style="position: relative; width: 80%; max-width: 1080px; margin: 0 auto; padding-bottom: 68px; color: #fff">
+      <p style="margin: 0 0 8px; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase">Pilar Program</p>
+      <h1 style="margin: 0; font-size: 64px; line-height: 1.1; color: #fff">Aksi Kemanusiaan</h1>
+    </div>
+  </header>
+
+  <section style="padding: 80px 0">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 60px; align-items: center">
+      <h2 style="margin: 0; font-size: 45px; line-height: 1.05; font-weight: 800; font-style: italic">Taklukkan Krisis, Pulihkan Kehidupan</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6">Pilar Aksi Kemanusiaan merupakan komitmen Relawan Nusantara dalam merespons bencana, konflik, dan krisis kemanusiaan secara cepat, tepat, [lanjutan teks dari halaman asli].</p>
+    </div>
+  </section>
+
+  <section style="background: #F2F6F8; padding: 72px 0">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto">
+      <h2 style="margin: 0; font-size: 36px">Program Pilihan</h2>
+      <p style="margin: 8px 0 0; font-size: 14px; font-weight: 700; letter-spacing: .1em; color: #006659">SIGAP</p>
+      <div style="margin-top: 36px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+        <sc-for list="{{programs}}" as="p" hint-placeholder-count="3">
+          <article style="background: #fff; border-radius: 10px; padding: 28px; display: flex; gap: 20px; align-items: flex-start; box-shadow: 0 2px 18px rgba(0,0,0,.06)">
+            <span aria-hidden="true" style="width: 64px; height: 64px; border-radius: 50%; background: #e3f0ed; color: #006659; display: flex; align-items: center; justify-content: center; flex: none; font-weight: 700; font-size: 20px">{{p.initial}}</span>
+            <div>
+              <h3 style="margin: 0; font-size: 20px">{{p.title}}</h3>
+              <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: #444">{{p.desc}}</p>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 72px 0">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+        <h2 style="margin: 0; font-size: 36px">Cerita Berdampak</h2>
+        <a href="Publikasi.dc.html" style="border: 2px solid #006659; border-radius: 999px; padding: 8px 18px; font-size: 15px; font-weight: 500; text-decoration: none">Lihat Semua Cerita</a>
+      </div>
+      <div style="margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+        <sc-for list="{{stories}}" as="s" hint-placeholder-count="3">
+          <article style="background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 2px 18px rgba(0,0,0,.08)">
+            <div class="ph" style="aspect-ratio: 4 / 3; border-radius: 6px">FOTO · {{s.photo}}</div>
+            <h3 style="margin: 20px 0 0; font-size: 18px; line-height: 1.35"><a href="Post.dc.html" style="color: #000; text-decoration: none">{{s.title}}</a></h3>
+            <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center">
+              <span style="font-size: 12px; color: #666">{{s.date}}</span>
+              <a href="Post.dc.html" style="background: #006659; color: #fff; text-decoration: none; padding: 10px 16px; border-radius: 6px; font-size: 12px; font-weight: 600">Selengkapnya</a>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 12px">
+        <button type="button" aria-label="Sebelumnya" style="width: 44px; height: 44px; border: 0; border-radius: 6px; background: #006659; color: #fff; cursor: pointer">‹</button>
+        <button type="button" aria-label="Berikutnya" style="width: 44px; height: 44px; border: 0; border-radius: 6px; background: #006659; color: #fff; cursor: pointer">›</button>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 80px">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; background: #006659; border-radius: 20px; padding: 48px; box-sizing: border-box; display: grid; grid-template-columns: 2fr 1fr; gap: 32px; align-items: center; color: #fff">
+      <div>
+        <h2 style="margin: 0; font-size: 34px; color: #fff">Jadilah Bagian Aksi Kemanusiaan</h2>
+        <p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6">Setiap bantuan Anda menghadirkan harapan, melindungi mereka yang rentan, dan membantu masyarakat terdampak untuk kembali bangkit.</p>
+      </div>
+      <a href="#donasi" style="justify-self: end; background: #F4A62A; color: #000; text-decoration: none; padding: 14px 40px; border-radius: 999px; font-weight: 600">Mari Berdonasi</a>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      programs: [
+        { initial: 'RB', title: 'Respon Bencana', desc: 'Layanan cepat melalui pengerahan relawan, logistik, dan dukungan psikososial untuk memenuhi kebutuhan dasar masyarakat terdampak bencana.' },
+        { initial: 'BK', title: 'Bantuan Kesehatan', desc: 'Layanan kesehatan berupa pemeriksaan gratis, edukasi hidup sehat, pembagian vitamin atau alat kesehatan, serta kampanye kesehatan masyarakat.' },
+        { initial: 'G', title: 'Aksi Kemanusiaan Global', desc: '[Deskripsi program dari halaman asli]' }
+      ],
+      stories: [
+        { title: 'Sebanyak 9.500 Liter Air Bersih Disalurkan untuk Warga Terdampak Kekeringan di Gorontalo', date: '11 Nov, 2026', photo: 'Air bersih Gorontalo' },
+        { title: 'Paket Makanan Disalurkan bagi Pasien Terdampak Konflik di Wad Medani, Sudan', date: '02 Nov, 2026', photo: 'Wad Medani' },
+        { title: 'Karhutla Palangka Raya: Perjuangan Relawan Padamkan Api Lahan Gambut Hingga Subuh', date: '27 Oct, 2026', photo: 'Pemadaman gambut' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

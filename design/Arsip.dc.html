@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Hasil Pencarian — Relawan Nusantara</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+.ph{background:#cfd8d4;color:#2d4a44;display:flex;align-items:center;justify-content:center;text-align:center;font:600 13px/1.4 Poppins,sans-serif}
+</style>
+</helmet>
+<div style="font-family: Poppins, sans-serif; color: #000; background: #F2F6F8; position: relative">
+  <div style="position: absolute; top: 0; left: 0; right: 0; z-index: 5">
+    <dc-import name="SiteHeader" variant="accent" hint-size="100%,116px"></dc-import>
+  </div>
+
+  <section style="padding: 170px 0 88px">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto">
+      <nav aria-label="Breadcrumb" style="font-size: 14px; color: #555"><a href="Main.dc.html">Beranda</a> / Pencarian</nav>
+      <p style="margin: 20px 0 0; font-size: 14px; font-weight: 600; color: #006659; letter-spacing: .08em; text-transform: uppercase">{{eyebrow}}</p>
+      <h1 style="margin: 8px 0 0; font-size: 45px; line-height: 1.15">{{heading}}</h1>
+      <p style="margin: 10px 0 0; font-size: 16px; color: #444">{{subline}}</p>
+
+      <form role="search" style="margin-top: 28px; display: flex; gap: 12px; max-width: 640px">
+        <label for="q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Kata kunci</label>
+        <input id="q" type="search" value="sudan" style="flex: 1; height: 48px; border: 1px solid #cfd6d4; border-radius: 8px; padding: 0 16px; font: 400 15px Poppins, sans-serif; background: #fff">
+        <button type="submit" style="height: 48px; padding: 0 24px; border: 0; border-radius: 8px; background: #006659; color: #fff; font: 600 15px Poppins, sans-serif">Cari</button>
+      </form>
+
+      <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap">
+        <span style="font-size: 13px; color: #555; align-self: center">Kategori terkait:</span>
+        <a href="#k" style="font-size: 13px; background: #fff; border: 1px solid #cfd6d4; padding: 6px 12px; border-radius: 999px; text-decoration: none">Sudan (7)</a>
+        <a href="#k" style="font-size: 13px; background: #fff; border: 1px solid #cfd6d4; padding: 6px 12px; border-radius: 999px; text-decoration: none">Kemanusiaan (60)</a>
+        <a href="#k" style="font-size: 13px; background: #fff; border: 1px solid #cfd6d4; padding: 6px 12px; border-radius: 999px; text-decoration: none">Pangan (49)</a>
+      </div>
+
+      <div style="margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="6">
+          <article style="background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 2px 18px rgba(0,0,0,.08); display: flex; flex-direction: column">
+            <div class="ph" style="aspect-ratio: 4 / 3; border-radius: 6px">FOTO · {{c.photo}}</div>
+            <p style="margin: 16px 0 0; font-size: 12px; font-weight: 600; color: #006659">{{c.cat}}</p>
+            <h2 style="margin: 6px 0 0; font-size: 18px; line-height: 1.35; font-weight: 800"><a href="Post.dc.html" style="color: #000; text-decoration: none">{{c.title}}</a></h2>
+            <div style="margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center">
+              <span style="font-size: 12px; color: #666">{{c.date}}</span>
+              <a href="Post.dc.html" style="background: #006659; color: #fff; text-decoration: none; padding: 10px 16px; border-radius: 6px; font-size: 12px; font-weight: 600">Selengkapnya</a>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["pencarian","kategori"],"default":"pencarian"},"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const cat = (this.props.mode ?? 'pencarian') === 'kategori';
+    const cards = [
+      ['Paket Makanan Disalurkan bagi Pasien Terdampak Konflik di Wad Medani, Sudan', '02 Nov, 2026', 'Berita · Sudan', 'Wad Medani'],
+      ['[Judul publikasi Sudan lainnya]', '[tanggal]', 'Berita · Sudan', 'Sudan'],
+      ['[Judul publikasi Sudan lainnya]', '[tanggal]', 'Artikel · Sudan', 'Sudan']
+    ].map(([title, date, cat, photo]) => ({ title, date, cat, photo }));
+    return {
+      cards,
+      eyebrow: cat ? 'Kategori' : 'Pencarian',
+      heading: cat ? 'Sudan' : 'Hasil untuk “sudan”',
+      subline: cat ? '7 publikasi dalam kategori ini.' : '[n] publikasi ditemukan.'
+    };
+  }
+}
+</script>
+</body>
+</html>

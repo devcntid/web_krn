@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kategori &amp; Tag — Admin CMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; background: #F5F7F6; display: flex; flex-wrap: wrap; min-height: 1150px">
+  <div style="flex: 0 0 264px"><dc-import name="AdminSidebar" active="taksonomi" hint-size="264px,1050px"></dc-import></div>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <header>
+      <h1 style="margin: 0; font-size: 28px; font-weight: 800">Kategori &amp; Tag</h1>
+      <p style="margin: 4px 0 0; font-size: 14px; color: #55615e">37 kategori · 1.857 tag. Gabungkan duplikat agar arsip lebih rapi.</p>
+    </header>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+      <section style="flex: 1 1 300px; max-width: 360px; background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 800">Tambah kategori</h2>
+        <label for="nm" style="font-size: 12px; font-weight: 700; color: #55615e">Nama</label>
+        <input id="nm" style="height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif">
+        <label for="sl" style="font-size: 12px; font-weight: 700; color: #55615e">Slug</label>
+        <input id="sl" style="height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif">
+        <label for="pr" style="font-size: 12px; font-weight: 700; color: #55615e">Induk</label>
+        <select id="pr" style="height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif; background: #fff"><option>— Tidak ada —</option><option>Ramadhan</option><option>Rumah, Jembatan &amp; Sumur Bor</option></select>
+        <label for="ds" style="font-size: 12px; font-weight: 700; color: #55615e">Deskripsi (meta description arsip)</label>
+        <textarea id="ds" rows="3" style="border: 1px solid #cfd6d4; border-radius: 10px; padding: 8px 12px; font: 500 14px Manrope, sans-serif"></textarea>
+        <button type="button" style="height: 44px; border-radius: 10px; border: 0; background: #006659; color: #fff; font: 800 14px Manrope, sans-serif">Tambah</button>
+      </section>
+
+      <section style="flex: 999 1 520px; min-width: 0; background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; overflow: hidden">
+        <div role="tablist" aria-label="Jenis" style="display: flex; gap: 6px; padding: 0 16px; border-bottom: 1px solid #edf0ef">
+          <button type="button" role="tab" aria-selected="true" style="height: 48px; padding: 0 12px; border: 0; background: transparent; border-bottom: 3px solid #006659; font: 800 14px Manrope, sans-serif; color: #006659">Kategori (37)</button>
+          <button type="button" role="tab" aria-selected="false" style="height: 48px; padding: 0 12px; border: 0; background: transparent; border-bottom: 3px solid transparent; font: 700 14px Manrope, sans-serif; color: #3d4644">Tag (1.857)</button>
+        </div>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px">
+            <thead><tr style="text-align: left; color: #55615e; font-size: 12px; text-transform: uppercase; letter-spacing: .06em"><th style="padding: 12px 16px">Nama</th><th style="padding: 12px 8px">Slug</th><th style="padding: 12px 8px">Jumlah</th><th style="padding: 12px 16px"></th></tr></thead>
+            <tbody>
+              <sc-for list="{{cats}}" as="c" hint-placeholder-count="10">
+                <tr style="border-top: 1px solid #edf0ef">
+                  <td style="padding: 11px 16px; font-weight: 800; padding-left: {{c.pad}}">{{c.name}}</td>
+                  <td style="padding: 11px 8px; color: #55615e">{{c.slug}}</td>
+                  <td style="padding: 11px 8px">{{c.count}}</td>
+                  <td style="padding: 11px 16px; text-align: right; white-space: nowrap"><a href="#edit" style="font-weight: 700; font-size: 13px">Edit</a> · <a href="#merge" style="font-weight: 700; font-size: 13px">Gabungkan</a></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const cats = [
+      ['Blog', 'blog', 620, 0], ['Berita', 'berita', 403, 0], ['Bencana', 'bencana', 142, 0], ['Artikel', 'artikel', 135, 0],
+      ['Yatim, Dhuafa & Lansia', 'yatim-dhuafa-lansia', 87, 0], ['Palestina', 'palestina', 74, 0], ['Sekolah & Madrasah', 'sekolah-madrasah', 64, 0],
+      ['Kemanusiaan', 'kemanusiaan', 60, 0], ['Kemitraan', 'kemitraan', 59, 0], ['Ramadhan', 'ramadhan', 40, 0], ['Fidyah', 'fidyah', 11, 1],
+      ['Kurban', 'kurban', 47, 0], ['Qurban', 'qurban', 5, 0]
+    ].map(([name, slug, count, lvl]) => ({ name, slug, count: String(count), pad: lvl ? '36px' : '16px' }));
+    return { cats };
+  }
+}
+</script>
+</body>
+</html>

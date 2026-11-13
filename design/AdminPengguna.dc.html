@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Pengguna &amp; Peran — Admin CMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; background: #F5F7F6; display: flex; flex-wrap: wrap; min-height: 1100px">
+  <div style="flex: 0 0 264px"><dc-import name="AdminSidebar" active="pengguna" hint-size="264px,1050px"></dc-import></div>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+    <header style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+      <div>
+        <h1 style="margin: 0; font-size: 28px; font-weight: 800">Pengguna &amp; Peran</h1>
+        <p style="margin: 4px 0 0; font-size: 14px; color: #55615e">Atur siapa yang bisa menulis, meninjau, dan menerbitkan.</p>
+      </div>
+      <button type="button" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 0; background: #006659; color: #fff; font: 800 14px Manrope, sans-serif">+ Undang Pengguna</button>
+    </header>
+
+    <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; overflow: hidden">
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px">
+          <thead><tr style="text-align: left; color: #55615e; font-size: 12px; text-transform: uppercase; letter-spacing: .06em"><th style="padding: 12px 18px">Pengguna</th><th style="padding: 12px 8px">Peran</th><th style="padding: 12px 8px">2FA</th><th style="padding: 12px 8px">Terakhir aktif</th><th style="padding: 12px 18px"></th></tr></thead>
+          <tbody>
+            <sc-for list="{{users}}" as="u" hint-placeholder-count="5">
+              <tr style="border-top: 1px solid #edf0ef">
+                <td style="padding: 12px 18px"><div style="display: flex; gap: 12px; align-items: center"><span style="width: 36px; height: 36px; border-radius: 50%; background: #2c5a52; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px">{{u.initial}}</span><span><span style="display: block; font-weight: 800">{{u.name}}</span><span style="display: block; font-size: 12px; color: #55615e">{{u.email}}</span></span></div></td>
+                <td style="padding: 12px 8px"><span style="font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: #e3f0ed; color: #004d43">{{u.role}}</span></td>
+                <td style="padding: 12px 8px; font-weight: 700; color: {{u.tfaColor}}">{{u.tfa}}</td>
+                <td style="padding: 12px 8px; color: #55615e">{{u.last}}</td>
+                <td style="padding: 12px 18px; text-align: right"><a href="#edit" style="font-weight: 700; font-size: 13px">Kelola</a></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 18px">
+      <h2 style="margin: 0; font-size: 17px; font-weight: 800">Matriks hak akses</h2>
+      <div style="margin-top: 12px; overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px; text-align: center">
+          <thead><tr style="color: #55615e; font-size: 12px; text-transform: uppercase; letter-spacing: .06em"><th style="padding: 10px; text-align: left">Kemampuan</th><th style="padding: 10px">Super Admin</th><th style="padding: 10px">Editor</th><th style="padding: 10px">Penulis</th><th style="padding: 10px">Kontributor</th><th style="padding: 10px">Viewer</th></tr></thead>
+          <tbody>
+            <sc-for list="{{matrix}}" as="m" hint-placeholder-count="8">
+              <tr style="border-top: 1px solid #edf0ef">
+                <td style="padding: 10px; text-align: left; font-weight: 700">{{m.cap}}</td>
+                <td style="padding: 10px; color: {{m.c0}}">{{m.v0}}</td><td style="padding: 10px; color: {{m.c1}}">{{m.v1}}</td><td style="padding: 10px; color: {{m.c2}}">{{m.v2}}</td><td style="padding: 10px; color: {{m.c3}}">{{m.v3}}</td><td style="padding: 10px; color: {{m.c4}}">{{m.v4}}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const users = [
+      ['PM', 'Project Manager', 'pm@…', 'Super Admin', true, 'Baru saja'],
+      ['ED', '[Nama Editor]', '[email]', 'Editor', true, '[waktu]'],
+      ['PN', '[Nama Penulis]', '[email]', 'Penulis', false, '[waktu]'],
+      ['RL', '[Relawan Kontributor]', '[email]', 'Kontributor', false, '[waktu]'],
+      ['AU', '[Auditor / Pengawas]', '[email]', 'Viewer', true, '[waktu]']
+    ].map(([initial, name, email, role, tfa, last]) => ({ initial, name, email, role, last, tfa: tfa ? 'Aktif' : 'Belum', tfaColor: tfa ? '#1e6b44' : '#8a2b1c' }));
+    const rows = [
+      ['Menulis draf publikasi', [1, 1, 1, 1, 0]],
+      ['Menerbitkan publikasi', [1, 1, 1, 0, 0]],
+      ['Meninjau & menyetujui', [1, 1, 0, 0, 0]],
+      ['Kelola halaman & beranda', [1, 1, 0, 0, 0]],
+      ['Unggah & hapus media', [1, 1, 1, 0, 0]],
+      ['e-Report, audit, legalitas', [1, 1, 0, 0, 0]],
+      ['SEO & redirect', [1, 1, 0, 0, 0]],
+      ['Pengguna & pengaturan', [1, 0, 0, 0, 0]]
+    ];
+    const matrix = rows.map(([cap, v]) => {
+      const o = { cap };
+      v.forEach((x, i) => { o['v' + i] = x ? '✓' : '—'; o['c' + i] = x ? '#1e6b44' : '#8a9592'; });
+      return o;
+    });
+    return { users, matrix };
+  }
+}
+</script>
+</body>
+</html>

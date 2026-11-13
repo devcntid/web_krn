@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Log Aktivitas — Admin CMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; background: #F5F7F6; display: flex; flex-wrap: wrap; min-height: 1050px">
+  <div style="flex: 0 0 264px"><dc-import name="AdminSidebar" active="log" hint-size="264px,1050px"></dc-import></div>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <header style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+      <div>
+        <h1 style="margin: 0; font-size: 28px; font-weight: 800">Log Aktivitas</h1>
+        <p style="margin: 4px 0 0; font-size: 14px; color: #55615e">Jejak audit semua perubahan konten dan pengaturan.</p>
+      </div>
+      <button type="button" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid #cfd6d4; background: #fff; font: 700 14px Manrope, sans-serif">Ekspor CSV</button>
+    </header>
+
+    <div style="display: flex; gap: 10px; flex-wrap: wrap">
+      <select aria-label="Pengguna" style="height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif; background: #fff"><option>Semua pengguna</option></select>
+      <select aria-label="Jenis aksi" style="height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif; background: #fff"><option>Semua aksi</option><option>Terbit</option><option>Edit</option><option>Hapus</option><option>Login</option></select>
+      <select aria-label="Rentang" style="height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif; background: #fff"><option>7 hari terakhir</option><option>30 hari terakhir</option></select>
+    </div>
+
+    <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 8px 20px">
+      <ol style="margin: 0; padding: 0; list-style: none">
+        <sc-for list="{{events}}" as="e" hint-placeholder-count="8">
+          <li style="display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid #edf0ef; align-items: flex-start">
+            <span style="width: 64px; flex: none; font-size: 12px; color: #55615e; padding-top: 3px">{{e.time}}</span>
+            <span style="font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; background: {{e.bg}}; color: {{e.fg}}; flex: none; width: 64px; text-align: center">{{e.kind}}</span>
+            <span style="flex: 1; font-size: 14px; line-height: 1.5"><strong>{{e.who}}</strong> {{e.what}}</span>
+            <a href="#diff" style="font-size: 13px; font-weight: 700; flex: none">Lihat</a>
+          </li>
+        </sc-for>
+      </ol>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1050}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const k = { TERBIT: ['#e3f0ed', '#004d43'], EDIT: ['#e3ecf8', '#1d4a80'], HAPUS: ['#f8e4e1', '#8a2b1c'], LOGIN: ['#eceeed', '#3d4644'], SETUP: ['#fdf0d9', '#7a4b00'] };
+    const events = [
+      ['10:42', 'EDIT', 'Project Manager', 'memperbarui SEO “Paket Makanan Disalurkan bagi Pasien Terdampak Konflik di Wad Medani, Sudan”'],
+      ['10:15', 'SETUP', 'Project Manager', 'menambah redirect /253272-2/ → /audit-keuangan/'],
+      ['09:58', 'EDIT', '[Editor]', 'mengubah statistik beranda “Jejak Sebaran Kebaikan 2026”'],
+      ['09:30', 'TERBIT', '[Editor]', 'menerbitkan “[Judul publikasi]”'],
+      ['09:02', 'LOGIN', '[Penulis]', 'masuk dari [perangkat]'],
+      ['Kemarin', 'HAPUS', '[Editor]', 'memindahkan 1 media ke sampah'],
+      ['Kemarin', 'EDIT', '[Penulis]', 'menyimpan draf “[Judul publikasi]”'],
+      ['Kemarin', 'SETUP', 'Project Manager', 'mengundang pengguna baru sebagai Kontributor']
+    ].map(([time, kind, who, what]) => ({ time, kind, who, what, bg: k[kind][0], fg: k[kind][1] }));
+    return { events };
+  }
+}
+</script>
+</body>
+</html>

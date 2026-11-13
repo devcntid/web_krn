@@ -54,3 +54,6 @@ src/types/          content.ts
 
 ## Aplikasi donasi
 Tombol Donasi, slider beranda, dan CTA post hanya menautkan ke `/campaign` dan `/donasi/programs` (aplikasi terpisah, tidak disentuh). Saat cut-over DNS, pastikan path tersebut tetap dilayani server existing.
+
+## Media
+Semua media (lama hasil migrasi & baru) disimpan di **Vercel Blob**; path WordPress dipertahankan (`wp-content/uploads/...`). Detail: `docs/MEDIA.md`.

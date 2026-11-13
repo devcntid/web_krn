@@ -6,7 +6,7 @@
  * Token: Vercel Dashboard → Storage → Blob store → .env.local (atau `vercel env pull`).
  * Hasil: URL publik https://<store>.public.blob.vercel-storage.com/media/2026/11/foto1-xxxx.jpg
  * yang bisa langsung dipakai di konten (featuredImage.src atau <img src> di HTML).
- * Gambar LAMA hasil migrasi tetap di media.relawannusantara.org (lihat docs/MEDIA.md).
+ * Gambar LAMA hasil migrasi diunggah sekali lewat `npm run media:migrate` (docs/MEDIA.md).
  */
 
 import fs from "node:fs/promises";

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>e-Report &amp; Audit — Admin CMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; background: #F5F7F6; display: flex; flex-wrap: wrap; min-height: 1100px">
+  <div style="flex: 0 0 264px"><dc-import name="AdminSidebar" active="ereport" hint-size="264px,1050px"></dc-import></div>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+    <header style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+      <div>
+        <h1 style="margin: 0; font-size: 28px; font-weight: 800">e-Report &amp; Audit</h1>
+        <p style="margin: 4px 0 0; font-size: 14px; color: #55615e">Laporan penyaluran (flipbook/PDF), audit tahunan, dan dokumen legalitas.</p>
+      </div>
+      <button type="button" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 0; background: #006659; color: #fff; font: 800 14px Manrope, sans-serif">+ Tambah Laporan</button>
+    </header>
+
+    <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; overflow: hidden">
+      <h2 style="margin: 0; padding: 16px 18px; font-size: 17px; font-weight: 800; border-bottom: 1px solid #edf0ef">Laporan Penyaluran</h2>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px">
+          <thead><tr style="text-align: left; color: #55615e; font-size: 12px; text-transform: uppercase; letter-spacing: .06em"><th style="padding: 12px 18px">Judul</th><th style="padding: 12px 8px">Tema</th><th style="padding: 12px 8px">Sumber</th><th style="padding: 12px 8px">Tampil</th><th style="padding: 12px 18px"></th></tr></thead>
+          <tbody>
+            <sc-for list="{{reports}}" as="r" hint-placeholder-count="6">
+              <tr style="border-top: 1px solid #edf0ef">
+                <td style="padding: 12px 18px; font-weight: 800">{{r.title}}</td>
+                <td style="padding: 12px 8px">{{r.theme}}</td>
+                <td style="padding: 12px 8px"><span style="font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: #e3ecf8; color: #1d4a80">Heyzine</span></td>
+                <td style="padding: 12px 8px"><input type="checkbox" checked aria-label="Tampilkan di situs" style="width: 18px; height: 18px"></td>
+                <td style="padding: 12px 18px; text-align: right"><a href="#edit" style="font-weight: 700; font-size: 13px">Edit</a></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+      <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 18px">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 800">Audit Keuangan</h2>
+        <ul style="margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px">
+          <sc-for list="{{audits}}" as="a" hint-placeholder-count="5">
+            <li style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #e2e7e5; border-radius: 10px">
+              <span style="font-weight: 800; width: 90px">{{a.year}}</span>
+              <span style="flex: 1; font-size: 13px; color: #55615e">Opini WTP · PDF</span>
+              <a href="#ganti" style="font-weight: 700; font-size: 13px">Ganti PDF</a>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+      <section style="background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 18px">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 800">Dokumen Legalitas</h2>
+        <ul style="margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+          <sc-for list="{{legal}}" as="l" hint-placeholder-count="5">
+            <li style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #e2e7e5; border-radius: 10px"><span aria-hidden="true" style="color: #9fb3ae; font-weight: 800">⋮⋮</span><span style="flex: 1; font-weight: 700">{{l}}</span><a href="#edit" style="font-weight: 700; font-size: 13px">Edit</a></li>
+          </sc-for>
+        </ul>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      reports: [
+        ['Laporan Penyaluran RN x Albahjah', 'Penyaluran Bulanan'], ['Laporan Penyaluran Juni 2025', 'Penyaluran Bulanan'],
+        ['Report Zakat Kemanusiaan Palestina', 'Palestina'], ['Report Kurban 1446H', 'Kurban & Zakat'],
+        ['e-Report Penyaluran Iqra Al-Quran', 'Pendidikan'], ['Pengiriman Bantuan Kemanusiaan Palestina', 'Palestina']
+      ].map(([title, theme]) => ({ title, theme })),
+      audits: ['Tahun 2025', 'Tahun 2024', 'Tahun 2023', 'Tahun 2022', 'Tahun 2021'].map((year) => ({ year })),
+      legal: ['Akta Pendirian', 'SK Pendirian', 'Akta Perubahan (ke-6)', 'SK Kemenkumham', 'Domisili', 'Lembaga Kesejahteraan Sosial', 'NPWP', 'UPZ']
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Halaman — Admin CMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; background: #F5F7F6; display: flex; flex-wrap: wrap; min-height: 1150px">
+  <div style="flex: 0 0 264px"><dc-import name="AdminSidebar" active="halaman" hint-size="264px,1050px"></dc-import></div>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+    <header style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+      <div>
+        <h1 style="margin: 0; font-size: 28px; font-weight: 800">Halaman</h1>
+        <p style="margin: 4px 0 0; font-size: 14px; color: #55615e">Susun halaman dari section siap pakai — tanpa page builder berat.</p>
+      </div>
+      <button type="button" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 0; background: #006659; color: #fff; font: 800 14px Manrope, sans-serif">+ Halaman Baru</button>
+    </header>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+      <section aria-label="Daftar halaman" style="flex: 1 1 300px; max-width: 360px; background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 10px">
+        <sc-for list="{{pages}}" as="p" hint-placeholder-count="10">
+          <a href="#page" style="display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; text-decoration: none; color: #10201d; background: {{p.bg}}">
+            <span><span style="display: block; font-size: 14px; font-weight: 800; padding-left: {{p.indent}}">{{p.title}}</span><span style="display: block; font-size: 12px; color: #55615e; padding-left: {{p.indent}}">/{{p.path}}/</span></span>
+            <span style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: {{p.sbg}}; color: {{p.sfg}}">{{p.status}}</span>
+          </a>
+        </sc-for>
+      </section>
+
+      <section style="flex: 999 1 520px; min-width: 0; background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 22px">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+          <div>
+            <h2 style="margin: 0; font-size: 20px; font-weight: 800">Aksi Kemanusiaan</h2>
+            <p style="margin: 2px 0 0; font-size: 13px; color: #55615e">/aksi-kemanusiaan/ · Template: Pilar Program</p>
+          </div>
+          <div style="display: flex; gap: 8px"><button type="button" style="height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid #cfd6d4; background: #fff; font: 700 13px Manrope, sans-serif">Pratinjau</button><button type="button" style="height: 40px; padding: 0 16px; border-radius: 10px; border: 0; background: #006659; color: #fff; font: 800 13px Manrope, sans-serif">Simpan</button></div>
+        </div>
+        <ol style="margin: 18px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{sections}}" as="s" hint-placeholder-count="5">
+            <li style="display: flex; align-items: center; gap: 14px; border: 1px solid #e2e7e5; border-radius: 12px; padding: 14px 16px; background: #fafbfb">
+              <span aria-hidden="true" style="color: #9fb3ae; font-weight: 800; letter-spacing: -2px">⋮⋮</span>
+              <span style="width: 34px; height: 34px; border-radius: 8px; background: #e3f0ed; color: #006659; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">{{s.n}}</span>
+              <span style="flex: 1"><span style="display: block; font-weight: 800; font-size: 15px">{{s.type}}</span><span style="display: block; font-size: 13px; color: #55615e">{{s.summary}}</span></span>
+              <button type="button" style="height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid #cfd6d4; background: #fff; font: 700 13px Manrope, sans-serif">Edit</button>
+              <button type="button" aria-label="Sembunyikan section" style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid #cfd6d4; background: #fff">◐</button>
+            </li>
+          </sc-for>
+        </ol>
+        <button type="button" style="margin-top: 12px; width: 100%; height: 48px; border-radius: 12px; border: 1px dashed #9fb3ae; background: #fff; font: 700 14px Manrope, sans-serif; color: #3d4644">+ Tambah section (Hero, Teks 2 kolom, Kartu program, Grid publikasi, Testimoni, Accordion, Logo mitra, CTA)</button>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const pub = ['#e3f0ed', '#004d43'], red = ['#eceeed', '#3d4644'];
+    const pages = [
+      ['Beranda', '', 'Terbit', 0], ['Profil Relawan Nusantara', 'profil-relawan-nusantara', 'Terbit', 0], ['Audit Keuangan', 'audit-keuangan', 'Terbit', 0],
+      ['Asas Legalitas', 'asas-legalitas', 'Terbit', 0], ['Program Kami', 'pr0gram-kami', 'Terbit', 0], ['Kerelawanan', 'pr0gram-kami/kerelawanan', 'Terbit', 1],
+      ['Kebencanaan', 'pr0gram-kami/kebencanaan', 'Terbit', 1], ['Aksi Kemanusiaan', 'aksi-kemanusiaan', 'Terbit', 0], ['Kemitraan', 'kemitraan', 'Terbit', 0],
+      ['e-Reporting', 'e-report', 'Terbit', 0], ['beranda-testing', 'beranda-testing', 'Redirect', 0]
+    ].map(([title, path, status, lvl]) => ({ title, path, status, indent: lvl ? '16px' : '0', bg: title === 'Aksi Kemanusiaan' ? '#e3f0ed' : 'transparent', sbg: status === 'Terbit' ? pub[0] : red[0], sfg: status === 'Terbit' ? pub[1] : red[1] }));
+    const sections = [
+      ['Hero', 'Judul “Aksi Kemanusiaan” · gambar latar'],
+      ['Teks 2 kolom', 'Taklukkan Krisis, Pulihkan Kehidupan'],
+      ['Kartu program', 'Program Pilihan · 3 kartu (SIGAP)'],
+      ['Grid publikasi', 'Cerita Berdampak · otomatis dari kategori Kemanusiaan'],
+      ['CTA', 'Jadilah Bagian Aksi Kemanusiaan → /donasi/programs']
+    ].map(([type, summary], i) => ({ n: String(i + 1), type, summary }));
+    return { pages, sections };
+  }
+}
+</script>
+</body>
+</html>

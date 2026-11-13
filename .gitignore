@@ -41,5 +41,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Media hasil migrasi disajikan dari media.relawannusantara.org (docs/MEDIA.md)
+# Media hasil migrasi disimpan di Vercel Blob (docs/MEDIA.md)
 /public/wp-content/
+/content/blob-migrated.json
+/content/blob-failed.json

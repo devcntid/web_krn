@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>404 — Relawan Nusantara</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Poppins, sans-serif; color: #000; background: #fff; position: relative">
+  <div style="position: absolute; top: 0; left: 0; right: 0; z-index: 5">
+    <dc-import name="SiteHeader" variant="accent" hint-size="100%,116px"></dc-import>
+  </div>
+  <section style="min-height: 740px; display: flex; align-items: center; justify-content: center; padding: 160px 24px 80px; box-sizing: border-box; text-align: center">
+    <div style="max-width: 560px; display: flex; flex-direction: column; align-items: center; gap: 16px">
+      <p style="margin: 0; font-size: 120px; line-height: 1; font-weight: 800; font-style: italic; color: #006659">404</p>
+      <h1 style="margin: 0; font-size: 40px">Halaman tidak ditemukan</h1>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #444">Halaman yang Sahabat cari mungkin sudah dipindahkan. Coba cari publikasi kami atau kembali ke beranda.</p>
+      <form role="search" style="margin-top: 8px; display: flex; gap: 10px; width: 100%">
+        <label for="q404" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Cari publikasi</label>
+        <input id="q404" type="search" placeholder="Cari publikasi…" style="flex: 1; height: 48px; border: 1px solid #cfd6d4; border-radius: 8px; padding: 0 16px; font: 400 15px Poppins, sans-serif">
+        <button type="submit" style="height: 48px; padding: 0 22px; border: 0; border-radius: 8px; background: #006659; color: #fff; font: 600 15px Poppins, sans-serif">Cari</button>
+      </form>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px">
+        <a href="Main.dc.html" style="background: #006659; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: 600; font-size: 14px">Kembali ke Beranda</a>
+        <a href="Publikasi.dc.html" style="border: 2px solid #006659; text-decoration: none; padding: 10px 24px; border-radius: 999px; font-weight: 600; font-size: 14px">Lihat Berita</a>
+      </div>
+    </div>
+  </section>
+  <dc-import name="SiteFooter" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

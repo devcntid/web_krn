@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Dashboard — Admin CMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; background: #F5F7F6; display: flex; flex-wrap: wrap; min-height: 1250px">
+  <div style="flex: 0 0 264px"><dc-import name="AdminSidebar" active="dashboard" hint-size="264px,1050px"></dc-import></div>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+    <header style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+      <div>
+        <h1 style="margin: 0; font-size: 28px; font-weight: 800">Selamat datang, PM</h1>
+        <p style="margin: 4px 0 0; font-size: 14px; color: #55615e">Jumat, 13 November 2026</p>
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap">
+        <a href="AdminEditor.dc.html" style="height: 44px; padding: 0 18px; border-radius: 10px; background: #006659; color: #fff; display: flex; align-items: center; text-decoration: none; font-weight: 800; font-size: 14px">+ Tulis Publikasi</a>
+        <a href="#situs" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid #cfd6d4; background: #fff; color: #10201d; display: flex; align-items: center; text-decoration: none; font-weight: 700; font-size: 14px">Lihat Situs ↗</a>
+      </div>
+    </header>
+
+    <section aria-label="Ringkasan konten" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+      <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+        <div style="background: #fff; border-radius: 14px; padding: 20px; border: 1px solid #e2e7e5">
+          <p style="margin: 0; font-size: 13px; font-weight: 700; color: #55615e">{{k.label}}</p>
+          <p style="margin: 8px 0 0; font-size: 32px; font-weight: 800">{{k.value}}</p>
+          <p style="margin: 4px 0 0; font-size: 12px; color: #55615e">{{k.note}}</p>
+        </div>
+      </sc-for>
+    </section>
+
+    <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px">
+      <section style="background: #fff; border-radius: 14px; border: 1px solid #e2e7e5; padding: 22px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <h2 style="margin: 0; font-size: 17px; font-weight: 800">Pengunjung 30 hari</h2>
+          <span style="font-size: 12px; color: #55615e">Sumber: Google Analytics 4</span>
+        </div>
+        <div style="margin-top: 18px; height: 220px; border-radius: 10px; background: #F5F7F6; border: 1px dashed #b9c7c3; display: flex; align-items: center; justify-content: center; color: #55615e; font-size: 13px; font-weight: 600">[Grafik garis sesi harian — data GA4 terhubung]</div>
+        <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+          <div><p style="margin: 0; font-size: 12px; color: #55615e">Sesi</p><p style="margin: 2px 0 0; font-size: 18px; font-weight: 800">[GA4]</p></div>
+          <div><p style="margin: 0; font-size: 12px; color: #55615e">Klik Donasi</p><p style="margin: 2px 0 0; font-size: 18px; font-weight: 800">[GA4]</p></div>
+          <div><p style="margin: 0; font-size: 12px; color: #55615e">Klik WhatsApp</p><p style="margin: 2px 0 0; font-size: 18px; font-weight: 800">[GA4]</p></div>
+        </div>
+      </section>
+
+      <section style="background: #fff; border-radius: 14px; border: 1px solid #e2e7e5; padding: 22px">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 800">Menunggu tindakan</h2>
+        <ul style="margin: 14px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{todos}}" as="t" hint-placeholder-count="4">
+            <li style="display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: #F5F7F6">
+              <span style="font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; background: {{t.bg}}; color: {{t.fg}}">{{t.tag}}</span>
+              <span style="flex: 1; font-size: 14px; font-weight: 600">{{t.text}}</span>
+              <a href="{{t.href}}" style="font-size: 13px; font-weight: 700">Buka</a>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+    </div>
+
+    <section style="background: #fff; border-radius: 14px; border: 1px solid #e2e7e5; padding: 22px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <h2 style="margin: 0; font-size: 17px; font-weight: 800">Publikasi terbaru</h2>
+        <a href="AdminPublikasi.dc.html" style="font-size: 13px; font-weight: 700">Lihat semua</a>
+      </div>
+      <div style="margin-top: 12px; overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 680px">
+          <thead><tr style="text-align: left; color: #55615e; font-size: 12px; text-transform: uppercase; letter-spacing: .06em">
+            <th style="padding: 10px 8px; font-weight: 800">Judul</th><th style="padding: 10px 8px; font-weight: 800">Kategori</th><th style="padding: 10px 8px; font-weight: 800">Penulis</th><th style="padding: 10px 8px; font-weight: 800">Status</th><th style="padding: 10px 8px; font-weight: 800">Tanggal</th>
+          </tr></thead>
+          <tbody>
+            <sc-for list="{{posts}}" as="p" hint-placeholder-count="4">
+              <tr style="border-top: 1px solid #edf0ef">
+                <td style="padding: 12px 8px; font-weight: 700"><a href="AdminEditor.dc.html" style="color: #10201d; text-decoration: none">{{p.title}}</a></td>
+                <td style="padding: 12px 8px">{{p.cat}}</td>
+                <td style="padding: 12px 8px">{{p.author}}</td>
+                <td style="padding: 12px 8px"><span style="font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: {{p.sbg}}; color: {{p.sfg}}">{{p.status}}</span></td>
+                <td style="padding: 12px 8px; color: #55615e">{{p.date}}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1250}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = { Terbit: ['#e3f0ed', '#004d43'], Review: ['#fdf0d9', '#7a4b00'], Draf: ['#eceeed', '#3d4644'], Terjadwal: ['#e3ecf8', '#1d4a80'] };
+    return {
+      kpis: [
+        { label: 'Publikasi', value: '672', note: 'Artikel 135 · Berita 403' },
+        { label: 'Halaman', value: '54', note: '16 halaman test dialihkan' },
+        { label: 'File media', value: '2.954', note: 'Pustaka hasil migrasi' },
+        { label: 'Kategori / Tag', value: '37 / 1.857', note: 'Perlu dirapikan' }
+      ],
+      todos: [
+        { tag: 'REVIEW', text: '[n] publikasi menunggu review', href: 'AdminPublikasi.dc.html', bg: '#fdf0d9', fg: '#7a4b00' },
+        { tag: 'SEO', text: 'Publikasi tanpa meta description', href: 'AdminSeo.dc.html', bg: '#e3ecf8', fg: '#1d4a80' },
+        { tag: 'MEDIA', text: 'Gambar tanpa teks alt', href: 'AdminMedia.dc.html', bg: '#f8e4e1', fg: '#8a2b1c' },
+        { tag: '404', text: 'URL lama tanpa redirect', href: 'AdminSeo.dc.html', bg: '#eceeed', fg: '#3d4644' }
+      ],
+      posts: [
+        ['Sebanyak 9.500 Liter Air Bersih Disalurkan untuk Warga Terdampak Kekeringan di Gorontalo', 'Berita', 'Relawan KRN', 'Terbit', '11 Nov 2026'],
+        ['Paket Makanan Disalurkan bagi Pasien Terdampak Konflik di Wad Medani, Sudan', 'Berita', 'Relawan KRN', 'Terbit', '02 Nov 2026'],
+        ['[Draf publikasi baru]', 'Artikel', '[Penulis]', 'Review', '—'],
+        ['[Publikasi terjadwal]', 'Berita', '[Penulis]', 'Terjadwal', '[tanggal]']
+      ].map(([title, cat, author, status, date]) => ({ title, cat, author, status, date, sbg: st[status][0], sfg: st[status][1] }))
+    };
+  }
+}
+</script>
+</body>
+</html>

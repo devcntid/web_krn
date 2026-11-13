@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Artikel &amp; Berita — Relawan Nusantara</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+.ph{background:#cfd8d4;color:#2d4a44;display:flex;align-items:center;justify-content:center;text-align:center;font:600 13px/1.4 Poppins,sans-serif}
+</style>
+</helmet>
+<div style="font-family: Poppins, sans-serif; color: #000; background: #fff; position: relative">
+  <div style="position: absolute; top: 0; left: 0; right: 0; z-index: 5">
+    <dc-import name="SiteHeader" variant="accent" hint-size="100%,116px"></dc-import>
+  </div>
+
+  <header style="position: relative; min-height: 707px; display: flex; align-items: flex-end; background: #6d7f72">
+    <span class="ph" style="position: absolute; inset: 0; background: #7d8c80; color: rgba(255,255,255,.75)">FOTO HERO · Anak-anak Gaza bergembira (Clean-Water.jpg, overlay 20%)</span>
+    <div style="position: relative; width: 80%; max-width: 1080px; margin: 0 auto; padding-bottom: 68px">
+      <h1 style="margin: 0; font-size: 64px; line-height: 1.1; color: #fff">{{pageTitle}}</h1>
+    </div>
+  </header>
+
+  <section style="background: #F2F6F8; padding: 64px 0">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto">
+      <h2 style="margin: 0; font-size: 45px; line-height: 1.1; font-weight: 800">Kilas Perjuangan dari Nusantara</h2>
+      <p style="margin: 12px 0 0; font-size: 16px; color: #444">Cerita tentang langkah-langkah kecil dari Nusantara yang menjadi kekuatan besar bagi kemanusiaan</p>
+
+      <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+        <div role="tablist" aria-label="Kategori" style="display: flex; gap: 16px; flex-wrap: wrap">
+          <sc-for list="{{tabs}}" as="tab" hint-placeholder-count="3">
+            <button type="button" role="tab" aria-selected="{{tab.selected}}" onClick="{{tab.pick}}" style="min-width: 104px; height: 40px; border-radius: 10px; border: 2px solid #006659; background: {{tab.bg}}; color: {{tab.fg}}; font: 500 14px Poppins, sans-serif; cursor: pointer; padding: 0 20px">{{tab.label}}</button>
+          </sc-for>
+        </div>
+        <div style="position: relative; width: 362px; max-width: 100%">
+          <label for="cari" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Cari publikasi</label>
+          <input id="cari" type="search" placeholder="Search for News" style="width: 100%; height: 40px; box-sizing: border-box; border: 0; border-radius: 6px; background: #e4e4e4; padding: 0 16px 0 40px; font: 400 14px Poppins, sans-serif">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="2" style="position: absolute; left: 14px; top: 12px"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+        <sc-for list="{{cards}}" as="c" hint-placeholder-count="6">
+          <article style="background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 2px 18px rgba(0,0,0,.08); display: flex; flex-direction: column">
+            <div class="ph" style="aspect-ratio: 4 / 3; border-radius: 6px">FOTO · {{c.photo}}</div>
+            <h3 style="margin: 20px 0 0; font-size: 18px; line-height: 1.35; font-weight: 800"><a href="Post.dc.html" style="color: #000; text-decoration: none">{{c.title}}</a></h3>
+            <p style="margin: 20px 0 0; font-size: 14px; line-height: 1.45; color: #666; flex: 1">{{c.excerpt}}</p>
+            <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center">
+              <span style="font-size: 12px; color: #666; display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>{{c.date}}</span>
+              <a href="Post.dc.html" style="background: #006659; color: #fff; text-decoration: none; padding: 10px 16px; border-radius: 6px; font-size: 12px; font-weight: 600">Selengkapnya</a>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+
+      <nav aria-label="Navigasi halaman" style="margin-top: 48px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap">
+        <sc-for list="{{pages}}" as="pg" hint-placeholder-count="7">
+          <a href="#hal" aria-current="{{pg.current}}" style="min-width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 1px solid #006659; border-radius: 6px; background: {{pg.bg}}; color: {{pg.fg}}; text-decoration: none; font-size: 14px; font-weight: 600">{{pg.label}}</a>
+        </sc-for>
+      </nav>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2400}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { tab: 'Artikel' }; }
+  renderVals() {
+    const tabs = ['Artikel', 'Berita', 'Kemitraan'].map((label) => {
+      const sel = this.state.tab === label;
+      return { label, selected: sel ? 'true' : 'false', bg: sel ? '#006659' : '#ffffff', fg: sel ? '#ffffff' : '#000000', pick: () => this.setState({ tab: label }) };
+    });
+    const data = {
+      Artikel: [
+        ['Cara Mengetahui Kualitas Udara di Sekitarmu, Cek ISPU Sebelum Beraktivitas!', 'Ketahui cara cek kualitas udara di sekitar melalui ISPU resmi KLH. Kenali kategori pencemaran udara…', '21 Oct, 2026', 'Infografis ISPU'],
+        ['Musim Dingin Palestina Kembali Datang, Warga Gaza Bersiap Menghadapi Dingin Tanpa Tempat Tinggal yang Layak', 'Musim dingin kembali mendekat di Palestina. Di tengah keterbatasan tempat tinggal…', '12 Oct, 2026', 'Anak-anak Gaza'],
+        ['Kabut Asap Karhutla: Apa yang Harus Dilakukan Saat Kualitas Udara Memburuk?', 'Pelajari langkah tepat melindungi diri dari kabut asap karhutla…', '09 Oct, 2026', 'Kabut asap kota'],
+        ['3 Tahun Genosida Gaza …', '[Ringkasan dari ekspor]', '[tanggal]', 'Reruntuhan Gaza'],
+        ['Ketika Banyak Orang …', '[Ringkasan dari ekspor]', '[tanggal]', 'Relawan di NTT'],
+        ['Air Bersih di Gaza …', '[Ringkasan dari ekspor]', '[tanggal]', 'Distribusi air Gaza']
+      ],
+      Berita: [
+        ['Sebanyak 9.500 Liter Air Bersih Disalurkan untuk Warga Terdampak Kekeringan di Gorontalo', 'Relawan Nusantara menyalurkan 9.500 liter air bersih untuk membantu 350 KK…', '11 Nov, 2026', 'Air bersih Gorontalo'],
+        ['Paket Makanan Disalurkan bagi Pasien Terdampak Konflik di Wad Medani, Sudan', 'Relawan Nusantara menyalurkan 100 paket makanan siap saji…', '02 Nov, 2026', 'Wad Medani'],
+        ['Taman Zakat Dukung Relawan Karhutla dan Pejuang Nafkah di Palangka Raya', 'Taman Zakat melalui Relawan Nusantara menyalurkan 200 porsi…', '29 Oct, 2026', 'Relawan karhutla'],
+        ['Perkuat Kesiapsiagaan Sesar Lembang, Masyarakat Ikuti Sekolah Lapang Gempa Bumi', 'BMKG Bandung menggelar Sekolah Lapang Gempa Bumi di Lembang…', '29 Oct, 2026', 'Sekolah Lapang Gempa'],
+        ['Dukung Rehabilitasi Orangutan Kalimantan, Bantuan Pakan Disalurkan melalui YIARI', 'Relawan Nusantara menyalurkan bantuan pakan melalui YIARI…', '28 Oct, 2026', 'Orangutan YIARI'],
+        ['Karhutla Palangka Raya: Perjuangan Relawan Padamkan Api Lahan Gambut Hingga Subuh', 'Relawan Nusantara menangani karhutla di dua titik Palangka Raya…', '27 Oct, 2026', 'Pemadaman gambut']
+      ],
+      Kemitraan: [
+        ['Kebakaran Palangka Raya Ancam 40 Rumah Warga, …', 'Kebakaran di Palangka Raya mengancam sekitar 40 rumah warga. Dukungan mesin alkon dari Nurul Ashri membantu upaya pemadaman di lokasi.', '15 Oct, 2026', 'Mesin alkon'],
+        ['Kolaborasi 11 BUMN dan Danantara Indonesia Mulai …', 'Danantara Indonesia, Kementerian BUMN, 11 BUMN, dan Relawan Nusantara memulai renovasi SDN 1 Panggalih di Cisewu, Garut…', '14 Oct, 2026', 'Renovasi sekolah'],
+        ['Penghijauan Eks-TPA Basirih: Pemeliharaan …', 'PT Pelindo Regional 3, DLH Banjarmasin, dan Relawan Nusantara rawat 2.500 pohon di eks-TPA Basirih saat kemarau.', '13 Oct, 2026', 'Penghijauan Basirih']
+      ]
+    };
+    const cards = data[this.state.tab].map(([title, excerpt, date, photo]) => ({ title, excerpt, date, photo }));
+    const pages = ['‹', '1', '2', '3', '…', '14', '15', '›'].map((label) => ({ label, current: label === '1' ? 'page' : 'false', bg: label === '1' ? '#006659' : '#ffffff', fg: label === '1' ? '#ffffff' : '#006659' }));
+    return { tabs, cards, pages, pageTitle: this.props.pageTitle ?? 'Artikel' };
+  }
+}
+</script>
+</body>
+</html>

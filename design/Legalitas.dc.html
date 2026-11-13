@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Asas Legalitas — Relawan Nusantara</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+.ph{background:#cfd8d4;color:#2d4a44;display:flex;align-items:center;justify-content:center;text-align:center;font:600 13px/1.4 Poppins,sans-serif}
+</style>
+</helmet>
+<div style="font-family: Poppins, sans-serif; color: #000; background: #fff; position: relative">
+  <div style="position: absolute; top: 0; left: 0; right: 0; z-index: 5">
+    <dc-import name="SiteHeader" variant="accent" hint-size="100%,116px"></dc-import>
+  </div>
+
+  <header style="position: relative; min-height: 480px; display: flex; align-items: flex-end; background: #5f6e66">
+    <span class="ph" style="position: absolute; inset: 0; background: #6a7a71; color: rgba(255,255,255,.75)">FOTO HERO · Kantor Relawan Nusantara, Bandung</span>
+    <div style="position: relative; width: 80%; max-width: 1080px; margin: 0 auto; padding-bottom: 60px">
+      <h1 style="margin: 0; font-size: 64px; line-height: 1.1; color: #fff">Asas Legalitas</h1>
+    </div>
+  </header>
+
+  <section style="padding: 72px 0 88px">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto">
+      <p style="margin: 0; font-size: 18px; line-height: 1.6; max-width: 820px">Relawan Nusantara memahami dan mematuhi segala peraturan yang ada di negara Republik Indonesia sehingga segala syarat perizinan kami perhatikan [lanjutan teks dari halaman asli].</p>
+      <ol style="margin: 40px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+        <sc-for list="{{docs}}" as="d" hint-placeholder-count="8">
+          <li style="border: 1px solid #dbdbdb; border-radius: 12px; padding: 24px; display: flex; gap: 18px; align-items: flex-start">
+            <span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #e3f0ed; color: #006659; display: flex; align-items: center; justify-content: center; flex: none">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+            </span>
+            <div>
+              <p style="margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .06em; color: #006659; text-transform: uppercase">{{d.kind}}</p>
+              <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.6; color: #222">{{d.text}}</p>
+            </div>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      docs: [
+        { kind: 'Akta Pendirian', text: 'Akta Pendirian dan Anggaran Dasar tanggal 22 Mei 2014 nomor 12 yang dibuat di hadapan Notaris Muhammad Juania, Sarjana Hukum, Magister Kenotariatan …' },
+        { kind: 'SK Pendirian', text: 'SK Pendirian Yayasan Komite Relawan Nusantara: AHU-01733.50.10.2014 yang dibuat pada tanggal 22 Mei 2014.' },
+        { kind: 'Akta Perubahan', text: 'Akta Perubahan Terakhir (Akta ke-6) Pernyataan Keputusan Rapat Pembina tanggal 31 Agustus 2022 nomor 07 yang dibuat di hadapan Notaris …' },
+        { kind: 'SK Kemenkumham', text: 'SK Kemenkumham Akta Perubahan Yayasan Komite Relawan Nusantara (Akta ke-6): AHU-AH.01.06-0037114 yang dibuat pada tanggal 12 September 2022' },
+        { kind: 'Domisili', text: 'Surat Keterangan Domisili Yayasan Komite Relawan Nusantara No. 255/Um/Kel-Anwet/X/2023' },
+        { kind: 'Lembaga Kesejahteraan Sosial', text: 'Yayasan Komite Relawan Nusantara dalam Penetapan terdaftar sebagai Lembaga Kesejahteraan Sosial …' },
+        { kind: 'NPWP', text: 'NPWP Yayasan Komite Relawan Nusantara : 66.245.737.3-429.000' },
+        { kind: 'UPZ', text: 'Yayasan Komite Relawan Nusantara terdaftar sebagai Unit Pengumpulan Zakat (UPZ) berdasarkan …' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

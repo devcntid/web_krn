@@ -1,10 +1,12 @@
 /**
  * URL media WordPress.
  *
- * - Gambar LAMA (migrasi WordPress): path /wp-content/uploads/... diarahkan ke
- *   NEXT_PUBLIC_MEDIA_BASE_URL (produksi: https://media.relawannusantara.org).
- *   Kosongkan saat development untuk membaca public/wp-content/uploads lokal.
- * - Gambar BARU: URL absolut Vercel Blob, dipakai apa adanya (lihat docs/MEDIA.md).
+ * Semua media disimpan di Vercel Blob (docs/MEDIA.md).
+ * - Gambar LAMA (migrasi WordPress): konten menyimpan path /wp-content/uploads/...;
+ *   di sini diberi host Blob dari NEXT_PUBLIC_MEDIA_BASE_URL
+ *   (https://<store-id>.public.blob.vercel-storage.com). Kosongkan saat development
+ *   untuk membaca public/wp-content/uploads lokal.
+ * - Gambar BARU: sudah berupa URL absolut Blob, dipakai apa adanya.
  */
 export const MEDIA_BASE_URL = (process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? "").replace(/\/$/, "");
 

@@ -4,6 +4,7 @@ Panduan membangun **frontend** (situs publik) dan **backend** (Admin CMS) sesuai
 
 - Project: `/Project/krn`
 - Kanvas desain: halaman **Website (Frontend)** (artboard `01`–`11`, `M1`–`M4`) dan **Admin CMS (Backend)** (artboard `A0`–`A12`).
+- Salinan file desain ada di folder **`design/`** project ini (lihat `design/README.md`).
 - Dokumen pendukung: `docs/WEBSITE_AUDIT.md`, `docs/DESIGN_SYSTEM.md`, `docs/TECHNICAL_ARCHITECTURE.md`, `docs/MEDIA.md`.
 
 ---
@@ -19,7 +20,7 @@ Panduan membangun **frontend** (situs publik) dan **backend** (Admin CMS) sesuai
 | Route: post `/[slug]`, halaman anak, kategori, tag, pencarian `/?s=`, Artikel/Berita (tab+cari+pagination) | ✅ |
 | SEO: metadata Rank Math, satu H1, sitemap, robots, redirect 301 halaman test | ✅ |
 | Ekspor WordPress (`npm run export`): 672 post, 54 halaman, 5.116 media | ✅ |
-| Media lama → `media.relawannusantara.org`, media baru → Vercel Blob | ✅ konfigurasi (infra menunggu DNS) |
+| Semua media → Vercel Blob (`npm run media:migrate` untuk media lama, `npm run media:upload` untuk baru) | ✅ siap — tinggal buat Blob store & jalankan migrasi |
 | Path milik aplikasi donasi (`/campaign`, `/donasi`, `/prog…`) dikecualikan | ✅ |
 
 **Belum:** rekonstruksi halaman khusus (Profil, Audit, Legalitas, Pilar, Program Kami, Kemitraan, e-Report), penyempurnaan mobile, QA visual, dan **seluruh backend/Admin CMS**.
@@ -35,10 +36,10 @@ Panduan membangun **frontend** (situs publik) dan **backend** (Admin CMS) sesuai
                 │   ├─ /admin/…        Admin CMS     ── tulis ─► Postgres     │
                 │   ├─ /api/…          upload, cron, revalidate               │
                 │   └─ proxy.ts        redirect dinamis (Edge Config)         │
-                └──────────────┬──────────────────────┬───────────────────────┘
-                               │                      │
-          media.relawannusantara.org            Vercel Blob
-          (gambar lama /wp-content/uploads)     (gambar baru)
+                └──────────────────────────┬──────────────────────────────────┘
+                                           │
+                                      Vercel Blob
+                     (semua media: wp-content/uploads/… lama + media/… baru)
 
  nginx (tetap): /campaign…, /donasi…, /prog…  → aplikasi donasi (tidak disentuh)
 ```
@@ -53,7 +54,7 @@ Panduan membangun **frontend** (situs publik) dan **backend** (Admin CMS) sesuai
 | Auth | **Auth.js (NextAuth v5)**: Google Workspace + email/password, **2FA TOTP** | sesuai artboard A0 |
 | Validasi | **Zod** (form & server action) | |
 | Editor konten | **Tiptap** (blok: paragraf, H2/H3, list, kutipan, gambar, tombol, video, accordion) → simpan JSON + HTML tersanitasi | sesuai artboard A3 |
-| Upload | **Vercel Blob client upload** (`@vercel/blob/client`) | keputusan media |
+| Media | **Vercel Blob** untuk semua gambar (lama & baru); upload admin via client upload (`@vercel/blob/client`) | keputusan media |
 | Redirect dinamis | **Vercel Edge Config** (sinkron dari tabel `redirects`) dibaca `proxy.ts` | cepat, tanpa query DB per request |
 | Cache | API cache Next 16 (`cacheComponents`, `"use cache"`, `cacheTag`) + `revalidateTag`/`updateTag` saat terbit | konten statis-cepat, update instan |
 | Jadwal terbit | **Vercel Cron** → `/api/cron/publish` | status “Terjadwal” |
@@ -135,16 +136,17 @@ Alur status: **Draf → Review → Terjadwal → Terbit** (+ Sampah). Setiap per
 ### Prompt Pembuka (tempel di awal setiap sesi)
 ```text
 Kamu bekerja di project Next.js /Project/krn — rekonstruksi situs WordPress relawannusantara.org.
-Baca dulu: AGENTS.md (Next.js 16 punya breaking changes; cek node_modules/next/dist/docs sebelum
+Baca dulu: AGENTS.md, design/README.md (Next.js 16 punya breaking changes; cek node_modules/next/dist/docs sebelum
 menulis kode), docs/BUILD_PLAYBOOK.md, docs/DESIGN_SYSTEM.md, docs/TECHNICAL_ARCHITECTURE.md,
-docs/MEDIA.md. Acuan visual: kanvas Claude Design "Relawan Nusantara — UI/UX Website & Admin CMS".
+docs/MEDIA.md. Acuan visual: file desain di folder design/ (salinan kanvas Claude Design
+"Relawan Nusantara — UI/UX Website & Admin CMS"); nama artboard = nama file, mis. A3 → design/AdminEditor.dc.html.
 Aturan:
 - Pertahankan identitas visual, konten asli (jangan menulis ulang), URL, dan SEO.
 - Server Components default; Client Component hanya untuk interaksi.
 - TypeScript strict, tanpa `any`. Token warna/font dari globals.css, jangan hex acak.
 - Satu H1 per halaman, semantic HTML, kontras ≥4.5:1, target sentuh ≥44px.
 - Jangan sentuh path milik aplikasi donasi (/campaign, /donasi, /prog…).
-- Gambar lama lewat mediaUrl() (media.relawannusantara.org); gambar baru di Vercel Blob.
+- Semua gambar di Vercel Blob: path lama /wp-content/uploads/… selalu lewat mediaUrl(); gambar baru berupa URL Blob.
 - Setelah selesai: jalankan typecheck, lint, build; laporkan file yang berubah dan cara mengujinya.
 Jangan commit/push kecuali saya minta.
 ```
@@ -156,7 +158,9 @@ Jangan commit/push kecuali saya minta.
 ### F1 · Verifikasi hasil ekspor & beranda dengan aset asli
 ```text
 Konten hasil `npm run export` sudah ada di content/ dan media di public/wp-content/uploads.
-1) Jalankan dev server dengan NEXT_PUBLIC_MEDIA_BASE_URL kosong (media lokal).
+0) Bila Blob store sudah ada: jalankan `npm run media:migrate`, set NEXT_PUBLIC_MEDIA_BASE_URL ke host
+   Blob yang dicetak, dan pastikan gambar tampil dari Blob. Bila belum: kosongkan variabel itu.
+1) Jalankan dev server.
 2) Periksa beranda vs relawannusantara.org di 1440px dan 390px: urutan slide, gambar kartu pilar
    (Clean-Water, Eco-Hope, Health-For-All, Eco-Hope-1 — pastikan pemetaan judul↔gambar benar),
    ikon statistik (Ellipse-278x), foto testimoni, background CTA e-Report.
@@ -394,13 +398,14 @@ Commit: `feat(admin): kelola beranda`
 
 ### B9 · Pustaka Media (Vercel Blob)
 ```text
-Bangun /admin/media (artboard "A6"): grid media (lama dari media.relawannusantara.org + baru dari
-Blob), cari nama/alt, filter jenis/bulan, filter "Tanpa teks alt", panel detail (pratinjau, ukuran,
+Bangun /admin/media (artboard "A6"): grid media (lama di Blob path wp-content/uploads/… + baru di
+Blob path media/…), cari nama/alt, filter jenis/bulan, filter "Tanpa teks alt", panel detail (pratinjau, ukuran,
 dipakai di mana, alt wajib, keterangan, salin URL, hapus). Unggah via drag & drop memakai
 @vercel/blob/client (route /api/media/upload dengan handleUpload; cek sesi & ability di
 onBeforeGenerateToken; batasi tipe & ukuran; path media/YYYY/MM/). Setelah unggah, baca dimensi dan
-simpan ke tabel media. Media lama tidak bisa dihapus dari server (hanya disembunyikan). Komponen
-MediaPicker (modal) dipakai ulang di editor dan beranda.
+simpan ke tabel media. Komponen
+MediaPicker (modal) dipakai ulang di editor dan beranda. Hapus media = del() di Blob + hapus baris
+tabel; tolak bila masih dipakai konten.
 ```
 Commit: `feat(admin): pustaka media`
 
@@ -491,7 +496,7 @@ ber-robots Disallow. Tulis docs/DEPLOYMENT.md: instalasi lokal, env, build, migr
 ```
 
 ### D2 · Checklist cut-over (dikerjakan manual, bukan oleh Claude)
-- [ ] `media.relawannusantara.org` aktif + SSL, semua file ter-rsync (cek acak 20 URL).
+- [ ] `npm run media:migrate` selesai tanpa gagal; `NEXT_PUBLIC_MEDIA_BASE_URL` = host Blob di Vercel (cek acak 20 URL gambar).
 - [ ] Ekspor ulang konten terakhir dari WordPress → `npm run db:seed` (delta).
 - [ ] Freeze penulisan di WordPress.
 - [ ] Uji staging: semua URL di sitemap lama → 200/301 (tidak ada 404), form cari, redirect.

@@ -27,13 +27,14 @@ Hasil & peringatan: `content/export-report.json`. Ekspor aman dijalankan ulang (
 | `npm run build` / `npm start` | Build & jalankan produksi |
 | `npm run lint` · `npm run typecheck` | ESLint · TypeScript |
 | `npm run export` | Ekspor WordPress → `content/` + media |
+| `npm run media:migrate` | Unggah semua media lama ke Vercel Blob (sekali, bisa dilanjutkan) |
 | `npm run media:upload -- <file>` | Unggah gambar baru ke Vercel Blob |
 
 ## Environment variables
 Lihat `.env.example`: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_MEDIA_BASE_URL`, `BLOB_READ_WRITE_TOKEN`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_META_PIXEL_ID`, `WP_ORIGIN`.
 
 ## Deploy (Vercel)
-1. Jalankan `npm run export`, commit `content/`. Salin `public/wp-content/uploads` ke **media.relawannusantara.org** (lihat `docs/MEDIA.md`); folder ini tidak masuk git.
+1. Jalankan `npm run export`, lalu `npm run media:migrate` (semua media → Vercel Blob, lihat `docs/MEDIA.md`). Commit `content/`; folder `public/wp-content/` tidak masuk git.
 2. Import repo ke Vercel (framework: Next.js), isi environment variables.
 3. Verifikasi di preview URL (preview otomatis `Disallow: /` di robots.txt).
 4. **Jangan pindahkan DNS** sampai QA selesai. WordPress tetap berjalan sampai cut-over.

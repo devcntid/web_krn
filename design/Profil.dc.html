@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Profil — Relawan Nusantara</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+.ph{background:#cfd8d4;color:#2d4a44;display:flex;align-items:center;justify-content:center;text-align:center;font:600 13px/1.4 Poppins,sans-serif}
+</style>
+</helmet>
+<div style="font-family: Poppins, sans-serif; color: #000; background: #fff; position: relative">
+  <div style="position: absolute; top: 0; left: 0; right: 0; z-index: 5">
+    <dc-import name="SiteHeader" variant="accent" hint-size="100%,116px"></dc-import>
+  </div>
+
+  <header style="position: relative; min-height: 600px; display: flex; align-items: flex-end; background: #5f6e66">
+    <span class="ph" style="position: absolute; inset: 0; background: #6a7a71; color: rgba(255,255,255,.75)">FOTO HERO · Tim relawan Relawan Nusantara</span>
+    <div style="position: relative; width: 80%; max-width: 1080px; margin: 0 auto; padding-bottom: 64px">
+      <h1 style="margin: 0; font-size: 64px; line-height: 1.1; color: #fff">Profil Relawan Nusantara</h1>
+    </div>
+  </header>
+
+  <section style="padding: 80px 0">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 60px; align-items: center">
+      <div>
+        <h2 style="margin: 0; font-size: 40px; line-height: 1.1; font-weight: 800">Apa itu Relawan Nusantara?</h2>
+        <p style="margin: 20px 0 0; font-size: 16px; line-height: 1.7; color: #333">Relawan Nusantara adalah lembaga kemanusiaan yang berperan sebagai jembatan kebaikan dalam merespons berbagai isu kemanusiaan, khususnya bagi kelompok rentan [lanjutan teks dari halaman asli].</p>
+      </div>
+      <div class="ph" style="aspect-ratio: 4 / 3; border-radius: 20px">FOTO · Kegiatan relawan di lapangan</div>
+    </div>
+  </section>
+
+  <section style="background: #F8F7F0; padding: 80px 0">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; align-items: stretch">
+      <div style="background: #006659; color: #fff; border-radius: 20px; padding: 40px; display: flex; flex-direction: column; gap: 16px">
+        <h2 style="margin: 0; font-size: 34px; color: #fff">Visi</h2>
+        <p style="margin: 0; font-size: 20px; line-height: 1.5; font-weight: 500">Lembaga kemanusiaan yang amanah dan profesional berbasis kedermawanan masyarakat demi hadirkan kebaikan bagi semesta</p>
+      </div>
+      <div style="background: #fff; border-radius: 20px; padding: 40px">
+        <h2 style="margin: 0; font-size: 34px">Misi</h2>
+        <ol style="margin: 24px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px">
+          <sc-for list="{{misi}}" as="m" hint-placeholder-count="3">
+            <li style="display: flex; gap: 16px; align-items: flex-start; font-size: 16px; line-height: 1.6">
+              <span style="width: 36px; height: 36px; border-radius: 50%; background: #F4A62A; color: #000; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: none">{{m.n}}</span>
+              <span>{{m.text}}</span>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 80px 0">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto">
+      <h2 style="margin: 0; font-size: 34px">Transparansi &amp; Legalitas</h2>
+      <p style="margin: 10px 0 0; font-size: 16px; color: #444">Opini Wajar Tanpa Pengecualian (WTP) pada laporan keuangan 2021 – 2025.</p>
+      <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+        <a href="Audit.dc.html" style="border: 1px solid #dbdbdb; border-radius: 12px; padding: 28px; text-decoration: none; color: #000; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: 20px; font-weight: 700">Audit Keuangan</span>
+          <span style="font-size: 14px; color: #555">Laporan audit KAP independen per tahun</span>
+          <span style="color: #006659; font-weight: 600; font-size: 14px">Lihat laporan →</span>
+        </a>
+        <a href="Legalitas.dc.html" style="border: 1px solid #dbdbdb; border-radius: 12px; padding: 28px; text-decoration: none; color: #000; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: 20px; font-weight: 700">Asas Legalitas</span>
+          <span style="font-size: 14px; color: #555">Akta, SK Kemenkumham, NPWP, dan izin</span>
+          <span style="color: #006659; font-weight: 600; font-size: 14px">Lihat dokumen →</span>
+        </a>
+        <a href="EReport.dc.html" style="border: 1px solid #dbdbdb; border-radius: 12px; padding: 28px; text-decoration: none; color: #000; display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: 20px; font-weight: 700">e-Report</span>
+          <span style="font-size: 14px; color: #555">Laporan penyaluran program</span>
+          <span style="color: #006659; font-weight: 600; font-size: 14px">Buka e-Report →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      misi: [
+        { n: '1', text: 'Mengokohkan pengelolaan lembaga dengan semangat agility dan berdampak global.' },
+        { n: '2', text: 'Mengembangkan kolaborasi kemitraan, jaringan kemanusiaan dan partisipasi masyarakat' },
+        { n: '3', text: 'Mendayagunakan sumber daya dan program unggulan yang bermanfaat bagi kemanusiaan.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

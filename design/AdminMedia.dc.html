@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Pustaka Media — Admin CMS</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+</style>
+</helmet>
+<div style="font-family: Manrope, sans-serif; color: #10201d; background: #F5F7F6; display: flex; flex-wrap: wrap; min-height: 1150px">
+  <div style="flex: 0 0 264px"><dc-import name="AdminSidebar" active="media" hint-size="264px,1050px"></dc-import></div>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 28px 36px 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+    <header style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+      <div>
+        <h1 style="margin: 0; font-size: 28px; font-weight: 800">Pustaka Media</h1>
+        <p style="margin: 4px 0 0; font-size: 14px; color: #55615e">2.954 file · otomatis dikompres ke WebP/AVIF</p>
+      </div>
+      <button type="button" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 0; background: #006659; color: #fff; font: 800 14px Manrope, sans-serif">Unggah File</button>
+    </header>
+
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+      <label for="mq" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Cari media</label>
+      <input id="mq" type="search" placeholder="Cari nama file atau teks alt…" style="flex: 1 1 260px; height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 14px; font: 500 14px Manrope, sans-serif; background: #fff">
+      <select aria-label="Jenis" style="height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif; background: #fff"><option>Semua jenis</option><option>Gambar</option><option>PDF</option><option>Video</option></select>
+      <select aria-label="Folder" style="height: 42px; border: 1px solid #cfd6d4; border-radius: 10px; padding: 0 12px; font: 600 14px Manrope, sans-serif; background: #fff"><option>2026 / 11</option><option>2026 / 10</option></select>
+      <button type="button" style="height: 42px; padding: 0 14px; border-radius: 10px; border: 1px solid #e0a83a; background: #fdf6e6; font: 700 13px Manrope, sans-serif; color: #7a4b00">Tanpa teks alt</button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+      <section style="flex: 999 1 520px; min-width: 0">
+        <div style="border: 2px dashed #9fb3ae; border-radius: 14px; padding: 18px; text-align: center; font-size: 14px; color: #3d4644; background: #fff">Seret file ke sini untuk mengunggah</div>
+        <div style="margin-top: 14px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px">
+          <sc-for list="{{files}}" as="f" hint-placeholder-count="15">
+            <button type="button" style="padding: 0; border: 2px solid {{f.border}}; border-radius: 10px; background: #fff; overflow: hidden; cursor: pointer; text-align: left">
+              <span style="display: block; aspect-ratio: 1 / 1; background: {{f.bg}}; position: relative">
+                <sc-if value="{{f.noAlt}}" hint-placeholder-val="{{false}}"><span style="position: absolute; top: 6px; right: 6px; font: 800 10px Manrope, sans-serif; background: #F4A62A; color: #000; padding: 2px 6px; border-radius: 4px">ALT</span></sc-if>
+              </span>
+              <span style="display: block; padding: 6px 8px; font: 600 11px Manrope, sans-serif; color: #3d4644; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.name}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+
+      <aside style="flex: 1 1 300px; max-width: 340px; background: #fff; border: 1px solid #e2e7e5; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+        <div style="aspect-ratio: 16 / 10; border-radius: 10px; background: #b7c7c1"></div>
+        <p style="margin: 0; font-size: 14px; font-weight: 800; word-break: break-all">relawan-nusantara-serahkan-makanan-pasien-pengungsi-sudan.jpeg</p>
+        <dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 13px">
+          <dt style="color: #55615e">Ukuran</dt><dd style="margin: 0">[px] · [KB]</dd>
+          <dt style="color: #55615e">Diunggah</dt><dd style="margin: 0">November 2026</dd>
+          <dt style="color: #55615e">Dipakai di</dt><dd style="margin: 0"><a href="AdminEditor.dc.html">1 publikasi</a></dd>
+        </dl>
+        <label for="alt" style="font-size: 12px; font-weight: 700; color: #55615e">Teks alt (wajib)</label>
+        <textarea id="alt" rows="3" style="width: 100%; box-sizing: border-box; border: 1px solid #cfd6d4; border-radius: 8px; padding: 8px 10px; font: 500 13px/1.5 Manrope, sans-serif">Tim relawan menyerahkan makanan kepada pasien pengungsi Sudan</textarea>
+        <label for="cap" style="font-size: 12px; font-weight: 700; color: #55615e">Keterangan</label>
+        <input id="cap" style="height: 40px; border: 1px solid #cfd6d4; border-radius: 8px; padding: 0 10px; font: 500 13px Manrope, sans-serif">
+        <div style="display: flex; gap: 8px"><button type="button" style="flex: 1; height: 40px; border-radius: 8px; border: 0; background: #006659; color: #fff; font: 800 13px Manrope, sans-serif">Simpan</button><button type="button" style="height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid #cfd6d4; background: #fff; font: 700 13px Manrope, sans-serif">Salin URL</button></div>
+        <button type="button" style="height: 40px; border-radius: 8px; border: 1px solid #e3b4ab; background: #fff; color: #8a2b1c; font: 700 13px Manrope, sans-serif">Hapus file</button>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const tones = ['#b7c7c1', '#c9bfb2', '#a9b8c4', '#bccab0', '#c4b6b9'];
+    const names = ['relawan-nusantara-serahkan-makanan…', 'AIR-GORONTALO-relawan…', 'suasana-sekolah-lapang-gempa…', 'Banner-Donol.png', 'Page-2.png', 'Bantu-Kemanusiaan-Sudan.png', 'ORG-2.png', 'Clean-Water.jpg', 'Eco-Hope.jpg', 'Health-For-All.jpg', 'Eco-Hope-1.jpg', 'image-57.jpg', 'Map.jpg', 'Saffa.png', 'logo-rn.png'];
+    const files = names.map((name, i) => ({ name, bg: tones[i % 5], noAlt: [3, 4, 6, 12].includes(i), border: i === 0 ? '#006659' : '#e2e7e5' }));
+    return { files };
+  }
+}
+</script>
+</body>
+</html>

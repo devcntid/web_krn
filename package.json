@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "export": "tsx scripts/export-wp.ts",
     "format": "prettier --write .",
-    "media:upload": "tsx scripts/upload-media.ts"
+    "media:upload": "tsx scripts/upload-media.ts",
+    "media:migrate": "tsx scripts/migrate-media-to-blob.ts"
   },
   "dependencies": {
     "@vercel/blob": "^2.9.0",

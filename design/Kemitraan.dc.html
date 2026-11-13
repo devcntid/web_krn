@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kemitraan — Relawan Nusantara</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#006659}a:hover{color:#004d43}
+.ph{background:#cfd8d4;color:#2d4a44;display:flex;align-items:center;justify-content:center;text-align:center;font:600 13px/1.4 Poppins,sans-serif}
+</style>
+</helmet>
+<div style="font-family: Poppins, sans-serif; color: #000; background: #F2F6F8; position: relative">
+  <div style="position: absolute; top: 0; left: 0; right: 0; z-index: 5">
+    <dc-import name="SiteHeader" variant="accent" hint-size="100%,116px"></dc-import>
+  </div>
+
+  <header style="position: relative; min-height: 640px; display: flex; align-items: flex-end; background: #5f6e66">
+    <span class="ph" style="position: absolute; inset: 0; background: #6a7a71; color: rgba(255,255,255,.75)">FOTO HERO · Kolaborasi mitra di lapangan</span>
+    <div style="position: relative; width: 80%; max-width: 1080px; margin: 0 auto; padding-bottom: 64px">
+      <h1 style="margin: 0; font-size: 64px; line-height: 1.1; color: #fff">Jaringan Kebaikan</h1>
+    </div>
+  </header>
+
+  <section style="padding: 80px 0">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; text-align: center">
+      <h2 style="margin: 0; font-size: 45px; font-weight: 800">Aksi Nyata untuk Berkolaborasi</h2>
+      <div style="margin-top: 48px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px">
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+            <span style="width: 88px; height: 88px; border-radius: 50%; background: #006659; color: #fff; font-size: 28px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{s.n}}</span>
+            <h3 style="margin: 0; font-size: 20px">{{s.title}}</h3>
+            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #333">{{s.desc}}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 80px">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; align-items: center">
+      <div>
+        <h2 style="margin: 0 0 24px; font-size: 34px; line-height: 1.2; text-align: center">Mengapa Berkolaborasi dengan Kami?</h2>
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <sc-for list="{{why}}" as="w" hint-placeholder-count="3">
+            <div style="background: #fff; border-radius: 10px; padding: 20px 22px; box-shadow: 0 2px 18px rgba(0,0,0,.05)">
+              <h3 style="margin: 0; font-size: 17px">{{w.title}}</h3>
+              <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: #333">{{w.desc}}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="ph" style="aspect-ratio: 4 / 5; border-radius: 20px">FOTO · Tim relawan bersama mitra</div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 80px">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; text-align: center">
+      <h2 style="margin: 0; font-size: 45px">Bersama Menebar Dampak</h2>
+      <p style="margin: 8px 0 0; font-size: 16px">Cerita, pengalaman, dan kesan dari para donatur, mitra, penerima manfaat, serta relawan yang telah menjadi bagian dari perjalanan menghadirkan manfaat.</p>
+      <div style="margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; text-align: left">
+        <figure style="margin: 0"><blockquote style="margin: 0; background: #D5D5D5; padding: 12px; font-size: 15px; line-height: 1.75; font-style: italic; color: #333; min-height: 200px">“Kami dari Industri Hulu Migas mengapresiasi Relawan Nusantara atas kolaborasi penyaluran bantuan SKK Migas-KKKS untuk korban bencana di Sumatera…”</blockquote><figcaption style="margin-top: 18px; font-size: 14px"><span style="display: block; color: #444">Roy Widiartha</span><span style="display: block; color: #1e7f73; font-weight: 700">Kepala Pokja Pengembangan Masyarakat SKK Migas</span></figcaption></figure>
+        <figure style="margin: 0"><blockquote style="margin: 0; background: #D5D5D5; padding: 12px; font-size: 15px; line-height: 1.75; font-style: italic; color: #333; min-height: 200px">“Terima kasih kepada Relawan Nusantara dan seluruh pihak yang telah memberikan kesempatan untuk aku dapat menjadi bagian dari perjalanan kemanusiaan ini…”</blockquote><figcaption style="margin-top: 18px; font-size: 14px"><span style="display: block; color: #444">Nabilah Ayu</span><span style="display: block; color: #1e7f73; font-weight: 700">Penyanyi</span></figcaption></figure>
+        <figure style="margin: 0"><blockquote style="margin: 0; background: #D5D5D5; padding: 12px; font-size: 15px; line-height: 1.75; font-style: italic; color: #333; min-height: 200px">“Senang sekali aku dapet sepatu dan peralatan sekolah baru, karena yang lama sudah rusak.”</blockquote><figcaption style="margin-top: 18px; font-size: 14px"><span style="display: block; color: #444">Syafira</span><span style="display: block; color: #1e7f73; font-weight: 700">Siswi MIS Menanga, NTT</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 80px">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto">
+      <h2 style="margin: 0; font-size: 45px">Cerita Berdampak</h2>
+      <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px">
+        <sc-for list="{{stories}}" as="c" hint-placeholder-count="3">
+          <article style="background: #fff; border-radius: 10px; padding: 22px; box-shadow: 0 2px 18px rgba(0,0,0,.08)">
+            <div class="ph" style="aspect-ratio: 16 / 10; border-radius: 6px">FOTO · {{c.photo}}</div>
+            <h3 style="margin: 20px 0 0; font-size: 20px; line-height: 1.25">{{c.title}}</h3>
+            <p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #444">{{c.excerpt}}</p>
+            <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center"><span style="font-size: 13px; color: #666">{{c.date}}</span><a href="Post.dc.html" style="background: #006659; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-size: 15px; font-weight: 600">Selengkapnya</a></div>
+          </article>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 80px; background: #fff">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; padding-top: 72px; text-align: center">
+      <h2 style="margin: 0; font-size: 45px; line-height: 1.15">Dari niat baik menjadi aksi nyata, ratusan gerakan telah tumbuh bersama kami</h2>
+      <p style="margin: 12px 0 0; font-size: 16px">Cerita tentang langkah-langkah kecil dari Nusantara yang menjadi kekuatan besar bagi kemanusiaan</p>
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px">
+        <sc-for list="{{partners}}" as="p" hint-placeholder-count="5">
+          <div class="ph" style="height: 72px; border-radius: 10px; background: #f2f4f3">LOGO · {{p}}</div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 72px 0; background: #006659">
+    <div style="width: 80%; max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; color: #fff">
+      <div>
+        <h2 style="margin: 0; font-size: 36px; color: #fff">Mari Berkolaborasi</h2>
+        <p style="margin: 8px 0 0; font-size: 16px">[Ajakan kemitraan dari halaman asli]</p>
+      </div>
+      <a href="#wa-kemitraan" style="background: #F4A62A; color: #000; text-decoration: none; padding: 14px 36px; border-radius: 999px; font-weight: 600">Hubungi Tim Kemitraan</a>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      steps: [
+        { n: '1', title: 'Assessment', desc: 'Tahap memahami kondisi masyarakat dengan mengidentifikasi kebutuhan, masalah, potensi, sumber daya, serta aktor sosial melalui observasi, wawancara, survei, dan FGD' },
+        { n: '2', title: 'Planning', desc: 'Tahap menyusun tujuan, strategi, kegiatan, sumber daya, dan indikator keberhasilan berdasarkan hasil assessment dengan melibatkan masyarakat' },
+        { n: '3', title: 'Implementation', desc: 'Tahap menjalankan program di lapangan melalui koordinasi bersama tim, mitra, dan masyarakat, disertai monitoring serta dokumentasi' },
+        { n: '4', title: 'Amplification', desc: 'Tahap memperluas dampak program melalui penyebarluasan hasil, pengembangan praktik baik, replikasi, penguatan kapasitas lokal, dan keberlanjutan program' }
+      ],
+      why: [
+        { title: 'Dekat dengan Masyarakat dan Tepat Sasaran', desc: 'Memastikan program dan menjawab kebutuhan nyata masyarakat serta menjangkau penerima manfaat yang tepat.' },
+        { title: '[Judul poin 2]', desc: 'Program dikelola secara terstruktur dengan proses pelaksanaan, dokumentasi dan pelaporan yang transparan.' },
+        { title: '[Judul poin 3]', desc: 'Hasil yang mudah terpantau dan terevaluasi dalam setiap kolaborasi.' }
+      ],
+      stories: [
+        { title: 'Kebakaran Palangka Raya Ancam 40 Rumah Warga, …', excerpt: 'Kebakaran di Palangka Raya mengancam sekitar 40 rumah warga. Dukungan mesin alkon dari Nurul Ashri membantu upaya pemadaman di lokasi.', date: '15 Oct, 2026', photo: 'Pemadaman' },
+        { title: 'Kolaborasi 11 BUMN dan Danantara Indonesia Mulai …', excerpt: 'Danantara Indonesia, Kementerian BUMN, 11 BUMN, dan Relawan Nusantara memulai renovasi SDN 1 Panggalih di Cisewu, Garut…', date: '14 Oct, 2026', photo: 'Renovasi sekolah' },
+        { title: 'Penghijauan Eks-TPA Basirih: Pemeliharaan …', excerpt: 'PT Pelindo Regional 3, DLH Banjarmasin, dan Relawan Nusantara rawat 2.500 pohon di eks-TPA Basirih saat kemarau.', date: '13 Oct, 2026', photo: 'Penghijauan' }
+      ],
+      partners: ['PELNI', 'BYOND by BSI', 'LaunchGood', 'Pelindo', 'Kitabisa']
+    };
+  }
+}
+</script>
+</body>
+</html>

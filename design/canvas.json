@@ -1,0 +1,63 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-13T06:10:00Z" },
+  "title": "Relawan Nusantara — UI/UX Website & Admin CMS",
+  "launch": { "view": "canvas", "page": "web" },
+  "pages": [
+    { "id": "web", "name": "Website (Frontend)" },
+    { "id": "admin", "name": "Admin CMS (Backend)" }
+  ],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 5200, "title": "01 · Beranda", "page": "web", "expand": "fill" },
+    "Post.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 3000, "title": "02 · Detail Post", "page": "web", "expand": "fill" },
+    "Publikasi.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 2400, "title": "03 · Artikel / Berita", "page": "web", "expand": "fill", "is_interactive": true },
+    "Pilar.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 3100, "title": "04 · Pilar Program (Aksi Kemanusiaan)", "page": "web", "expand": "fill" },
+    "Profil.dc.html": { "x": 6080, "y": 0, "w": 1440, "h": 2300, "title": "05 · Profil", "page": "web", "expand": "fill" },
+    "Audit.dc.html": { "x": 7600, "y": 0, "w": 1440, "h": 1800, "title": "06 · Audit Keuangan", "page": "web", "expand": "fill", "is_interactive": true },
+    "Legalitas.dc.html": { "x": 9120, "y": 0, "w": 1440, "h": 1900, "title": "07 · Asas Legalitas", "page": "web", "expand": "fill" },
+    "Kemitraan.dc.html": { "x": 10640, "y": 0, "w": 1440, "h": 3500, "title": "08 · Kemitraan", "page": "web", "expand": "fill" },
+    "EReport.dc.html": { "x": 12160, "y": 0, "w": 1440, "h": 2000, "title": "09 · e-Report", "page": "web", "expand": "fill" },
+    "Arsip.dc.html": { "x": 13680, "y": 0, "w": 1440, "h": 1900, "title": "10 · Kategori / Pencarian", "page": "web", "expand": "fill" },
+    "NotFound.dc.html": { "x": 15200, "y": 0, "w": 1440, "h": 1300, "title": "11 · 404", "page": "web", "expand": "fill" },
+
+    "MobileBeranda.dc.html": { "x": 0, "y": 5640, "w": 390, "h": 4300, "title": "M1 · Beranda (mobile)", "page": "web" },
+    "MobileMenu.dc.html": { "x": 470, "y": 5640, "w": 390, "h": 844, "title": "M2 · Menu (mobile)", "page": "web", "is_interactive": true },
+    "MobilePost.dc.html": { "x": 940, "y": 5640, "w": 390, "h": 2700, "title": "M3 · Detail Post (mobile)", "page": "web" },
+    "MobilePublikasi.dc.html": { "x": 1410, "y": 5640, "w": 390, "h": 2500, "title": "M4 · Publikasi (mobile)", "page": "web" },
+    "SiteHeader.dc.html": { "x": 1960, "y": 5640, "w": 1440, "h": 116, "title": "Komponen · Header", "page": "web" },
+    "SiteFooter.dc.html": { "x": 1960, "y": 5876, "w": 1440, "h": 560, "title": "Komponen · Footer", "page": "web" },
+
+    "AdminLogin.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 900, "title": "A0 · Login", "page": "admin", "expand": "fill" },
+    "AdminDashboard.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 1250, "title": "A1 · Dashboard", "page": "admin", "expand": "fill" },
+    "AdminPublikasi.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 1150, "title": "A2 · Publikasi (daftar)", "page": "admin", "expand": "fill", "is_interactive": true },
+    "AdminEditor.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 1400, "title": "A3 · Editor Publikasi + SEO", "page": "admin", "expand": "fill" },
+    "AdminHalaman.dc.html": { "x": 0, "y": 1640, "w": 1440, "h": 1150, "title": "A4 · Halaman & Section", "page": "admin", "expand": "fill" },
+    "AdminBeranda.dc.html": { "x": 1520, "y": 1640, "w": 1440, "h": 1400, "title": "A5 · Kelola Beranda", "page": "admin", "expand": "fill" },
+    "AdminMedia.dc.html": { "x": 3040, "y": 1640, "w": 1440, "h": 1150, "title": "A6 · Pustaka Media", "page": "admin", "expand": "fill" },
+    "AdminTaksonomi.dc.html": { "x": 4560, "y": 1640, "w": 1440, "h": 1150, "title": "A7 · Kategori & Tag", "page": "admin", "expand": "fill" },
+    "AdminEReport.dc.html": { "x": 0, "y": 3280, "w": 1440, "h": 1100, "title": "A8 · e-Report & Audit", "page": "admin", "expand": "fill" },
+    "AdminSeo.dc.html": { "x": 1520, "y": 3280, "w": 1440, "h": 1150, "title": "A9 · SEO & Redirect", "page": "admin", "expand": "fill" },
+    "AdminPengguna.dc.html": { "x": 3040, "y": 3280, "w": 1440, "h": 1100, "title": "A10 · Pengguna & Peran", "page": "admin", "expand": "fill" },
+    "AdminPengaturan.dc.html": { "x": 4560, "y": 3280, "w": 1440, "h": 1250, "title": "A11 · Pengaturan Situs", "page": "admin", "expand": "fill" },
+    "AdminLog.dc.html": { "x": 0, "y": 4840, "w": 1440, "h": 1050, "title": "A12 · Log Aktivitas", "page": "admin", "expand": "fill" },
+    "AdminSidebar.dc.html": { "x": 1520, "y": 4840, "w": 264, "h": 1050, "title": "Komponen · Sidebar Admin", "page": "admin" }
+  },
+  "order": [
+    "Main.dc.html", "Post.dc.html", "Publikasi.dc.html", "Pilar.dc.html", "Profil.dc.html", "Audit.dc.html",
+    "Legalitas.dc.html", "Kemitraan.dc.html", "EReport.dc.html", "Arsip.dc.html", "NotFound.dc.html",
+    "MobileBeranda.dc.html", "MobileMenu.dc.html", "MobilePost.dc.html", "MobilePublikasi.dc.html",
+    "SiteHeader.dc.html", "SiteFooter.dc.html",
+    "AdminLogin.dc.html", "AdminDashboard.dc.html", "AdminPublikasi.dc.html", "AdminEditor.dc.html",
+    "AdminHalaman.dc.html", "AdminBeranda.dc.html", "AdminMedia.dc.html", "AdminTaksonomi.dc.html",
+    "AdminEReport.dc.html", "AdminSeo.dc.html", "AdminPengguna.dc.html", "AdminPengaturan.dc.html",
+    "AdminLog.dc.html", "AdminSidebar.dc.html"
+  ],
+  "notes": {
+    "webDesktop": { "x": 0, "y": -300, "text": "Website — Desktop 1440 (replikasi WordPress + perbaikan SEO/aksesibilitas)", "kind": "title1", "maxW": 16640, "page": "web" },
+    "webMobile": { "x": 0, "y": 5340, "text": "Website — Mobile 390 & komponen bersama", "kind": "title1", "maxW": 3400, "page": "web" },
+    "webNote": { "x": 3480, "y": 5640, "w": 420, "text": "Catatan kurasi:\n• Gambar = placeholder berlabel (aset asli menyusul setelah ekspor WordPress).\n• Warna abu footer digelapkan (#A5A49A → #77756B) agar kontras teks ≥4.5:1.\n• Tiap halaman kini punya satu H1.\n• Tinggalkan komentar langsung di artboard untuk revisi.", "page": "web", "fill": "teal" },
+    "adminTitle": { "x": 0, "y": -300, "text": "Admin CMS — kelola konten tanpa WordPress", "kind": "title1", "maxW": 6000, "page": "admin" },
+    "adminNote": { "x": 1880, "y": 4840, "w": 460, "text": "Catatan kurasi Admin:\n• Peran: Super Admin, Editor, Penulis, Kontributor, Viewer.\n• Alur konten: Draf → Review → Terjadwal → Terbit.\n• Semua perubahan tercatat di Log Aktivitas.\n• Desain ini acuan bila nanti ditambahkan CMS (situs saat ini memakai konten statis hasil ekspor).", "page": "admin", "fill": "orange" }
+  },
+  "designSystems": []
+}
