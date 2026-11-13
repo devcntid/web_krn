@@ -28,6 +28,8 @@ const nextConfig: NextConfig = {
     localPatterns: [{ pathname: "/wp-content/uploads/**" }],
     remotePatterns: [
       { protocol: "https", hostname: "i.ytimg.com" },
+      // Gambar baru (setelah migrasi) disimpan di Vercel Blob
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
       ...(mediaHost
         ? [{ protocol: mediaHost.protocol.replace(":", "") as "https" | "http", hostname: mediaHost.hostname, pathname: "/wp-content/uploads/**" }]
         : []),

@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Media hasil migrasi disajikan dari media.relawannusantara.org (docs/MEDIA.md)
+/public/wp-content/

@@ -9,9 +9,11 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "export": "tsx scripts/export-wp.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "media:upload": "tsx scripts/upload-media.ts"
   },
   "dependencies": {
+    "@vercel/blob": "^2.9.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^1.72.0",
