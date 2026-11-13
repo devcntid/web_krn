@@ -1,0 +1,125 @@
+{
+  "id": 260503,
+  "slug": "x-6",
+  "title": "x",
+  "date": "2020-01-01T00:00:00",
+  "modified": "2026-07-28T21:16:11",
+  "excerpt": "Fakta Kelaparan di Sudan yang Jarang Dibahas Media, Padahal Jutaan Nyawa Sedang Terancam",
+  "featuredImage": null,
+  "categories": [
+    {
+      "slug": "yatim-dhuafa-lansia",
+      "name": "Sosial"
+    }
+  ],
+  "tags": [],
+  "html": "<blockquote><p><a href=\"/fakta-kelaparan-di-sudan-yang-jarang-dibahas-media-padahal-jutaan-nyawa-sedang-terancam/\">Fakta Kelaparan di Sudan yang Jarang Dibahas Media, Padahal Jutaan Nyawa Sedang Terancam</a></p></blockquote>\n<p><iframe title=\"“Fakta Kelaparan di Sudan yang Jarang Dibahas Media, Padahal Jutaan Nyawa Sedang Terancam” — Relawan Nusantara\"></iframe></p>",
+  "seo": {
+    "title": "x - Relawan Nusantara",
+    "description": "Fakta Kelaparan di Sudan yang Jarang Dibahas Media, Padahal Jutaan Nyawa Sedang Terancam",
+    "canonical": "/x-6/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "x - Relawan Nusantara",
+    "ogDescription": "Fakta Kelaparan di Sudan yang Jarang Dibahas Media, Padahal Jutaan Nyawa Sedang Terancam",
+    "ogType": "article",
+    "publishedTime": "2020-01-01T00:00:00+07:00",
+    "modifiedTime": "2026-07-28T21:16:11+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/x-6/#webpage",
+            "url": "https://relawannusantara.org/x-6/",
+            "name": "x - Relawan Nusantara",
+            "datePublished": "2020-01-01T00:00:00+07:00",
+            "dateModified": "2026-07-28T21:16:11+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "BlogPosting",
+            "headline": "x - Relawan Nusantara",
+            "datePublished": "2020-01-01T00:00:00+07:00",
+            "dateModified": "2026-07-28T21:16:11+07:00",
+            "articleSection": "Sosial",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "Fakta Kelaparan di Sudan yang Jarang Dibahas Media, Padahal Jutaan Nyawa Sedang Terancam",
+            "name": "x - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/x-6/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/x-6/#webpage"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/x-6/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

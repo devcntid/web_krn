@@ -1,0 +1,335 @@
+[
+  {
+    "id": 98,
+    "slug": "air-bersih",
+    "path": "hewan-lingkungan/air-bersih",
+    "name": "Air Bersih",
+    "description": "",
+    "count": 35,
+    "parent": 21
+  },
+  {
+    "id": 102,
+    "slug": "alat-ibadah",
+    "path": "alat-ibadah",
+    "name": "Alat Ibadah",
+    "description": "",
+    "count": 30,
+    "parent": 0
+  },
+  {
+    "id": 175,
+    "slug": "artikel",
+    "path": "artikel",
+    "name": "Artikel",
+    "description": "",
+    "count": 135,
+    "parent": 0
+  },
+  {
+    "id": 43,
+    "slug": "bencana",
+    "path": "bencana",
+    "name": "Bencana",
+    "description": "",
+    "count": 142,
+    "parent": 0
+  },
+  {
+    "id": 176,
+    "slug": "berita",
+    "path": "berita",
+    "name": "Berita",
+    "description": "",
+    "count": 403,
+    "parent": 0
+  },
+  {
+    "id": 8,
+    "slug": "blog",
+    "path": "blog",
+    "name": "Blog",
+    "description": "",
+    "count": 620,
+    "parent": 0
+  },
+  {
+    "id": 659,
+    "slug": "difabel",
+    "path": "difabel",
+    "name": "Difabel",
+    "description": "",
+    "count": 3,
+    "parent": 0
+  },
+  {
+    "id": 437,
+    "slug": "ekonomi",
+    "path": "ekonomi",
+    "name": "Ekonomi",
+    "description": "",
+    "count": 1,
+    "parent": 0
+  },
+  {
+    "id": 209,
+    "slug": "fidyah",
+    "path": "ramadhan/fidyah",
+    "name": "Fidyah",
+    "description": "",
+    "count": 11,
+    "parent": 137
+  },
+  {
+    "id": 23,
+    "slug": "rumah-jembatan-sumur-bor",
+    "path": "rumah-jembatan-sumur-bor",
+    "name": "infrastruktur",
+    "description": "",
+    "count": 9,
+    "parent": 0
+  },
+  {
+    "id": 687,
+    "slug": "inspirasi",
+    "path": "inspirasi",
+    "name": "Inspirasi",
+    "description": "",
+    "count": 21,
+    "parent": 0
+  },
+  {
+    "id": 1844,
+    "slug": "jaga-satwa",
+    "path": "jaga-satwa",
+    "name": "Jaga Satwa",
+    "description": "",
+    "count": 2,
+    "parent": 0
+  },
+  {
+    "id": 157,
+    "slug": "jembatan",
+    "path": "jembatan",
+    "name": "Jembatan",
+    "description": "",
+    "count": 1,
+    "parent": 0
+  },
+  {
+    "id": 158,
+    "slug": "jembatan-rumah-jembatan-sumur-bor",
+    "path": "rumah-jembatan-sumur-bor/jembatan-rumah-jembatan-sumur-bor",
+    "name": "Jembatan",
+    "description": "",
+    "count": 1,
+    "parent": 23
+  },
+  {
+    "id": 1841,
+    "slug": "karhutla",
+    "path": "karhutla",
+    "name": "Karhutla",
+    "description": "",
+    "count": 6,
+    "parent": 0
+  },
+  {
+    "id": 1732,
+    "slug": "kebencanaan",
+    "path": "kebencanaan",
+    "name": "Kebencanaan",
+    "description": "",
+    "count": 28,
+    "parent": 0
+  },
+  {
+    "id": 78,
+    "slug": "kemanusiaan",
+    "path": "kemanusiaan",
+    "name": "kemanusiaan",
+    "description": "",
+    "count": 60,
+    "parent": 0
+  },
+  {
+    "id": 492,
+    "slug": "kemitraan",
+    "path": "kemitraan",
+    "name": "Kemitraan",
+    "description": "",
+    "count": 59,
+    "parent": 0
+  },
+  {
+    "id": 22,
+    "slug": "kesehatan",
+    "path": "kesehatan",
+    "name": "Kesehatan",
+    "description": "",
+    "count": 9,
+    "parent": 0
+  },
+  {
+    "id": 699,
+    "slug": "komunitas",
+    "path": "komunitas",
+    "name": "Komunitas",
+    "description": "",
+    "count": 6,
+    "parent": 0
+  },
+  {
+    "id": 117,
+    "slug": "kurban",
+    "path": "kurban",
+    "name": "kurban",
+    "description": "",
+    "count": 47,
+    "parent": 0
+  },
+  {
+    "id": 21,
+    "slug": "hewan-lingkungan",
+    "path": "hewan-lingkungan",
+    "name": "Lingkungan",
+    "description": "",
+    "count": 29,
+    "parent": 0
+  },
+  {
+    "id": 101,
+    "slug": "masjid",
+    "path": "rumah-jembatan-sumur-bor/masjid",
+    "name": "Masjid",
+    "description": "",
+    "count": 18,
+    "parent": 23
+  },
+  {
+    "id": 72,
+    "slug": "news",
+    "path": "news",
+    "name": "News",
+    "description": "",
+    "count": 4,
+    "parent": 0
+  },
+  {
+    "id": 213,
+    "slug": "paket-buka-puasa",
+    "path": "ramadhan/paket-buka-puasa",
+    "name": "Paket Buka Puasa",
+    "description": "",
+    "count": 4,
+    "parent": 137
+  },
+  {
+    "id": 79,
+    "slug": "palestina",
+    "path": "palestina",
+    "name": "Palestina",
+    "description": "",
+    "count": 74,
+    "parent": 0
+  },
+  {
+    "id": 443,
+    "slug": "pangan",
+    "path": "pangan",
+    "name": "Pangan",
+    "description": "",
+    "count": 49,
+    "parent": 0
+  },
+  {
+    "id": 24,
+    "slug": "sekolah-madrasah",
+    "path": "sekolah-madrasah",
+    "name": "Pendidikan",
+    "description": "",
+    "count": 64,
+    "parent": 0
+  },
+  {
+    "id": 1157,
+    "slug": "qurban",
+    "path": "qurban",
+    "name": "Qurban",
+    "description": "",
+    "count": 5,
+    "parent": 0
+  },
+  {
+    "id": 137,
+    "slug": "ramadhan",
+    "path": "ramadhan",
+    "name": "Ramadhan",
+    "description": "",
+    "count": 40,
+    "parent": 0
+  },
+  {
+    "id": 1787,
+    "slug": "relawan",
+    "path": "relawan",
+    "name": "Relawan",
+    "description": "",
+    "count": 0,
+    "parent": 0
+  },
+  {
+    "id": 215,
+    "slug": "sedekah-buka-puasa",
+    "path": "ramadhan/sedekah-buka-puasa",
+    "name": "Sedekah Buka Puasa",
+    "description": "",
+    "count": 10,
+    "parent": 137
+  },
+  {
+    "id": 1130,
+    "slug": "sedekah-daging",
+    "path": "sedekah-daging",
+    "name": "Sedekah Daging",
+    "description": "",
+    "count": 7,
+    "parent": 0
+  },
+  {
+    "id": 1,
+    "slug": "yatim-dhuafa-lansia",
+    "path": "yatim-dhuafa-lansia",
+    "name": "Sosial",
+    "description": "",
+    "count": 87,
+    "parent": 0
+  },
+  {
+    "id": 601,
+    "slug": "sudan",
+    "path": "sudan",
+    "name": "Sudan",
+    "description": "",
+    "count": 7,
+    "parent": 0
+  },
+  {
+    "id": 1538,
+    "slug": "yatim",
+    "path": "yatim",
+    "name": "Yatim",
+    "description": "",
+    "count": 1,
+    "parent": 0
+  },
+  {
+    "id": 256,
+    "slug": "zakat",
+    "path": "zakat",
+    "name": "Zakat",
+    "description": "",
+    "count": 14,
+    "parent": 0
+  }
+]

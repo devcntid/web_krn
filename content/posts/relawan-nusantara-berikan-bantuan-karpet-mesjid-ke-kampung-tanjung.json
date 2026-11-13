@@ -1,0 +1,162 @@
+{
+  "id": 253381,
+  "slug": "relawan-nusantara-berikan-bantuan-karpet-mesjid-ke-kampung-tanjung",
+  "title": "Relawan Nusantara Berikan Bantuan Karpet Mesjid ke Kampung Tanjung",
+  "date": "2024-08-27T07:59:31",
+  "modified": "2024-08-27T08:00:04",
+  "excerpt": "Pada 15 Juni 2024, Relawan Nusantara menyalurkan karpet mesjid ke Mesjid At-Taufiq, Kampung Tanjung, Cianjur, sebagai bagian dari program peningkatan kualitas sarana ibadah di pedesaan. Bantuan ini diharapkan dapat meningkatkan kenyamanan dan kekhusyukan warga dalam beribadah. Salah seorang pengurus masjid mengungkapkan rasa syukur atas karpet baru tersebut, yang memungkinkan pelaksanaan ibadah dengan lebih tenang. Relawan Nusantara berharap dukungan dari berbagai pihak terus meningkat, demi membantu lebih banyak daerah yang membutuhkan.",
+  "featuredImage": {
+    "src": "/wp-content/uploads/2024/08/WhatsApp-Image-2024-06-24-at-10.06.54_f46f498d.jpg",
+    "width": 1280,
+    "height": 960,
+    "alt": "Relawan Nusantara Berikan Bantuan Karpet Mesjid ke Kampung Tanjung"
+  },
+  "categories": [
+    {
+      "slug": "alat-ibadah",
+      "name": "Alat Ibadah"
+    },
+    {
+      "slug": "blog",
+      "name": "Blog"
+    },
+    {
+      "slug": "masjid",
+      "name": "Masjid"
+    }
+  ],
+  "tags": [
+    {
+      "slug": "bantuan-karpet-masjid",
+      "name": "bantuan karpet masjid"
+    },
+    {
+      "slug": "relawan-nusantara",
+      "name": "Relawan Nusantara"
+    }
+  ],
+  "html": "",
+  "seo": {
+    "title": "Relawan Nusantara Berikan Bantuan Karpet Mesjid ke Kampung Tanjung - Relawan Nusantara",
+    "description": "Pada 15 Juni 2024, Relawan Nusantara menyalurkan karpet mesjid ke Mesjid At-Taufiq, Kampung Tanjung, Cianjur, sebagai bagian dari program peningkatan kualitas sarana ibadah di pedesaan. Bantuan ini diharapkan dapat meningkatkan kenyamanan dan kekhusyukan warga dalam beribadah. Salah seorang pengurus masjid mengungkapkan rasa syukur atas karpet baru tersebut, yang memungkinkan pelaksanaan ibadah dengan lebih tenang. Relawan Nusantara berharap dukungan dari berbagai pihak terus meningkat, demi membantu lebih banyak daerah yang membutuhkan.",
+    "canonical": "/relawan-nusantara-berikan-bantuan-karpet-mesjid-ke-kampung-tanjung/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Relawan Nusantara Berikan Bantuan Karpet Mesjid ke Kampung Tanjung - Relawan Nusantara",
+    "ogDescription": "Pada 15 Juni 2024, Relawan Nusantara menyalurkan karpet mesjid ke Mesjid At-Taufiq, Kampung Tanjung, Cianjur, sebagai bagian dari program peningkatan kualitas sarana ibadah di pedesaan. Bantuan ini diharapkan dapat meningkatkan kenyamanan dan kekhusyukan warga dalam beribadah. Salah seorang pengurus masjid mengungkapkan rasa syukur atas karpet baru tersebut, yang memungkinkan pelaksanaan ibadah dengan lebih tenang. Relawan Nusantara berharap dukungan dari berbagai pihak terus meningkat, demi membantu lebih banyak daerah yang membutuhkan.",
+    "ogImage": "/wp-content/uploads/2024/08/WhatsApp-Image-2024-06-24-at-10.06.54_f46f498d.jpg",
+    "ogType": "article",
+    "publishedTime": "2024-08-27T07:59:31+07:00",
+    "modifiedTime": "2024-08-27T08:00:04+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://relawannusantara.org/wp-content/uploads/2024/08/WhatsApp-Image-2024-06-24-at-10.06.54_f46f498d.jpg",
+            "url": "https://relawannusantara.org/wp-content/uploads/2024/08/WhatsApp-Image-2024-06-24-at-10.06.54_f46f498d.jpg",
+            "width": "1280",
+            "height": "960",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/relawan-nusantara-berikan-bantuan-karpet-mesjid-ke-kampung-tanjung/#webpage",
+            "url": "https://relawannusantara.org/relawan-nusantara-berikan-bantuan-karpet-mesjid-ke-kampung-tanjung/",
+            "name": "Relawan Nusantara Berikan Bantuan Karpet Mesjid ke Kampung Tanjung - Relawan Nusantara",
+            "datePublished": "2024-08-27T07:59:31+07:00",
+            "dateModified": "2024-08-27T08:00:04+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2024/08/WhatsApp-Image-2024-06-24-at-10.06.54_f46f498d.jpg"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "BlogPosting",
+            "headline": "Relawan Nusantara Berikan Bantuan Karpet Mesjid ke Kampung Tanjung - Relawan Nusantara",
+            "datePublished": "2024-08-27T07:59:31+07:00",
+            "dateModified": "2024-08-27T08:00:04+07:00",
+            "articleSection": "Alat Ibadah, Blog, Masjid",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "Pada 15 Juni 2024, Relawan Nusantara menyalurkan karpet mesjid ke Mesjid At-Taufiq, Kampung Tanjung, Cianjur, sebagai bagian dari program peningkatan kualitas sarana ibadah di pedesaan. Bantuan ini diharapkan dapat meningkatkan kenyamanan dan kekhusyukan warga dalam beribadah. Salah seorang pengurus masjid mengungkapkan rasa syukur atas karpet baru tersebut, yang memungkinkan pelaksanaan ibadah dengan lebih tenang. Relawan Nusantara berharap dukungan dari berbagai pihak terus meningkat, demi membantu lebih banyak daerah yang membutuhkan.",
+            "name": "Relawan Nusantara Berikan Bantuan Karpet Mesjid ke Kampung Tanjung - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/relawan-nusantara-berikan-bantuan-karpet-mesjid-ke-kampung-tanjung/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/relawan-nusantara-berikan-bantuan-karpet-mesjid-ke-kampung-tanjung/#webpage"
+            },
+            "image": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2024/08/WhatsApp-Image-2024-06-24-at-10.06.54_f46f498d.jpg"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/relawan-nusantara-berikan-bantuan-karpet-mesjid-ke-kampung-tanjung/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

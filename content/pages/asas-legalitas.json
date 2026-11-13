@@ -1,0 +1,130 @@
+{
+  "id": 259947,
+  "path": "asas-legalitas",
+  "slug": "asas-legalitas",
+  "title": "Asas Legalitas",
+  "modified": "2026-08-20T13:34:44",
+  "html": "<h2>Asas Legalitas</h2>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tRelawan Nusantara memahami dan mematuhi segala peraturan yang ada di negara Republik Indonesia sehingga segala syarat perizinan kami perhatikan dan penuhi.\n\n<ol>\n<li>Akta Pendirian dan Anggaran Dasar tanggal 22 Mel 2014 nomor 12 yang dibuat di hadapan Notaris Muhammad Juania, Sarjana Hukum, Magister Kenotariatan.</li>\n<li>SK Pendirian Yayasan Komite Relawan Nusantara: AHU-01733.50.10.2014 yang dibuat pada tanggal 22 Mei 2014.</li>\n<li>Akta Perubahan Terakhir (Akta ke-6) Pernyataan Keputusan Rapat Pembina tanggal 31 Agustus 2022 nomor 07 yang dibuat di hadapan Notaris Yulia Permata Putri, Sarjana Hukum, Magister Kenotarisan.</li>\n<li>SK Kemenkumham Akta Perubahan Yayasan Komite Relawan Nusantara (Akta ke-6): AHU-AH.01.06-0037114 yang dibuat pada tanggal 12 September 2022</li>\n<li>Surat Keterangan Domisili Yayasan Komite Relawan Nusantara No. 255/Um/Kel-Anwet/X/2023</li>\n<li>Yayasan Komite Relawan Nusantara dalam Penetapan terdaftar sebagai Lembaga Kesejahteraan Sosial (LKS) Dinsos Kota Bandung No.TU.01.02/0607-Dinsos/l/2024 dengan jenis pennyelenggaraan Kesos Pelayanan Kesejahteraan Sosial Korban Bencana Alam, Status Lokal, Lingkup Wilayah Kerja Kota Bandung, dengan Tipe C, Masa berlaku 21 Maret 2024 sd. 21 Maret 2025.</li>\n<li>Yayasan Komite Relawan Nusantara dalam Penetapan terdaftar sebagai Lembaga Kesejahteraan Sosial (LKS) Dinsos Provinsi Jawa Barat No.062/118/PPSKS/17/2024, dengan jenis penyelenggaraan Kesos Pelayanan Kesejahteraan Sosial Bagi Fakir Miskin Luar Panti, Status Pusat, Lingkup Wilayah Kerja Provinsi Jawa Barat dengan Tipe C, Masa Berlaku 4 Juni 2024 sd. 4 Juni 2027</li>\n<li>NPWP Yayasan Komite Relawan Nusantara : 66.245.737.3-429.000</li>\n<li>Yayasan Komite Relawan Nusantara terdaftar sebagai Unit Pengumpulan Zakat (UPZ) berdasarkan Surat Keputusan Ketua Badan Amil Zakat Nasional Provinsi Jawa Barat Nomor 21 Tahun 2025</li>\n</ol>",
+  "seo": {
+    "title": "Asas Legalitas - Relawan Nusantara",
+    "description": "Relawan Nusantara memahami dan mematuhi segala peraturan yang ada di negara Republik Indonesia sehingga segala syarat perizinan kami perhatikan dan penuhi.",
+    "canonical": "/asas-legalitas/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Asas Legalitas - Relawan Nusantara",
+    "ogDescription": "Relawan Nusantara memahami dan mematuhi segala peraturan yang ada di negara Republik Indonesia sehingga segala syarat perizinan kami perhatikan dan penuhi.",
+    "ogImage": "/wp-content/uploads/2026/06/Rectangle-7098.jpg",
+    "ogType": "article",
+    "publishedTime": "2026-06-30T15:48:43+07:00",
+    "modifiedTime": "2026-08-20T13:34:44+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://relawannusantara.org/wp-content/uploads/2026/06/Rectangle-7098.jpg",
+            "url": "https://relawannusantara.org/wp-content/uploads/2026/06/Rectangle-7098.jpg",
+            "width": "1440",
+            "height": "661",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/asas-legalitas/#webpage",
+            "url": "https://relawannusantara.org/asas-legalitas/",
+            "name": "Asas Legalitas - Relawan Nusantara",
+            "datePublished": "2026-06-30T15:48:43+07:00",
+            "dateModified": "2026-08-20T13:34:44+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2026/06/Rectangle-7098.jpg"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "Article",
+            "headline": "Asas Legalitas - Relawan Nusantara",
+            "datePublished": "2026-06-30T15:48:43+07:00",
+            "dateModified": "2026-08-20T13:34:44+07:00",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "Relawan Nusantara memahami dan mematuhi segala peraturan yang ada di negara Republik Indonesia sehingga segala syarat perizinan kami perhatikan dan penuhi.",
+            "name": "Asas Legalitas - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/asas-legalitas/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/asas-legalitas/#webpage"
+            },
+            "image": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2026/06/Rectangle-7098.jpg"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/asas-legalitas/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "id": 253670,
+  "slug": "relawan-nusantara-menyalurkan-pakan-untuk-shelter-kucing-whiskerssyndicate",
+  "title": "Relawan Nusantara Menyalurkan Pakan untuk Shelter Kucing WhiskersSyndicate",
+  "date": "2024-11-05T04:04:09",
+  "modified": "2024-11-05T04:04:10",
+  "excerpt": "Relawan Nusantara telah menyalurkan bantuan pakan untuk Shelter Kucing WhiskersSyndicate, sebuah Petshop dan Shelter Kucing yang berdedikasi untuk menyelamatkan dan merawat kucing-kucing terlantar di Bandung dan sekitarnya.",
+  "featuredImage": {
+    "src": "/wp-content/uploads/2024/11/WhatsApp-Image-2024-07-19-at-15.42.59_6f7f7fc7.jpg",
+    "width": 1200,
+    "height": 800,
+    "alt": "Relawan Nusantara Menyalurkan Pakan untuk Shelter Kucing WhiskersSyndicate"
+  },
+  "categories": [
+    {
+      "slug": "hewan-lingkungan",
+      "name": "Lingkungan"
+    },
+    {
+      "slug": "yatim-dhuafa-lansia",
+      "name": "Sosial"
+    }
+  ],
+  "tags": [
+    {
+      "slug": "anabul",
+      "name": "anabul"
+    },
+    {
+      "slug": "berbagi-pakan-kucing",
+      "name": "Berbagi Pakan Kucing"
+    },
+    {
+      "slug": "pakan-kucing",
+      "name": "Pakan Kucing"
+    },
+    {
+      "slug": "perantara-kebaikan",
+      "name": "Perantara Kebaikan"
+    },
+    {
+      "slug": "relawan-nusantara",
+      "name": "Relawan Nusantara"
+    }
+  ],
+  "html": "<p>Bandung, 19 Juli 2024 – Relawan Nusantara telah menyalurkan bantuan pakan untuk Shelter Kucing WhiskersSyndicate, sebuah Petshop dan Shelter Kucing yang berdedikasi untuk menyelamatkan dan merawat kucing-kucing terlantar di Bandung dan sekitarnya.</p>\n\n<p>Pemberian bantuan pakan ini adalah bagian dari program Relawan Nusantara yang berfokus pada kesejahteraan hewan dan dukungan terhadap komunitas-komunitas yang peduli terhadap hewan terlantar. Sebanyak 150 Kucing di rawat di dalam rumah, kucing-kucing ini ada yang berasal dari Pasar, dibuang dan juga ada yang memang menitipkan kepada WhiskersSyndicate.</p>\n\n<p>“Terimakasih kami ucapkan kepada Relawan Nusantara untuk bantuan pakan hewan dan beberapa obat kepada kami sangat bermanfaat karena membantu mengurangi pengeluaran kami dalam perawatan dan juga pemberian makanan tiap hari nya untuk 150 kucing di sini.”</p>\n<p>Dukung terus program berbagi pakan untuk anabul dengan cara klik “Donasi Sekarang”</p>\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t<a href=\"/campaign/bantu-si-belang-dan-kucing-jalanan-lainnya?source=web\" data-button=\"true\">Donasi Sekarang</a>",
+  "seo": {
+    "title": "Relawan Nusantara Menyalurkan Pakan untuk Shelter Kucing WhiskersSyndicate - Relawan Nusantara",
+    "description": "Relawan Nusantara telah menyalurkan bantuan pakan untuk Shelter Kucing WhiskersSyndicate, sebuah Petshop dan Shelter Kucing yang berdedikasi untuk menyelamatkan dan merawat kucing-kucing terlantar di Bandung dan sekitarnya.",
+    "canonical": "/relawan-nusantara-menyalurkan-pakan-untuk-shelter-kucing-whiskerssyndicate/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Relawan Nusantara Menyalurkan Pakan untuk Shelter Kucing WhiskersSyndicate - Relawan Nusantara",
+    "ogDescription": "Relawan Nusantara telah menyalurkan bantuan pakan untuk Shelter Kucing WhiskersSyndicate, sebuah Petshop dan Shelter Kucing yang berdedikasi untuk menyelamatkan dan merawat kucing-kucing terlantar di Bandung dan sekitarnya.",
+    "ogImage": "/wp-content/uploads/2024/11/WhatsApp-Image-2024-07-19-at-15.42.59_6f7f7fc7.jpg",
+    "ogType": "article",
+    "publishedTime": "2024-11-05T04:04:09+07:00",
+    "modifiedTime": "2024-11-05T04:04:10+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://relawannusantara.org/wp-content/uploads/2024/11/WhatsApp-Image-2024-07-19-at-15.42.59_6f7f7fc7.jpg",
+            "url": "https://relawannusantara.org/wp-content/uploads/2024/11/WhatsApp-Image-2024-07-19-at-15.42.59_6f7f7fc7.jpg",
+            "width": "1200",
+            "height": "800",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/relawan-nusantara-menyalurkan-pakan-untuk-shelter-kucing-whiskerssyndicate/#webpage",
+            "url": "https://relawannusantara.org/relawan-nusantara-menyalurkan-pakan-untuk-shelter-kucing-whiskerssyndicate/",
+            "name": "Relawan Nusantara Menyalurkan Pakan untuk Shelter Kucing WhiskersSyndicate - Relawan Nusantara",
+            "datePublished": "2024-11-05T04:04:09+07:00",
+            "dateModified": "2024-11-05T04:04:10+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2024/11/WhatsApp-Image-2024-07-19-at-15.42.59_6f7f7fc7.jpg"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "BlogPosting",
+            "headline": "Relawan Nusantara Menyalurkan Pakan untuk Shelter Kucing WhiskersSyndicate - Relawan Nusantara",
+            "datePublished": "2024-11-05T04:04:09+07:00",
+            "dateModified": "2024-11-05T04:04:10+07:00",
+            "articleSection": "Lingkungan, Sosial",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "Relawan Nusantara telah menyalurkan bantuan pakan untuk Shelter Kucing WhiskersSyndicate, sebuah Petshop dan Shelter Kucing yang berdedikasi untuk menyelamatkan dan merawat kucing-kucing terlantar di Bandung dan sekitarnya.",
+            "name": "Relawan Nusantara Menyalurkan Pakan untuk Shelter Kucing WhiskersSyndicate - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/relawan-nusantara-menyalurkan-pakan-untuk-shelter-kucing-whiskerssyndicate/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/relawan-nusantara-menyalurkan-pakan-untuk-shelter-kucing-whiskerssyndicate/#webpage"
+            },
+            "image": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2024/11/WhatsApp-Image-2024-07-19-at-15.42.59_6f7f7fc7.jpg"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/relawan-nusantara-menyalurkan-pakan-untuk-shelter-kucing-whiskerssyndicate/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "id": 252261,
+  "slug": "penyaluran-sepatu-relawan-nusantara",
+  "title": "Berbagi Sepatu Nusantara bersama Relawan Nusantara",
+  "date": "2023-12-08T02:20:56",
+  "modified": "2023-12-29T04:21:46",
+  "excerpt": "Alhamdulillah hingga saat ini Relawan Nusantara telah menyalurkan sepatu sebanyak 90 untuk anak-anak sekolah yang tersebar di 12 Kabupaten/kota dengan 10 provinsi.",
+  "featuredImage": null,
+  "categories": [
+    {
+      "slug": "blog",
+      "name": "Blog"
+    },
+    {
+      "slug": "sekolah-madrasah",
+      "name": "Pendidikan"
+    },
+    {
+      "slug": "yatim-dhuafa-lansia",
+      "name": "Sosial"
+    }
+  ],
+  "tags": [
+    {
+      "slug": "bantuan-pendidikan",
+      "name": "bantuan pendidikan"
+    },
+    {
+      "slug": "bantuan-sosial",
+      "name": "bantuan sosial"
+    },
+    {
+      "slug": "berbagi-sepatu",
+      "name": "Berbagi Sepatu"
+    },
+    {
+      "slug": "relawan-nusantara",
+      "name": "Relawan Nusantara"
+    },
+    {
+      "slug": "sepatu-nusantara",
+      "name": "Sepatu Nusantara"
+    }
+  ],
+  "html": "<p>Alhamdulillah hingga saat ini Relawan Nusantara telah menyalurkan sepatu sebanyak 90 untuk anak-anak sekolah yang tersebar di 12 Kabupaten/kota dengan 10 provinsi.</p>\n<p>Program distribusi sepatu ini di salurkan kepada adik-adik yang sangat membutuhkan jadi dalam prosesnya ada survey yang di lakukan sebelum implementasi.</p>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<img width=\"1080\" height=\"1080\" src=\"/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-07-at-16.21.24.jpeg\" alt=\"\" loading=\"lazy\" />\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<p>Terimakasih kepada seluruh donatur yang telah mensupport program berbagi sepatu ini yang Alhamdulillah sangat membantu &amp; membuat senyum lebar di adik-adik yang membutuhkan. Semoga diberikan kesehatan dan keberkahan kepada donatur semuanya.</p>\n<p>Terus dukung program berbagi sepatu untuk adik-adik yang membutuhkan terutama di wilayah pedalaman.</p>\n\t\t\t\n\t\t\t\t<a data-button=\"true\">Bantu Wujudkan Mimpi Pendidikan Anak Pelosok</a>",
+  "seo": {
+    "title": "Berbagi Sepatu Nusantara bersama Relawan Nusantara - Relawan Nusantara",
+    "description": "Alhamdulillah hingga saat ini Relawan Nusantara telah menyalurkan sepatu sebanyak 90 untuk anak-anak sekolah yang tersebar di 12 Kabupaten/kota dengan 10 provinsi.",
+    "canonical": "/penyaluran-sepatu-relawan-nusantara/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Berbagi Sepatu Nusantara bersama Relawan Nusantara - Relawan Nusantara",
+    "ogDescription": "Alhamdulillah hingga saat ini Relawan Nusantara telah menyalurkan sepatu sebanyak 90 untuk anak-anak sekolah yang tersebar di 12 Kabupaten/kota dengan 10 provinsi.",
+    "ogImage": "/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-07-at-16.21.49-2.jpeg",
+    "ogType": "article",
+    "publishedTime": "2023-12-08T02:20:56+07:00",
+    "modifiedTime": "2023-12-29T04:21:46+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://relawannusantara.org/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-07-at-16.21.49-2.jpeg",
+            "url": "https://relawannusantara.org/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-07-at-16.21.49-2.jpeg",
+            "width": "1600",
+            "height": "1200",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/penyaluran-sepatu-relawan-nusantara/#webpage",
+            "url": "https://relawannusantara.org/penyaluran-sepatu-relawan-nusantara/",
+            "name": "Berbagi Sepatu Nusantara bersama Relawan Nusantara - Relawan Nusantara",
+            "datePublished": "2023-12-08T02:20:56+07:00",
+            "dateModified": "2023-12-29T04:21:46+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-07-at-16.21.49-2.jpeg"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "BlogPosting",
+            "headline": "Berbagi Sepatu Nusantara bersama Relawan Nusantara - Relawan Nusantara",
+            "datePublished": "2023-12-08T02:20:56+07:00",
+            "dateModified": "2023-12-29T04:21:46+07:00",
+            "articleSection": "Blog, Pendidikan, Sosial",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "Alhamdulillah hingga saat ini Relawan Nusantara telah menyalurkan sepatu sebanyak 90 untuk anak-anak sekolah yang tersebar di 12 Kabupaten/kota dengan 10 provinsi.",
+            "name": "Berbagi Sepatu Nusantara bersama Relawan Nusantara - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/penyaluran-sepatu-relawan-nusantara/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/penyaluran-sepatu-relawan-nusantara/#webpage"
+            },
+            "image": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-07-at-16.21.49-2.jpeg"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/penyaluran-sepatu-relawan-nusantara/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

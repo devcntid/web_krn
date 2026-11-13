@@ -1,0 +1,113 @@
+{
+  "id": 258690,
+  "path": "home-lagi",
+  "slug": "home-lagi",
+  "title": "Home lagi",
+  "modified": "2026-03-06T15:58:52",
+  "html": "<img src=\"/wp-content/uploads/slider/cache/66a4a0bc8355756e99fa8e77900ccaa9/Respon-72-Jam-Tanggap-Darurat.png\" alt=\"\" loading=\"lazy\" /><img src=\"/wp-content/uploads/slider/cache/e6cfa34fca85018f7df029ea6fa96a5c/Page-2.png\" alt=\"\" loading=\"lazy\" /><img src=\"/wp-content/uploads/slider/cache/375b4aca5032fe79972e0b0e863dc28f/Bantu-Kemanusiaan-Sudan.png\" alt=\"\" loading=\"lazy\" /><img src=\"/wp-content/uploads/slider/cache/5292e187abae2c28ba1446a95f61eea1/ORG-2.png\" alt=\"\" loading=\"lazy\" /><img src=\"/wp-content/uploads/slider/cache/a853c89c7edd8d814fea6ecd69f5d8fd/Sedekah-AlQuran-untuk-Sesama-ORG-scaled.png\" alt=\"\" loading=\"lazy\" />                    \n                        Respon 72 Jam Tanggap BencanaRespon Darurat KarhutlaBantu Kemanusiaan SudanMusim Dingin PalestinaAlQuran",
+  "seo": {
+    "title": "Home lagi - Relawan Nusantara",
+    "description": "",
+    "canonical": "/home-lagi/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Home lagi - Relawan Nusantara",
+    "ogType": "article",
+    "publishedTime": "2026-02-26T10:22:21+07:00",
+    "modifiedTime": "2026-03-06T15:58:52+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/home-lagi/#webpage",
+            "url": "https://relawannusantara.org/home-lagi/",
+            "name": "Home lagi - Relawan Nusantara",
+            "datePublished": "2026-02-26T10:22:21+07:00",
+            "dateModified": "2026-03-06T15:58:52+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "Article",
+            "headline": "Home lagi - Relawan Nusantara",
+            "datePublished": "2026-02-26T10:22:21+07:00",
+            "dateModified": "2026-03-06T15:58:52+07:00",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "name": "Home lagi - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/home-lagi/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/home-lagi/#webpage"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/home-lagi/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

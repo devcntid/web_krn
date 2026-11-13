@@ -1,0 +1,162 @@
+{
+  "id": 252787,
+  "slug": "relawan-nusantara-respon-banjir-bima",
+  "title": "Relawan Nusantara Respon Banjir Bima",
+  "date": "2024-03-04T02:13:10",
+  "modified": "2024-03-04T02:17:57",
+  "excerpt": "Bima (10/2) Banjir yang melanda kawasan Bima beberapa hari yg lalu sangat dirasakan oleh masyarakat khususnya di kelurahan Dara Kelurahan Paruga Kota Bima.  Relawan Nusantara menurunkan Relawan untuk merespon dan mendistribusikan bantuan untuk penyintas banjir yang melanda kawasan tersebut.  Sebanyak 80 paket Makanan Siap Saji, Air Mineral serta Hygiene Kit disalurkan untuk penyintas di kelurahan…",
+  "featuredImage": {
+    "src": "/wp-content/uploads/2024/03/WhatsApp-Image-2024-02-12-at-09.37.46_265af601.jpg",
+    "width": 1600,
+    "height": 721,
+    "alt": "Relawan Nusantara Respon Banjir Bima"
+  },
+  "categories": [
+    {
+      "slug": "blog",
+      "name": "Blog"
+    }
+  ],
+  "tags": [
+    {
+      "slug": "banjir-bima",
+      "name": "Banjir Bima"
+    },
+    {
+      "slug": "bantuan-bencana",
+      "name": "Bantuan Bencana"
+    },
+    {
+      "slug": "perantara-kebaikan",
+      "name": "Perantara Kebaikan"
+    },
+    {
+      "slug": "relawan-nusantara",
+      "name": "Relawan Nusantara"
+    }
+  ],
+  "html": "<p>Bima (10/2) Banjir yang melanda kawasan Bima beberapa hari yg lalu sangat dirasakan oleh masyarakat khususnya di kelurahan Dara Kelurahan Paruga Kota Bima. </p>\n<p>Relawan Nusantara menurunkan Relawan untuk merespon dan mendistribusikan bantuan untuk penyintas banjir yang melanda kawasan tersebut. </p>\n<p>Sebanyak 80 paket Makanan Siap Saji, Air Mineral serta Hygiene Kit disalurkan untuk penyintas di kelurahan Dara Kelurahan Paruga Kota Bima. </p>\n<p>Alhamdulillah bantuan dapat tersalurkan langsung kepada para penyintas dan dapat diterima langsung oleh masyarakat. Semoga bantuan ini dapat sedikit membantu masyarakat yg terdampak banjir. Dukung terus program berbagi kebaikan untuk masyarakat yang terdampak bencana. </p>\n<p>Mari bantu para penyintas bencana di nusantara ini melalui link di bawah ini .</p>\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t<a href=\"/campaign/bersama-relawan-nusantara-siaga-bencana\" data-button=\"true\">Bantuan Bencana Nasional</a>",
+  "seo": {
+    "title": "Relawan Nusantara Respon Banjir Bima - Relawan Nusantara",
+    "description": "Bima (10/2) Banjir yang melanda kawasan Bima beberapa hari yg lalu sangat dirasakan oleh masyarakat khususnya di kelurahan Dara Kelurahan Paruga Kota Bima.",
+    "canonical": "/relawan-nusantara-respon-banjir-bima/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Relawan Nusantara Respon Banjir Bima - Relawan Nusantara",
+    "ogDescription": "Bima (10/2) Banjir yang melanda kawasan Bima beberapa hari yg lalu sangat dirasakan oleh masyarakat khususnya di kelurahan Dara Kelurahan Paruga Kota Bima.",
+    "ogImage": "/wp-content/uploads/2024/03/WhatsApp-Image-2024-02-12-at-09.37.46_265af601.jpg",
+    "ogType": "article",
+    "publishedTime": "2024-03-04T02:13:10+07:00",
+    "modifiedTime": "2024-03-04T02:17:57+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://relawannusantara.org/wp-content/uploads/2024/03/WhatsApp-Image-2024-02-12-at-09.37.46_265af601.jpg",
+            "url": "https://relawannusantara.org/wp-content/uploads/2024/03/WhatsApp-Image-2024-02-12-at-09.37.46_265af601.jpg",
+            "width": "1600",
+            "height": "721",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/relawan-nusantara-respon-banjir-bima/#webpage",
+            "url": "https://relawannusantara.org/relawan-nusantara-respon-banjir-bima/",
+            "name": "Relawan Nusantara Respon Banjir Bima - Relawan Nusantara",
+            "datePublished": "2024-03-04T02:13:10+07:00",
+            "dateModified": "2024-03-04T02:17:57+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2024/03/WhatsApp-Image-2024-02-12-at-09.37.46_265af601.jpg"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "BlogPosting",
+            "headline": "Relawan Nusantara Respon Banjir Bima - Relawan Nusantara",
+            "datePublished": "2024-03-04T02:13:10+07:00",
+            "dateModified": "2024-03-04T02:17:57+07:00",
+            "articleSection": "Blog",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "Bima (10/2) Banjir yang melanda kawasan Bima beberapa hari yg lalu sangat dirasakan oleh masyarakat khususnya di kelurahan Dara Kelurahan Paruga Kota Bima. ",
+            "name": "Relawan Nusantara Respon Banjir Bima - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/relawan-nusantara-respon-banjir-bima/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/relawan-nusantara-respon-banjir-bima/#webpage"
+            },
+            "image": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2024/03/WhatsApp-Image-2024-02-12-at-09.37.46_265af601.jpg"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/relawan-nusantara-respon-banjir-bima/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

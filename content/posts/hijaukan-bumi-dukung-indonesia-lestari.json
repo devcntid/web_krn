@@ -1,0 +1,162 @@
+{
+  "id": 252053,
+  "slug": "hijaukan-bumi-dukung-indonesia-lestari",
+  "title": "Hijaukan Bumi, Dukung Indonesia Lestari",
+  "date": "2023-11-30T09:54:46",
+  "modified": "2023-11-30T09:59:34",
+  "excerpt": "140 Relawan turut ikut serta dalam kegiatan Penanaman Mangrove yg diadakan Relawan Nusantara Sebanyak 500 bibit ditanam di Muara Jenggalu, sebelum penanaman Relawan Nusantara mengadakan sosialisasi dan pelatihan mengenai Ekosistem Mangrove kepada seluruh peserta.”Terimakasih untuk kepedulian dan partisipasi untuk penghijauan lingkungan, kami selaku warga sekitar siap untuk menjaga dan akan selalu menyambut kegiatan2 baik seperti…",
+  "featuredImage": {
+    "src": "/wp-content/uploads/2023/11/Penanaman-Mangrove1-1.png",
+    "width": 1080,
+    "height": 1080,
+    "alt": "Hijaukan Bumi, Dukung Indonesia Lestari"
+  },
+  "categories": [
+    {
+      "slug": "hewan-lingkungan",
+      "name": "Lingkungan"
+    }
+  ],
+  "tags": [
+    {
+      "slug": "mangrove",
+      "name": "mangrove"
+    },
+    {
+      "slug": "menanam-pohon",
+      "name": "menanam pohon"
+    },
+    {
+      "slug": "penghijauan",
+      "name": "penghijauan"
+    },
+    {
+      "slug": "relawannusantara",
+      "name": "relawannusantara"
+    }
+  ],
+  "html": "<img width=\"1080\" height=\"1080\" src=\"/wp-content/uploads/2023/11/Penanaman-Mangrove-2-1.png\" alt=\"\" loading=\"lazy\" />\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t<p>140 Relawan turut ikut serta dalam kegiatan Penanaman Mangrove yg diadakan Relawan Nusantara</p>\n<p>Sebanyak 500 bibit ditanam di Muara Jenggalu, sebelum penanaman Relawan Nusantara mengadakan sosialisasi dan pelatihan mengenai Ekosistem Mangrove kepada seluruh peserta.</p>\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t<img width=\"1080\" height=\"1080\" src=\"/wp-content/uploads/2023/11/Penanaman-Mangrove-3-1.png\" alt=\"\" loading=\"lazy\" />\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t<p>“Terimakasih untuk kepedulian dan partisipasi untuk penghijauan lingkungan, kami selaku warga sekitar siap untuk menjaga dan akan selalu menyambut kegiatan2 baik seperti ini” pesan pak Wahyudi selaku ketua RT Desa Jenggalu.</p>\n<p>Mari dukung terus program Penanaman Pohon diseluruh Indonesia Bersama dengan Relawan Nusantara.</p>",
+  "seo": {
+    "title": "Hijaukan Bumi, Dukung Indonesia Lestari - Relawan Nusantara",
+    "description": "140 Relawan turut ikut serta dalam kegiatan Penanaman Mangrove yg diadakan Relawan Nusantara",
+    "canonical": "/hijaukan-bumi-dukung-indonesia-lestari/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Hijaukan Bumi, Dukung Indonesia Lestari - Relawan Nusantara",
+    "ogDescription": "140 Relawan turut ikut serta dalam kegiatan Penanaman Mangrove yg diadakan Relawan Nusantara",
+    "ogImage": "/wp-content/uploads/2023/11/Penanaman-Mangrove1-1.png",
+    "ogType": "article",
+    "publishedTime": "2023-11-30T09:54:46+07:00",
+    "modifiedTime": "2023-11-30T09:59:34+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://relawannusantara.org/wp-content/uploads/2023/11/Penanaman-Mangrove1-1.png",
+            "url": "https://relawannusantara.org/wp-content/uploads/2023/11/Penanaman-Mangrove1-1.png",
+            "width": "1080",
+            "height": "1080",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/hijaukan-bumi-dukung-indonesia-lestari/#webpage",
+            "url": "https://relawannusantara.org/hijaukan-bumi-dukung-indonesia-lestari/",
+            "name": "Hijaukan Bumi, Dukung Indonesia Lestari - Relawan Nusantara",
+            "datePublished": "2023-11-30T09:54:46+07:00",
+            "dateModified": "2023-11-30T09:59:34+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2023/11/Penanaman-Mangrove1-1.png"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "BlogPosting",
+            "headline": "Hijaukan Bumi, Dukung Indonesia Lestari - Relawan Nusantara",
+            "datePublished": "2023-11-30T09:54:46+07:00",
+            "dateModified": "2023-11-30T09:59:34+07:00",
+            "articleSection": "Lingkungan",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "140 Relawan turut ikut serta dalam kegiatan Penanaman Mangrove yg diadakan Relawan Nusantara",
+            "name": "Hijaukan Bumi, Dukung Indonesia Lestari - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/hijaukan-bumi-dukung-indonesia-lestari/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/hijaukan-bumi-dukung-indonesia-lestari/#webpage"
+            },
+            "image": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2023/11/Penanaman-Mangrove1-1.png"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/hijaukan-bumi-dukung-indonesia-lestari/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

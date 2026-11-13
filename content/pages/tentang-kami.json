@@ -1,0 +1,115 @@
+{
+  "id": 181,
+  "path": "tentang-kami",
+  "slug": "tentang-kami",
+  "title": "Tentang Kami",
+  "modified": "2025-03-29T22:11:25",
+  "html": "<img loading=\"lazy\" width=\"600\" height=\"400\" src=\"/wp-content/uploads/2024/01/relawan.jpg\" alt=\"\" />\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<h3><strong>Relawan Nusantara</strong></h3>\n<p>Relawan Nusantara adalah lembaga kemanusiaan yang hadir sebagai <strong>perantara kebaikan</strong>, memberikan manfaat dan dampak positif bagi masyarakat. Kami berkomitmen untuk membangun pribadi yang tangguh, kreatif, inovatif, dan berjiwa sosial tinggi yang mampu berkontribusi secara nyata bagi lingkungan sekitarnya.</p>\n<p>Dengan semangat pengabdian, Relawan Nusantara bergerak untuk menwujudkan kebahagiaan masyarakat Indonesia dan dunia melalui aksi nyata yang penuh kebermanfaatan.</p>\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<img loading=\"lazy\" width=\"600\" height=\"400\" src=\"/wp-content/uploads/2024/01/air.jpg\" alt=\"\" />\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<h3>Visi</h3>\n<p> “Lembaga kemanusiaan yang amanah dan profesional berbasis kedermawanan demi hadirkan kebaikan bagi semesta”</p>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<h3>Misi</h3>\n<ul>\n<li>Mengokohkan pengelolaan lembaga dengan semangat agility dan berdampak global.</li>\n<li>Mengembangkan kolaborasi kemitraan, jaringan kemanusiaan, dan partisipasi masyarakat.</li>\n<li>Mendayagunakan sumber daya dan program unggulan yang bermanfaat bagi kemanusiaan.</li>\n</ul>",
+  "seo": {
+    "title": "Tentang Kami - Relawan Nusantara",
+    "description": "Relawan Nusantara adalah lembaga kemanusiaan yang hadir sebagai perantara kebaikan, memberikan manfaat dan dampak positif bagi masyarakat. Kami berkomitmen",
+    "canonical": "/tentang-kami/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Tentang Kami - Relawan Nusantara",
+    "ogDescription": "Relawan Nusantara adalah lembaga kemanusiaan yang hadir sebagai perantara kebaikan, memberikan manfaat dan dampak positif bagi masyarakat. Kami berkomitmen",
+    "ogType": "article",
+    "publishedTime": "2023-07-27T09:30:12+07:00",
+    "modifiedTime": "2025-03-29T22:11:25+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/tentang-kami/#webpage",
+            "url": "https://relawannusantara.org/tentang-kami/",
+            "name": "Tentang Kami - Relawan Nusantara",
+            "datePublished": "2023-07-27T09:30:12+07:00",
+            "dateModified": "2025-03-29T22:11:25+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/relawan/",
+            "name": "relawan",
+            "url": "https://relawannusantara.org/author/relawan/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/5cc0d976c043d963aae15654db2cbb9fffe894457e6feba5b935230add799d9a?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org"
+            ]
+          },
+          {
+            "@type": "Article",
+            "headline": "Tentang Kami - Relawan Nusantara",
+            "datePublished": "2023-07-27T09:30:12+07:00",
+            "dateModified": "2025-03-29T22:11:25+07:00",
+            "author": {
+              "@id": "https://relawannusantara.org/author/relawan/",
+              "name": "relawan"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "Relawan Nusantara adalah lembaga kemanusiaan yang hadir sebagai perantara kebaikan, memberikan manfaat dan dampak positif bagi masyarakat. Kami berkomitmen",
+            "name": "Tentang Kami - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/tentang-kami/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/tentang-kami/#webpage"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/tentang-kami/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

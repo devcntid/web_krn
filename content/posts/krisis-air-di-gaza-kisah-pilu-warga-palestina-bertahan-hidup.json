@@ -1,0 +1,362 @@
+{
+  "id": 260001,
+  "slug": "krisis-air-di-gaza-kisah-pilu-warga-palestina-bertahan-hidup",
+  "title": "Krisis Air di Gaza: Kisah Pilu Warga Palestina Bertahan Hidup",
+  "date": "2026-07-02T10:13:32",
+  "modified": "2026-07-02T10:13:43",
+  "excerpt": "Bagaimana warga Palestina mendapatkan air bersih di tengah krisis? Simak fakta menyentuh tentang perjuangan mereka dan bagaimana kita bisa menjadi bagian dari harapan.",
+  "featuredImage": {
+    "src": "/wp-content/uploads/2026/07/Artikel-Krisis-Air-Palestina-scaled.jpg",
+    "width": 2560,
+    "height": 1441,
+    "alt": "Krisis Air di Gaza: Kisah Pilu Warga Palestina Bertahan Hidup"
+  },
+  "categories": [
+    {
+      "slug": "artikel",
+      "name": "Artikel"
+    },
+    {
+      "slug": "air-bersih",
+      "name": "Air Bersih"
+    },
+    {
+      "slug": "blog",
+      "name": "Blog"
+    },
+    {
+      "slug": "palestina",
+      "name": "Palestina"
+    }
+  ],
+  "tags": [
+    {
+      "slug": "air",
+      "name": "air"
+    },
+    {
+      "slug": "air-bersih",
+      "name": "Air Bersih"
+    },
+    {
+      "slug": "air-bersih-untuk-gaza",
+      "name": "air bersih untuk gaza"
+    },
+    {
+      "slug": "air-dan-pangan",
+      "name": "air dan pangan"
+    },
+    {
+      "slug": "airbersih",
+      "name": "airbersih"
+    },
+    {
+      "slug": "bantuan-air-bersih",
+      "name": "Bantuan Air Bersih"
+    },
+    {
+      "slug": "bantuan-air-palestina",
+      "name": "bantuan air palestina"
+    },
+    {
+      "slug": "bantuan-makanan-palestina",
+      "name": "bantuan makanan palestina"
+    },
+    {
+      "slug": "bantuan-makanan-untuk-palestina",
+      "name": "bantuan makanan untuk palestina"
+    },
+    {
+      "slug": "bantuan-palestina",
+      "name": "bantuan palestina"
+    },
+    {
+      "slug": "bantuan-sumur-bor-palestina",
+      "name": "bantuan sumur bor palestina"
+    },
+    {
+      "slug": "bantuan-untuk-palestina",
+      "name": "bantuan untuk palestina"
+    },
+    {
+      "slug": "bantuanpalestina",
+      "name": "bantuanpalestina"
+    },
+    {
+      "slug": "berita-palestina",
+      "name": "berita palestina"
+    },
+    {
+      "slug": "cara-donasi-ke-palestina",
+      "name": "cara donasi ke palestina"
+    },
+    {
+      "slug": "donasi-ke-palestina",
+      "name": "donasi ke palestina"
+    },
+    {
+      "slug": "donasi-palestina-resmi",
+      "name": "donasi palestina resmi"
+    },
+    {
+      "slug": "donasi-palestina-terpercaya",
+      "name": "donasi palestina terpercaya"
+    },
+    {
+      "slug": "donasi-untuk-palestina",
+      "name": "donasi untuk palestina"
+    },
+    {
+      "slug": "donasi-untuk-palestina-terpercaya",
+      "name": "donasi untuk palestina terpercaya"
+    },
+    {
+      "slug": "gaza",
+      "name": "gaza"
+    },
+    {
+      "slug": "kelaparan-palestina",
+      "name": "kelaparan palestina"
+    },
+    {
+      "slug": "krisis-air",
+      "name": "krisis air"
+    },
+    {
+      "slug": "link-donasi-palestina",
+      "name": "link donasi palestina"
+    },
+    {
+      "slug": "luaskan-manfaat",
+      "name": "Luaskan Manfaat"
+    },
+    {
+      "slug": "makanan-palestina",
+      "name": "makanan palestina"
+    },
+    {
+      "slug": "palestina",
+      "name": "palestina"
+    },
+    {
+      "slug": "palestina-hari-ini",
+      "name": "palestina hari ini"
+    },
+    {
+      "slug": "palestina-sekarang",
+      "name": "palestina sekarang"
+    },
+    {
+      "slug": "palestine",
+      "name": "palestine"
+    },
+    {
+      "slug": "pangan-palestina",
+      "name": "pangan palestina"
+    },
+    {
+      "slug": "penyaluran-air-bersih",
+      "name": "Penyaluran air bersih"
+    },
+    {
+      "slug": "penyaluran-bantuan-palestina",
+      "name": "penyaluran bantuan Palestina"
+    },
+    {
+      "slug": "penyaluran-palestina",
+      "name": "penyaluran palestina"
+    },
+    {
+      "slug": "perantara-kebaikan",
+      "name": "Perantara Kebaikan"
+    },
+    {
+      "slug": "relawan",
+      "name": "relawan"
+    },
+    {
+      "slug": "relawan-indonesia",
+      "name": "relawan indonesia"
+    },
+    {
+      "slug": "relawan-nusantara",
+      "name": "Relawan Nusantara"
+    },
+    {
+      "slug": "relawan-nusantara-palestina",
+      "name": "relawan nusantara palestina"
+    },
+    {
+      "slug": "relawannusantara",
+      "name": "relawannusantara"
+    },
+    {
+      "slug": "salurkan-air-bersih",
+      "name": "salurkan air bersih"
+    },
+    {
+      "slug": "sedekah",
+      "name": "sedekah"
+    },
+    {
+      "slug": "sedekah-air",
+      "name": "sedekah air"
+    },
+    {
+      "slug": "sedekah-air-bersih",
+      "name": "sedekah air bersih"
+    },
+    {
+      "slug": "sedekah-air-minum",
+      "name": "sedekah air minum"
+    },
+    {
+      "slug": "sedekah-air-palestina",
+      "name": "sedekah air palestina"
+    },
+    {
+      "slug": "sedekah-palestina",
+      "name": "sedekah palestina"
+    },
+    {
+      "slug": "sumur-bor-palestina",
+      "name": "sumur bor palestina"
+    },
+    {
+      "slug": "sumur-palestina",
+      "name": "sumur palestina"
+    },
+    {
+      "slug": "tangki-air",
+      "name": "tangki air"
+    },
+    {
+      "slug": "torn-air",
+      "name": "torn air"
+    }
+  ],
+  "html": "<p>Air adalah kebutuhan paling mendasar bagi setiap makhluk hidup. Allah SWT berfirman mengenai pentingnya air dalam kehidupan:</p>\n<p><i>“Dan Kami ciptakan dari air segala sesuatu yang hidup. Maka mengapa mereka tidak juga beriman?”</i> <b>(QS. Al-Anbiya: 30)</b></p>\n<p>Di rumah, kita bisa dengan mudah membuka keran dan air langsung mengalir. Kita menggunakannya untuk bersuci, minum, memasak, mandi, hingga mencuci tanpa banyak berpikir. Namun, bagi jutaan warga Palestina, terutama di Jalur Gaza, mendapatkan satu jerigen air bersih adalah perjuangan yang menguras tenaga sekaligus mempertaruhkan keselamatan.</p>\n<p>Di tengah konflik yang berkepanjangan, kerusakan infrastruktur, serta terbatasnya pasokan listrik dan bahan bakar, air bersih berubah menjadi sesuatu yang sangat langka. Banyak keluarga harus berjalan jauh setiap hari hanya untuk mendapatkan beberapa liter air yang belum tentu layak diminum.</p>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<h2>Mengapa Palestina Mengalami Krisis Air Bersih?</h2>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<p>Krisis air di Palestina sebenarnya bukan persoalan baru. Bahkan sebelum konflik yang semakin meluas, Jalur Gaza telah menghadapi keterbatasan sumber air bersih selama bertahun-tahun.</p>\n<p>Sebagian besar kebutuhan air berasal dari akuifer pesisir yang kini mengalami eksploitasi berlebihan. Akibatnya, air tanah  tercampur air laut dan limbah sehingga kualitasnya menurun drastis. <b>UNICEF</b> menyebut sebagian besar air dari akuifer tersebut tidak layak untuk dikonsumsi manusia tanpa melalui proses pengolahan.</p>\n<p>Situasi semakin memburuk ketika konflik menyebabkan banyak sumur rusak, jaringan pipa hancur, instalasi pengolahan air berhenti beroperasi, hingga pasokan listrik dan bahan bakar yang dibutuhkan untuk memompa maupun mengolah air menjadi sangat terbatas. Akibatnya, jutaan warga harus hidup dengan akses air yang jauh dibawah kebutuhan minimum.</p>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<h2>Bagaimana Warga Palestina Mendapatkan Air Bersih?</h2>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<p>Di tengah kondisi yang serba sulit, warga Palestina terus berupaya mendapatkan air dengan berbagai cara. Sayangnya, hampir semua cara tersebut membutuhkan perjuangan yang tidak mudah.</p>\n<p>Sebagian keluarga mengantri berjam-jam di titik distribusi air yang disediakan lembaga kemanusiaan. Ketika truk tangki air datang, warga segera membawa jerigen, ember, hingga galon untuk mendapatkan jatah air bersih sebelum persediaannya habis. Bantuan distribusi menggunakan truk tangki masih menjadi salah satu cara utama agar air dapat menjangkau keluarga-keluarga yang kehilangan akses terhadap jaringan perpipaan.</p>\n<p>Di beberapa wilayah, warga masih mengandalkan sumur yang tersisa. Namun air dari sumur tersebut seringkali memiliki kadar garam tinggi atau telah tercemar sehingga hanya digunakan untuk mencuci atau keperluan lain yang bukan untuk diminum. Ketika tidak ada pilihan, sebagian keluarga tetap mengkonsumsinya meski berisiko terhadap kesehatan.</p>\n<p>Bagi banyak keluarga yang tinggal di kamp-kamp pengungsian, tandon-tandon air yang dipasang lembaga kemanusiaan menjadi satu-satunya harapan. Setiap hari mereka datang membawa wadah seadanya untuk memenuhi kebutuhan minum dan memasak keluarga.</p>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<h2>Mengapa Bantuan Air Bersih Sangat Penting?</h2>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<p>Dalam situasi darurat kemanusiaan, menyediakan air bersih bukan hanya tentang menghilangkan rasa haus, melainkan tentang menyelamatkan kehidupan. Dalam Islam, memberikan bantuan air merupakan salah satu sedekah yang paling utama. Rasulullah SAW pernah ditanya oleh Sa’ad bin Ubadah radhiyallahu ‘anhu:</p>\n<p><i>“Wahai Rasulullah, sedekah apa yang paling utama?” Beliau SAW menjawab: “Memberi air minum (sedekah air).”</i> <b>(HR. Abu Dawud, An-Nasa’i, dan Ibnu Majah, dinilai sahih oleh Al-Albani)</b></p>\n<p>Air bersih berarti kesempatan untuk memasak makanan bagi keluarga. Air bersih berarti anak-anak dapat terhindar dari penyakit menular yang berbahaya. Air bersih juga berarti para ibu tidak perlu lagi berjalan berkilo-kilometer sambil membawa jerigen berat hanya demi memenuhi kebutuhan sehari. Setiap tetes air yang sampai kepada mereka adalah perpanjangan nafas kehidupan dan harapan untuk bertahan hidup.</p>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<h2>Ketika Pangan dan Air Menjadi Dua Harapan Sekaligus</h2>\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<p>Krisis yang dialami saudara-saudara kita di Palestina bukan hanya tentang kekurangan air. Banyak keluarga juga kesulitan memperoleh makanan yang cukup setiap hari. Kelaparan dan dehidrasi membayangi anak-anak dan lansia di sana.</p>\n<p>Oleh karena itu, bantuan pangan dan air bersih menjadi dua kebutuhan pokok yang tidak bisa dipisahkan. Rasulullah SAW mengingatkan kita tentang kewajiban membantu sesama Muslim yang kelaparan. Dari Anas bin Malik RA, Rasulullah SAW bersabda:</p>\n<p><i>“Tidaklah beriman kepadaku orang yang tidur dalam keadaan kenyang, padahal tetangga di sampingnya kelaparan dan dia mengetahuinya.”</i> <b>(HR. Ath-Thabrani dalam </b><b><i>Al-Mu’jam Al-Kabir</i></b><b>, No. 751 dinilai sahih/hasan oleh para ulama)</b></p>\n<p>Meringankan beban mereka yang sedang kesulitan juga merupakan jalan bagi kita untuk mendapatkan pertolongan Allah di akhirat kelak, sebagaimana sabda Nabi SAW:</p>\n<p><i>“Siapa yang melepaskan satu kesusahan seorang mukmin dari kesusahan-kesusahan dunia, niscaya Allah akan melepaskan satu kesusahan darinya dari kesusahan-kesusahan hari kiamat.”</i> <b>(HR. Muslim, no. 2699)</b></p>\n<p>Di tengah kondisi yang penuh keterbatasan, kepedulian kita menjadi salah satu cahaya harapan bagi saudara-saudara kita di Palestina. <a href=\"/campaign/bantu-pangan-dan-air-indonesia-palestina?source=artikeltry\"><b>Klik di sini untuk ikut menghadirkan bantuan Pangan dan akses Air Indonesia–Palestina.</b></a></p>\n<p>Hari ini, kita mungkin belum mampu menghentikan krisis global yang terjadi. Tetapi kita masih bisa berikhtiar untuk menjaga kehidupan, menghadirkan harapan, dan menguatkan saudara kita yang sedang berjuang melewati hari-hari yang berat. Boleh jadi dari kebaikan kecil yang kita bagikan hari ini, ada sebuah keluarga di Palestina yang dapat menikmati makanan hangat dan meneguk air bersih yang layak.</p>\n\t\t\t\n\t\t\t\t<a href=\"/campaign/bantu-pangan-dan-air-indonesia-palestina?source=artikeltry\" data-button=\"true\">Luaskan Manfaat</a>",
+  "seo": {
+    "title": "Krisis Air di Gaza: Kisah Pilu Warga Palestina Bertahan Hidup - Relawan Nusantara",
+    "description": "Bagaimana warga Palestina mendapatkan air bersih di tengah krisis? Simak fakta menyentuh tentang perjuangan mereka dan bagaimana kita bisa menjadi bagian dari harapan.",
+    "canonical": "/krisis-air-di-gaza-kisah-pilu-warga-palestina-bertahan-hidup/",
+    "robots": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "ogTitle": "Krisis Air di Gaza: Kisah Pilu Warga Palestina Bertahan Hidup - Relawan Nusantara",
+    "ogDescription": "Bagaimana warga Palestina mendapatkan air bersih di tengah krisis? Simak fakta menyentuh tentang perjuangan mereka dan bagaimana kita bisa menjadi bagian dari harapan.",
+    "ogImage": "/wp-content/uploads/2026/07/Artikel-Krisis-Air-Palestina-1024x576.jpg",
+    "ogType": "article",
+    "publishedTime": "2026-07-02T10:13:32+07:00",
+    "modifiedTime": "2026-07-02T10:13:43+07:00",
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": [
+              "Person",
+              "Organization"
+            ],
+            "@id": "https://relawannusantara.org/#person",
+            "name": "Relawan Nusantara",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://relawannusantara.org/#logo",
+              "url": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "contentUrl": "https://relawannusantara.org/wp-content/uploads/2025/04/Logo-RN.png",
+              "caption": "Relawan Nusantara",
+              "inLanguage": "en-US",
+              "width": "1080",
+              "height": "330"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://relawannusantara.org/#website",
+            "url": "https://relawannusantara.org",
+            "name": "Relawan Nusantara",
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://relawannusantara.org/wp-content/uploads/2026/07/Artikel-Krisis-Air-Palestina-scaled.jpg",
+            "url": "https://relawannusantara.org/wp-content/uploads/2026/07/Artikel-Krisis-Air-Palestina-scaled.jpg",
+            "width": "2560",
+            "height": "1441",
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://relawannusantara.org/krisis-air-di-gaza-kisah-pilu-warga-palestina-bertahan-hidup/#webpage",
+            "url": "https://relawannusantara.org/krisis-air-di-gaza-kisah-pilu-warga-palestina-bertahan-hidup/",
+            "name": "Krisis Air di Gaza: Kisah Pilu Warga Palestina Bertahan Hidup - Relawan Nusantara",
+            "datePublished": "2026-07-02T10:13:32+07:00",
+            "dateModified": "2026-07-02T10:13:43+07:00",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/#website"
+            },
+            "primaryImageOfPage": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2026/07/Artikel-Krisis-Air-Palestina-scaled.jpg"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://relawannusantara.org/author/krn/",
+            "name": "relawan nusantara",
+            "url": "https://relawannusantara.org/author/krn/",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://secure.gravatar.com/avatar/4174054d48b2d1cf5aaf763094295f4685a1ed70d23c4dc85063ae41771361b5?s=96&amp;d=mm&amp;r=g",
+              "url": "https://secure.gravatar.com/avatar/4174054d48b2d1cf5aaf763094295f4685a1ed70d23c4dc85063ae41771361b5?s=96&amp;d=mm&amp;r=g",
+              "caption": "relawan nusantara",
+              "inLanguage": "en-US"
+            },
+            "sameAs": [
+              "https://relawannusantara.org/"
+            ]
+          },
+          {
+            "@type": "BlogPosting",
+            "headline": "Krisis Air di Gaza: Kisah Pilu Warga Palestina Bertahan Hidup - Relawan Nusantara",
+            "datePublished": "2026-07-02T10:13:32+07:00",
+            "dateModified": "2026-07-02T10:13:43+07:00",
+            "articleSection": "Air Bersih, Artikel, Blog, Palestina",
+            "author": {
+              "@id": "https://relawannusantara.org/author/krn/",
+              "name": "relawan nusantara"
+            },
+            "publisher": {
+              "@id": "https://relawannusantara.org/#person"
+            },
+            "description": "Bagaimana warga Palestina mendapatkan air bersih di tengah krisis? Simak fakta menyentuh tentang perjuangan mereka dan bagaimana kita bisa menjadi bagian dari harapan.",
+            "name": "Krisis Air di Gaza: Kisah Pilu Warga Palestina Bertahan Hidup - Relawan Nusantara",
+            "@id": "https://relawannusantara.org/krisis-air-di-gaza-kisah-pilu-warga-palestina-bertahan-hidup/#richSnippet",
+            "isPartOf": {
+              "@id": "https://relawannusantara.org/krisis-air-di-gaza-kisah-pilu-warga-palestina-bertahan-hidup/#webpage"
+            },
+            "image": {
+              "@id": "https://relawannusantara.org/wp-content/uploads/2026/07/Artikel-Krisis-Air-Palestina-scaled.jpg"
+            },
+            "inLanguage": "en-US",
+            "mainEntityOfPage": {
+              "@id": "https://relawannusantara.org/krisis-air-di-gaza-kisah-pilu-warga-palestina-bertahan-hidup/#webpage"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
