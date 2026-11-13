@@ -31,7 +31,7 @@ public/wp-content/uploads/…  media dengan path ASLI WordPress
 | `/category/<path>/(page/<n>/)` | `app/category/[...path]` | SSG |
 | `/tag/<slug>/(page/<n>/)` | `app/tag/[...path]` | ISR saat diakses, `noindex` |
 | `/?s=…` | rewrite → `app/search` | Dinamis, `noindex` |
-| `/campaign*`, `/donasi/*` | rewrite ke `CAMPAIGN_ORIGIN` | Aplikasi donasi existing |
+| `/campaign*`, `/donasi/*` | — (hanya tautan) | Aplikasi donasi existing, tidak disentuh |
 | `/sitemap.xml`, `/robots.txt` | metadata routes | Static |
 
 Halaman yang mendapat route khusus didaftarkan di `src/config/routes.ts` (`STATIC_ROUTES`) agar tidak dirender ganda oleh `[slug]`.
@@ -52,5 +52,5 @@ src/lib/            content.ts, seo.ts, format.ts, site-icons.ts
 src/types/          content.ts
 ```
 
-## Catatan penting: aplikasi donasi `/campaign`
-`/campaign` adalah aplikasi Next.js terpisah yang memuat aset dari `/_next/static/...` di root domain — **bentrok** dengan aset aplikasi ini. Pilihan: (a) pindahkan app donasi ke subdomain (mis. `donasi.relawannusantara.org`) lalu arahkan tautan Donasi ke sana, atau (b) set `basePath`/`assetPrefix` di app donasi, lalu isi `CAMPAIGN_ORIGIN`. Perlu koordinasi dengan pemilik app donasi sebelum DNS dipindah.
+## Aplikasi donasi
+Tombol Donasi, slider beranda, dan CTA post hanya menautkan ke `/campaign` dan `/donasi/programs` (aplikasi terpisah, tidak disentuh). Saat cut-over DNS, pastikan path tersebut tetap dilayani server existing.

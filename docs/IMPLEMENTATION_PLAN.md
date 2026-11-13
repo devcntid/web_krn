@@ -19,5 +19,4 @@ Sandbox pengembangan tidak bisa mengakses relawannusantara.org. Ekspor harus dij
 
 ## Risiko
 - Ukuran media: hanya media yang dirujuk yang diunduh; cek `content/export-report.json → media.megabytes`. Bila > ±1 GB, pindahkan ke object storage (Vercel Blob/R2) dan atur `images.remotePatterns`.
-- Konflik `/_next` dengan app donasi (lihat TECHNICAL_ARCHITECTURE).
 - Halaman Divi kompleks yang memakai template generik akan terlihat lebih sederhana sampai direkonstruksi (tahap 8).

@@ -29,13 +29,13 @@ Hasil & peringatan: `content/export-report.json`. Ekspor aman dijalankan ulang (
 | `npm run export` | Ekspor WordPress → `content/` + media |
 
 ## Environment variables
-Lihat `.env.example`: `NEXT_PUBLIC_SITE_URL`, `CAMPAIGN_ORIGIN` (aplikasi donasi), `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_META_PIXEL_ID`, `WP_ORIGIN`.
+Lihat `.env.example`: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_META_PIXEL_ID`, `WP_ORIGIN`.
 
 ## Deploy (Vercel)
 1. Jalankan `npm run export`, commit `content/` dan `public/wp-content/`.
 2. Import repo ke Vercel (framework: Next.js), isi environment variables.
 3. Verifikasi di preview URL (preview otomatis `Disallow: /` di robots.txt).
-4. **Jangan pindahkan DNS** sampai QA selesai dan routing aplikasi donasi `/campaign` sudah diputuskan (lihat `docs/TECHNICAL_ARCHITECTURE.md`). WordPress tetap berjalan sampai cut-over.
+4. **Jangan pindahkan DNS** sampai QA selesai. WordPress tetap berjalan sampai cut-over.
 5. Rollback: Vercel → Deployments → *Promote* deployment sebelumnya; atau kembalikan DNS ke server WordPress.
 
 ## Dokumentasi

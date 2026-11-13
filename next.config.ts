@@ -2,13 +2,6 @@ import type { NextConfig } from "next";
 
 import { legacyRedirects } from "./src/config/redirects";
 
-/**
- * Aplikasi donasi existing (Next.js terpisah, data Odoo) yang saat ini
- * dilayani nginx di /campaign dan /donasi. Isi dengan origin-nya
- * (mis. https://donasi.relawannusantara.org) agar route itu di-proxy.
- */
-const CAMPAIGN_ORIGIN = process.env.CAMPAIGN_ORIGIN?.replace(/\/$/, "");
-
 const nextConfig: NextConfig = {
   // Permalink WordPress memakai trailing slash.
   trailingSlash: true,
@@ -49,13 +42,7 @@ const nextConfig: NextConfig = {
         { source: "/", has: [{ type: "query", key: "s" }], destination: "/search/" },
       ],
       afterFiles: [],
-      fallback: CAMPAIGN_ORIGIN
-        ? [
-            { source: "/campaign", destination: `${CAMPAIGN_ORIGIN}/campaign` },
-            { source: "/campaign/:path*", destination: `${CAMPAIGN_ORIGIN}/campaign/:path*` },
-            { source: "/donasi/:path*", destination: `${CAMPAIGN_ORIGIN}/donasi/:path*` },
-          ]
-        : [],
+      fallback: [],
     };
   },
 };
