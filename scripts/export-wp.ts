@@ -256,12 +256,24 @@ function cleanContent(rawHtml: string, ctx: string): string {
 
 /** Ambil HTML publik → { seo, contentHtml }. */
 async function scrape(url: string, ctx: string, kind: "post" | "page") {
-  const res = await fetchRetry(url);
+  let res: Response;
+  try {
+    res = await fetchRetry(url);
+  } catch (err) {
+    warnings.push(`${ctx}: gagal diambil (${(err as Error).message}) — jalankan ulang ekspor`);
+    return null;
+  }
   if (!res.ok) {
     warnings.push(`${ctx}: HTTP ${res.status} ${url}`);
     return null;
   }
-  const html = await res.text();
+  let html: string;
+  try {
+    html = await res.text();
+  } catch (err) {
+    warnings.push(`${ctx}: koneksi terputus saat membaca (${(err as Error).message}) — jalankan ulang ekspor`);
+    return null;
+  }
   const $ = cheerio.load(html);
   const seo = extractSeo($);
 
@@ -308,42 +320,101 @@ function mediaRef(m: WpMedia | undefined, fallbackAlt: string) {
 
 /* ---------------------------------------------------------------- media download */
 
-async function downloadMedia() {
-  const list = [...mediaUrls].sort();
-  let bytes = 0;
-  let skipped = 0;
-  const failed: string[] = [];
-  await pool(
-    list,
-    async (rel) => {
-      const dest = path.join(PUBLIC_DIR, decodeURIComponent(rel));
-      try {
-        const stat = await fs.stat(dest);
-        bytes += stat.size;
-        skipped++;
-        return;
-      } catch {
-        /* belum ada */
-      }
-      const res = await fetchRetry(`${ORIGIN}${rel}`);
-      if (!res.ok) {
-        failed.push(`${res.status} ${rel}`);
-        return;
-      }
+const MEDIA_CONCURRENCY = Number(process.env.MEDIA_CONCURRENCY ?? 3);
+const MEDIA_RETRIES = 6;
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Unduh satu file dengan retry yang mencakup PEMBACAAN BODY (ECONNRESET sering
+ * terjadi di tengah transfer, bukan saat request). Ditulis ke .part lalu di-rename
+ * supaya file setengah jadi tidak pernah dianggap selesai.
+ */
+async function downloadOne(rel: string, dest: string): Promise<{ ok: true; size: number } | { ok: false; reason: string }> {
+  let lastErr = "";
+  for (let i = 1; i <= MEDIA_RETRIES; i++) {
+    try {
+      const res = await fetch(`${ORIGIN}${encodeURI(decodeURI(rel))}`, {
+        headers: { "User-Agent": UA },
+        signal: AbortSignal.timeout(120_000),
+      });
+      if (res.status === 404 || res.status === 410) return { ok: false, reason: `${res.status}` };
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const buf = Buffer.from(await res.arrayBuffer());
       await fs.mkdir(path.dirname(dest), { recursive: true });
-      await fs.writeFile(dest, buf);
-      bytes += buf.length;
-    },
-    "media",
+      await fs.writeFile(`${dest}.part`, buf);
+      await fs.rename(`${dest}.part`, dest);
+      return { ok: true, size: buf.length };
+    } catch (err) {
+      lastErr = (err as Error & { cause?: { code?: string } }).cause?.code ?? (err as Error).message;
+      await sleep(1000 * 2 ** (i - 1)); // 1s, 2s, 4s, 8s, 16s, 32s
+    }
+  }
+  return { ok: false, reason: lastErr };
+}
+
+async function downloadMedia(list: string[]) {
+  let bytes = 0;
+  let skipped = 0;
+  let downloaded = 0;
+  const failed: string[] = [];
+  let next = 0;
+  let done = 0;
+  await Promise.all(
+    Array.from({ length: Math.min(MEDIA_CONCURRENCY, list.length) }, async () => {
+      while (next < list.length) {
+        const rel = list[next++];
+        const dest = path.join(PUBLIC_DIR, decodeURIComponent(rel));
+        try {
+          const stat = await fs.stat(dest);
+          if (stat.size > 0) {
+            bytes += stat.size;
+            skipped++;
+            process.stdout.write(`\r  media: ${++done}/${list.length} (gagal ${failed.length})`);
+            continue;
+          }
+        } catch {
+          /* belum ada */
+        }
+        const r = await downloadOne(rel, dest);
+        if (r.ok) {
+          bytes += r.size;
+          downloaded++;
+        } else {
+          failed.push(`${r.reason} ${rel}`);
+        }
+        process.stdout.write(`\r  media: ${++done}/${list.length} (gagal ${failed.length})`);
+      }
+    }),
   );
+  process.stdout.write("\n");
+  await writeJson("media-failed.json", failed);
   failed.forEach((f) => warnings.push(`media gagal: ${f}`));
-  return { files: list.length, skipped, failed: failed.length, megabytes: +(bytes / 1048576).toFixed(1) };
+  return { files: list.length, downloaded, skipped, failed: failed.length, megabytes: +(bytes / 1048576).toFixed(1) };
 }
 
 /* ---------------------------------------------------------------- main */
 
+/** `--media-only`: lanjutkan unduhan media dari content/media-manifest.json tanpa scraping ulang. */
+async function mediaOnly() {
+  const file = path.join(CONTENT_DIR, "media-manifest.json");
+  let manifest: string[];
+  try {
+    manifest = JSON.parse(await fs.readFile(file, "utf8"));
+  } catch {
+    console.error("content/media-manifest.json belum ada — jalankan `npm run export` penuh sekali dulu.");
+    process.exit(1);
+  }
+  const only = args.get("only-failed") === "true";
+  const list = only ? (JSON.parse(await fs.readFile(path.join(CONTENT_DIR, "media-failed.json"), "utf8")) as string[]).map((l) => l.split(" ").pop()!) : manifest;
+  console.log(`Melanjutkan unduhan ${list.length} media dari ${ORIGIN} (paralel ${MEDIA_CONCURRENCY})`);
+  const media = await downloadMedia(list);
+  console.log(JSON.stringify(media, null, 2));
+  if (media.failed) console.log("Daftar gagal: content/media-failed.json — ulangi dengan `npm run export -- --media-only --only-failed`.");
+}
+
 async function main() {
+  if (args.has("media-only")) return mediaOnly();
+
   console.log(`Ekspor dari ${ORIGIN}`);
   await fs.mkdir(CONTENT_DIR, { recursive: true });
 
@@ -425,9 +496,10 @@ async function main() {
     .filter((i) => i.href.startsWith("/wp-content/uploads/"));
   await writeJson("site.json", { icons });
 
-  // 5. Media
-  const media = SKIP_MEDIA ? { skipped: "dilewati (--skip-media)", files: mediaUrls.size } : await downloadMedia();
-  await writeJson("media-manifest.json", [...mediaUrls].sort());
+  // 5. Media — manifest ditulis DULU agar `--media-only` bisa melanjutkan bila terputus
+  const manifest = [...mediaUrls].sort();
+  await writeJson("media-manifest.json", manifest);
+  const media = SKIP_MEDIA ? { skipped: "dilewati (--skip-media)", files: manifest.length } : await downloadMedia(manifest);
 
   // 6. Laporan
   const report = {
