@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 import { legacyRedirects } from "./src/config/redirects";
 
+/** Host media eksternal opsional (lihat src/lib/media.ts). */
+const MEDIA_BASE_URL = (process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? "").replace(/\/$/, "");
+const mediaHost = MEDIA_BASE_URL ? new URL(MEDIA_BASE_URL) : null;
+
 const nextConfig: NextConfig = {
   // Permalink WordPress memakai trailing slash.
   trailingSlash: true,
@@ -22,7 +26,12 @@ const nextConfig: NextConfig = {
   images: {
     // Media WordPress disimpan di public/wp-content/uploads (path asli dipertahankan).
     localPatterns: [{ pathname: "/wp-content/uploads/**" }],
-    remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "i.ytimg.com" },
+      ...(mediaHost
+        ? [{ protocol: mediaHost.protocol.replace(":", "") as "https" | "http", hostname: mediaHost.hostname, pathname: "/wp-content/uploads/**" }]
+        : []),
+    ],
     formats: ["image/avif", "image/webp"],
   },
 
@@ -42,7 +51,10 @@ const nextConfig: NextConfig = {
         { source: "/", has: [{ type: "query", key: "s" }], destination: "/search/" },
       ],
       afterFiles: [],
-      fallback: [],
+      // URL gambar lama (backlink, Google Images) tetap hidup bila media dipindah ke host lain.
+      fallback: MEDIA_BASE_URL
+        ? [{ source: "/wp-content/uploads/:path*", destination: `${MEDIA_BASE_URL}/wp-content/uploads/:path*` }]
+        : [],
     };
   },
 };

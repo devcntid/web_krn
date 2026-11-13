@@ -4,6 +4,7 @@ import { CalendarDays } from "lucide-react";
 
 import { formatDateCard, formatDateLong } from "@/lib/format";
 import type { PostSummary } from "@/types/content";
+import { mediaUrl } from "@/lib/media";
 
 /** Kartu grid Artikel/Berita (`pkp-card`): putih, gambar, judul, excerpt, tanggal + tombol. */
 export function PostCard({ post }: { post: PostSummary }) {
@@ -14,7 +15,7 @@ export function PostCard({ post }: { post: PostSummary }) {
         <div className="relative aspect-[4/3] bg-surface-alt">
           {post.featuredImage && (
             <Image
-              src={post.featuredImage.src}
+              src={mediaUrl(post.featuredImage.src)}
               alt={post.featuredImage.alt || post.title}
               fill
               sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
@@ -52,7 +53,7 @@ export function RelatedPostCard({ post }: { post: PostSummary }) {
     <article>
       <Link href={href} className="relative block aspect-[16/9] overflow-hidden bg-surface-alt" tabIndex={-1} aria-hidden>
         {post.featuredImage && (
-          <Image src={post.featuredImage.src} alt="" fill sizes="320px" className="object-cover" />
+          <Image src={mediaUrl(post.featuredImage.src)} alt="" fill sizes="320px" className="object-cover" />
         )}
       </Link>
       <h3 className="mt-6 line-clamp-2 text-xl leading-[1.22] font-bold text-ink">

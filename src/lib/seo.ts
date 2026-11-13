@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { SITE_URL, site } from "@/config/site";
 import type { SeoMeta } from "@/types/content";
+import { mediaUrl } from "@/lib/media";
 
 const BRAND_SUFFIX = ` - ${site.name}`;
 
@@ -15,7 +16,7 @@ export function metadataFromSeo(seo: SeoMeta | undefined, fallback: { title: str
   const title = seo?.title || `${fallback.title}${BRAND_SUFFIX}`;
   const description = seo?.description || fallback.description || site.description;
   const canonical = absoluteUrl(fallback.path);
-  const ogImage = seo?.ogImage ? absoluteUrl(seo.ogImage) : undefined;
+  const ogImage = seo?.ogImage ? absoluteUrl(mediaUrl(seo.ogImage)) : undefined;
   const noindex = /noindex/i.test(seo?.robots ?? "");
 
   return {
@@ -56,7 +57,7 @@ export function organizationJsonLd() {
     "@id": `${SITE_URL}/#organization`,
     name: site.name,
     url: SITE_URL,
-    logo: absoluteUrl(site.logo.src),
+    logo: absoluteUrl(mediaUrl(site.logo.src)),
     description: site.description,
   };
 }

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- /donasi dilayani aplikasi donasi terpisah, bukan route aplikasi ini */
 import Image from "next/image";
+import { mediaUrl } from "@/lib/media";
 
 /** CTA di akhir template post: "Jadilah Bagian Aksi Kemanusiaan" → /donasi/programs. */
 export function DonationCta() {
@@ -22,7 +23,7 @@ export function DonationCta() {
       </div>
       <a href="/donasi/programs" className="relative block aspect-[507/285]" aria-label="Mari Berdonasi">
         <Image
-          src="/wp-content/uploads/2026/10/bantuan-nebulizer-oksigen-petugas-bpbd-karhutla-relawan-nusantara.jpg"
+          src={mediaUrl("/wp-content/uploads/2026/10/bantuan-nebulizer-oksigen-petugas-bpbd-karhutla-relawan-nusantara.jpg")}
           alt="Relawan Nusantara memberikan bantuan nebulizer dan oksigen kepada petugas BPBD saat karhutla"
           fill
           sizes="(min-width: 768px) 45vw, 90vw"

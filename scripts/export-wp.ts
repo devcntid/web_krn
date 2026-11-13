@@ -98,7 +98,11 @@ const decode = (html: string) => cheerio.load(`<div>${html}</div>`)("div").text(
 /** URL absolut situs → path relatif; catat media untuk diunduh. */
 function localize(url: string | undefined): string {
   if (!url) return "";
-  let u = url.trim();
+  // URL yang tertangkap dari string JSON di HTML (mis. JSON-LD) masih ber-escape \uXXXX / \/
+  let u = url
+    .trim()
+    .replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/\\\//g, "/");
   if (u.startsWith("//")) u = `https:${u}`;
   const m = u.match(/^https?:\/\/(?:www\.)?relawannusantara\.org(\/[^"'\s)]*)?/i);
   if (m) u = m[1] || "/";

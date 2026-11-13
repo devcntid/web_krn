@@ -6,6 +6,7 @@ import { getPostsByCategory, getLatestPosts } from "@/lib/content";
 import { formatDateLong } from "@/lib/format";
 import { Carousel } from "@/components/ui/Carousel";
 import { YouTubeFacade } from "@/components/home/YouTubeFacade";
+import { mediaUrl } from "@/lib/media";
 
 const outlineBtn =
   "inline-flex self-start items-center justify-center rounded-full border-2 border-primary px-4 py-2 text-[15px] font-medium text-primary transition-colors hover:bg-primary hover:text-white";
@@ -18,7 +19,7 @@ export function IntroSection() {
     <section className="relative py-16 lg:pt-[110px]">
       {/* Label vertikal "Scroll Untuk Eksplorasi" */}
       <div className="absolute top-10 left-6 hidden flex-col items-center gap-2 xl:flex" aria-hidden>
-        <Image src={intro.scrollIcon} alt="" width={40} height={40} unoptimized />
+        <Image src={mediaUrl(intro.scrollIcon)} alt="" width={40} height={40} unoptimized />
         <p className="text-xs leading-[1.3] font-extralight text-ink">
           Scroll
           <br />
@@ -48,7 +49,7 @@ export function IntroSection() {
         {/* Peta sebaran + statistik */}
         <div className="mt-14 grid overflow-hidden md:grid-cols-[75%_25%]">
           <Image
-            src={impactMap.image.src}
+            src={mediaUrl(impactMap.image.src)}
             alt={impactMap.alt}
             width={impactMap.image.width}
             height={impactMap.image.height}
@@ -60,7 +61,7 @@ export function IntroSection() {
             <dl className="mt-6 grid gap-5 sm:grid-cols-2 md:grid-cols-1">
               {impactMap.stats.map((s) => (
                 <div key={s.label} className="flex items-center gap-4">
-                  <Image src={s.icon} alt="" width={86} height={80} className="size-[70px] shrink-0 lg:size-[86px]" />
+                  <Image src={mediaUrl(s.icon)} alt="" width={86} height={80} className="size-[70px] shrink-0 lg:size-[86px]" />
                   <div>
                     <dd className="text-2xl leading-none font-bold">{nf.format(s.value)}</dd>
                     <dt className="mt-1 text-sm leading-[1.25]">{s.label}</dt>
@@ -100,7 +101,7 @@ export function PillarsSection() {
                 className="group relative flex aspect-[461/260] items-end overflow-hidden rounded-[10px] p-7 shadow-card"
               >
                 <Image
-                  src={item.image}
+                  src={mediaUrl(item.image)}
                   alt=""
                   fill
                   sizes="(min-width: 640px) 45vw, 90vw"
@@ -150,7 +151,7 @@ export function PublicationsSection() {
               <article key={post.slug} className="h-full">
                 <Link href={`/${post.slug}/`} className="relative block aspect-[258/145] overflow-hidden rounded-[20px] bg-surface-alt">
                   {post.featuredImage && (
-                    <Image src={post.featuredImage.src} alt={post.featuredImage.alt} fill sizes="(min-width: 1024px) 260px, 90vw" className="object-cover" />
+                    <Image src={mediaUrl(post.featuredImage.src)} alt={post.featuredImage.alt} fill sizes="(min-width: 1024px) 260px, 90vw" className="object-cover" />
                   )}
                 </Link>
                 <div className="px-1">
@@ -197,7 +198,7 @@ export function TestimonialsSection() {
                 <p>“{t.quote}”</p>
               </blockquote>
               <figcaption className="mt-6 flex items-center gap-4 px-[10px]">
-                <Image src={t.photo} alt={t.name} width={60} height={60} className="size-[60px] shrink-0 rounded-full object-cover" />
+                <Image src={mediaUrl(t.photo)} alt={t.name} width={60} height={60} className="size-[60px] shrink-0 rounded-full object-cover" />
                 <span>
                   <span className="block text-sm leading-[1.4] text-body">{t.name}</span>
                   <span className="block text-sm leading-[1.4] font-bold text-primary-400">{t.role}</span>
@@ -216,7 +217,7 @@ export function TestimonialsSection() {
 export function ReportCtaSection() {
   return (
     <section className="relative py-12">
-      <Image src={reportCta.background} alt="" fill sizes="100vw" className="object-cover" />
+      <Image src={mediaUrl(reportCta.background)} alt="" fill sizes="100vw" className="object-cover" />
       <div className="container-site relative rounded-[20px] bg-[rgba(217,217,217,0.88)] px-6 py-10 lg:px-[50px]">
         <h2 className="text-[26px] font-bold lg:text-[32px]">{reportCta.heading}</h2>
         <p className="mt-3 max-w-[810px] text-base leading-[1.5] text-ink lg:text-lg">{reportCta.description}</p>

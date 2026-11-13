@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { heroSlidesDesktop, heroSlidesMobile } from "@/content/home";
 import { Carousel } from "@/components/ui/Carousel";
+import { mediaUrl } from "@/lib/media";
 
 /** Hero beranda: slider desktop (5:3, link kampanye) & slider mobile (potret) terpisah, seperti Smart Slider 3. */
 export function HeroSlider() {
@@ -12,7 +13,7 @@ export function HeroSlider() {
           {heroSlidesDesktop.map((slide, i) => (
             <a key={slide.href} href={slide.href} className="relative block aspect-[1193/620] w-full">
               <Image
-                src={slide.image}
+                src={mediaUrl(slide.image)}
                 alt={slide.title}
                 fill
                 priority={i === 0}
@@ -28,7 +29,7 @@ export function HeroSlider() {
           {heroSlidesMobile.map((src, i) => (
             <div key={src} className="relative aspect-[1080/1350] w-full">
               <Image
-                src={src}
+                src={mediaUrl(src)}
                 alt={`Kampanye Relawan Nusantara ${i + 1}`}
                 fill
                 priority={i === 0}

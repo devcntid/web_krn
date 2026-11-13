@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import type { Page, PageSummary, Post, PostSummary, Term } from "@/types/content";
+import { isDonationAppPath } from "@/config/routes";
 
 /**
  * Data access untuk konten hasil ekspor WordPress di folder /content.
@@ -31,10 +32,11 @@ const safeName = (p: string) => p.replace(/\//g, "__");
 
 /** Semua post, terbaru dulu. */
 export function getAllPosts(): PostSummary[] {
-  return readJson<PostSummary[]>("posts/index.json", []);
+  return readJson<PostSummary[]>("posts/index.json", []).filter((p) => !isDonationAppPath(p.slug));
 }
 
 export function getPost(slug: string): Post | null {
+  if (isDonationAppPath(slug)) return null;
   return readJson<Post | null>(`posts/${safeName(slug)}.json`, null);
 }
 
@@ -62,10 +64,11 @@ export function searchPosts(query: string): PostSummary[] {
 /* ---------- Pages ---------- */
 
 export function getAllPages(): PageSummary[] {
-  return readJson<PageSummary[]>("pages/index.json", []);
+  return readJson<PageSummary[]>("pages/index.json", []).filter((p) => !isDonationAppPath(p.path));
 }
 
 export function getPage(pagePath: string): Page | null {
+  if (isDonationAppPath(pagePath)) return null;
   return readJson<Page | null>(`pages/${safeName(pagePath)}.json`, null);
 }
 

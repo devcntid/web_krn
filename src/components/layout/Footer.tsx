@@ -6,6 +6,7 @@ import { contact, footerNav, site, whatsappUrl } from "@/config/site";
 import { getLatestPosts } from "@/lib/content";
 import { formatDateShort } from "@/lib/format";
 import { SocialIcons } from "@/components/ui/SocialIcons";
+import { mediaUrl } from "@/lib/media";
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return (
@@ -26,7 +27,7 @@ export function Footer() {
           {/* Kolom brand */}
           <div>
             <Link href="/" aria-label={site.name}>
-              <Image src={site.logo.src} alt={site.name} width={160} height={36} className="h-9 w-auto" />
+              <Image src={mediaUrl(site.logo.src)} alt={site.name} width={160} height={36} className="h-9 w-auto" />
             </Link>
             <p className="mt-6 rounded-[10px] border border-dotted border-[#f05e22] p-[30px] text-[15px] leading-[1.5] font-medium text-muted">
               Dana yang didonasikan melalui Relawan Nusantara adalah milik sah, bukan berasal dari sumber yang

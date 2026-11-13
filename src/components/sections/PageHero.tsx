@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import type { MediaRef } from "@/types/content";
+import { mediaUrl } from "@/lib/media";
 
 type PageHeroProps = {
   title: string;
@@ -22,7 +23,7 @@ export function PageHero({ title, subtitle, image, size = "page", overlay = 0.61
     <section className={`relative flex items-end bg-[#666] ${height}`}>
       {image && (
         <Image
-          src={image.src}
+          src={mediaUrl(image.src)}
           alt={image.alt}
           fill
           priority

@@ -9,6 +9,7 @@ import { ChevronDown, Menu, Search, X } from "lucide-react";
 import { mainNav, site } from "@/config/site";
 import { DonateButton } from "@/components/ui/DonateButton";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
+import { mediaUrl } from "@/lib/media";
 
 type HeaderProps = {
   /** Template post WordPress memakai tombol Donasi hijau. */
@@ -49,7 +50,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
       >
         <Link href="/" aria-label={`${site.name} — Beranda`} className="shrink-0">
           <Image
-            src={site.logo.src}
+            src={mediaUrl(site.logo.src)}
             alt={site.name}
             width={site.logo.width}
             height={site.logo.height}

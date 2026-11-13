@@ -3,6 +3,8 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/config/site";
 import { getAllPages, getAllPosts, getCategories } from "@/lib/content";
 import { legacyRedirects } from "@/config/redirects";
+import { absoluteUrl } from "@/lib/seo";
+import { mediaUrl } from "@/lib/media";
 
 /** Pengganti sitemap Rank Math: halaman, post, dan kategori (tag tidak disertakan, sama seperti WP). */
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts().map((p) => ({
     url: `${SITE_URL}/${p.slug}/`,
     lastModified: p.modified,
-    images: p.featuredImage ? [`${SITE_URL}${p.featuredImage.src}`] : undefined,
+    images: p.featuredImage ? [absoluteUrl(mediaUrl(p.featuredImage.src))] : undefined,
   }));
 
   const categories = getCategories()
