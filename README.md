@@ -40,4 +40,4 @@ Lihat `.env.example`: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_MEDIA_BASE_URL`, `BLO
 5. Rollback: Vercel → Deployments → *Promote* deployment sebelumnya; atau kembalikan DNS ke server WordPress.
 
 ## Dokumentasi
-`docs/WEBSITE_AUDIT.md` · `docs/DESIGN_SYSTEM.md` · `docs/TECHNICAL_ARCHITECTURE.md` · `docs/IMPLEMENTATION_PLAN.md` · `docs/MEDIA.md`
+`docs/WEBSITE_AUDIT.md` · `docs/DESIGN_SYSTEM.md` · `docs/TECHNICAL_ARCHITECTURE.md` · `docs/IMPLEMENTATION_PLAN.md` · `docs/MEDIA.md` · `docs/BUILD_PLAYBOOK.md`
