@@ -181,7 +181,10 @@ async function main() {
       .onConflictDoUpdate({
         target: pages.path,
         set: {
-          legacyId: sql`excluded.legacy_id`, title: sql`excluded.title`, sections: sql`excluded.sections`, seoTitle: sql`excluded.seo_title`,
+          legacyId: sql`excluded.legacy_id`, title: sql`excluded.title`, 
+          // Halaman yang sudah disusun dari section di admin (B7) tidak ditimpa HTML ekspor.
+          sections: sql`case when ${pages.template} = 'generic' then excluded.sections else ${pages.sections} end`,
+          seoTitle: sql`excluded.seo_title`,
           seoDescription: sql`excluded.seo_description`, ogImage: sql`excluded.og_image`, canonical: sql`excluded.canonical`,
           robots: sql`excluded.robots`, updatedAt: sql`excluded.updated_at`,
         },

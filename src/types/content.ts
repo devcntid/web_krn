@@ -54,8 +54,13 @@ export type PageSummary = {
 };
 
 export type Page = PageSummary & {
+  /** HTML halaman generik (gabungan section "richtext" yang tampil). */
   html: string;
   seo: SeoMeta;
+  /** generic | sections | sections-muted — lihat src/server/sections.ts. */
+  template: string;
+  /** Isi mentah kolom `pages.sections`; divalidasi dengan parseSections() sebelum dirender. */
+  sections: unknown;
 };
 
 export type Term = {

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 
 import type { Page, PageSummary, SeoMeta } from "@/types/content";
 import { getDb, schema } from "../db";
@@ -31,7 +31,8 @@ export async function listPublishedPages(): Promise<PageSummary[]> {
   return rows.map((r) => ({ id: r.legacyId ?? r.rowId, path: r.path, slug: slugOf(r.path), title: r.title, modified: r.modified }));
 }
 
-export async function findPublishedPage(path: string): Promise<Page | null> {
+/** `includeUnpublished` (pratinjau Draft Mode) juga mengembalikan halaman draf — tidak pernah yang di sampah. */
+export async function findPublishedPage(path: string, includeUnpublished = false): Promise<Page | null> {
   const [row] = await getDb()
     .select({
       rowId: pages.id,
@@ -39,6 +40,7 @@ export async function findPublishedPage(path: string): Promise<Page | null> {
       path: pages.path,
       title: pages.title,
       modified: wibText(pages.updatedAt),
+      template: pages.template,
       sections: pages.sections,
       seoTitle: pages.seoTitle,
       seoDescription: pages.seoDescription,
@@ -47,7 +49,7 @@ export async function findPublishedPage(path: string): Promise<Page | null> {
       robots: pages.robots,
     })
     .from(pages)
-    .where(and(eq(pages.path, path), published))
+    .where(and(eq(pages.path, path), includeUnpublished ? ne(pages.status, "trashed") : published))
     .limit(1);
   if (!row) return null;
 
@@ -62,5 +64,5 @@ export async function findPublishedPage(path: string): Promise<Page | null> {
     ogType: "article",
     modifiedTime: `${row.modified}+07:00`,
   };
-  return { id: row.legacyId ?? row.rowId, path: row.path, slug: slugOf(row.path), title: row.title, modified: row.modified, html: sectionsToHtml(row.sections), seo };
+  return { id: row.legacyId ?? row.rowId, path: row.path, slug: slugOf(row.path), title: row.title, modified: row.modified, html: sectionsToHtml(row.sections), seo, template: row.template, sections: row.sections };
 }

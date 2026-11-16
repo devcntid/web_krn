@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
 
+import { SectionPage, sectionPageMetadata } from "@/components/site/sections/SectionPage";
 import { pillarsContent } from "@/content/localized";
-import { PillarPage, pillarMetadata } from "@/components/templates/PillarPage";
 import { initLocale } from "@/i18n/request";
 
 type LangProps = { params: Promise<{ lang: string }> };
 
+const PATH = "pendidikan";
+
 export async function generateMetadata({ params }: LangProps): Promise<Metadata> {
   await initLocale(params);
-  return pillarMetadata(pillarsContent("id")["pendidikan"], pillarsContent("en")["pendidikan"]);
+  // Judul & deskripsi Inggris masih dari src/content/en (menandai halaman sudah diterjemahkan).
+  const english = pillarsContent("en")["pendidikan"];
+  return sectionPageMetadata(PATH, { title: english.title, description: english.description });
 }
 
+/** Artboard "04 · Pilar Program". Isi dikelola di /admin/halaman (section di database). */
 export default async function Page({ params }: LangProps) {
-  const locale = await initLocale(params);
-  return <PillarPage pillar={pillarsContent(locale)["pendidikan"]} />;
+  await initLocale(params);
+  return <SectionPage path={PATH} />;
 }

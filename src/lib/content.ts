@@ -85,15 +85,22 @@ export async function searchPosts(query: string): Promise<PostSummary[]> {
 /* ---------- Pages ---------- */
 
 export const getAllPages = cache(
-  unstable_cache(async (): Promise<PageSummary[]> => (await listPublishedPages()).filter((p) => !isDonationAppPath(p.path)), ["content:pages"], {
+  unstable_cache(async (): Promise<PageSummary[]> => (await listPublishedPages()).filter((p) => !isDonationAppPath(p.path)), ["content:pages:v2"], {
     tags: [CACHE_TAGS.pages],
   }),
 );
 
 export const getPage = cache(async (pagePath: string): Promise<Page | null> => {
   if (isDonationAppPath(pagePath)) return null;
-  return unstable_cache(() => findPublishedPage(pagePath), ["content:page", pagePath], { tags: [CACHE_TAGS.pages, CACHE_TAGS.page(pagePath)] })();
+  return unstable_cache(() => findPublishedPage(pagePath), ["content:page:v2", pagePath], { tags: [CACHE_TAGS.pages, CACHE_TAGS.page(pagePath)] })();
 });
+
+/** Pratinjau Draft Mode untuk halaman: termasuk draf, tanpa cache, hanya untuk admin yang sudah masuk. */
+export async function getPagePreview(pagePath: string): Promise<Page | null> {
+  if (isDonationAppPath(pagePath)) return null;
+  if (!(await getCurrentUser())) return null;
+  return findPublishedPage(pagePath, true);
+}
 
 /* ---------- Taxonomies ---------- */
 

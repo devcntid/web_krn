@@ -10,7 +10,7 @@ export const STATIC_ROUTES = new Set<string>([
   "profil-relawan-nusantara",
   "audit-keuangan",
   "asas-legalitas",
-  // Pilar program (template PillarPage)
+  // Pilar program (section di database, lihat /admin/halaman)
   "aksi-kemanusiaan",
   "lingkungan",
   "pendidikan",

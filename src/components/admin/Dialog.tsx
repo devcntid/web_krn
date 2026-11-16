@@ -40,10 +40,15 @@ export function Dialog({
       ref={ref}
       aria-labelledby={titleId}
       onCancel={(e) => {
+        // Di React, `cancel`/`close` dari dialog yang bersarang (mis. MediaPicker di dalam dialog
+        // edit) ikut naik ke dialog luar — abaikan agar Esc hanya menutup dialog teratas.
+        if (e.target !== e.currentTarget) return;
         e.preventDefault();
         onClose();
       }}
-      onClose={() => returnTo.current?.focus()}
+      onClose={(e) => {
+        if (e.target === e.currentTarget) returnTo.current?.focus();
+      }}
       className={`m-auto max-h-[calc(100dvh-32px)] w-[calc(100%-32px)] flex-col rounded-2xl bg-white p-0 text-admin-ink shadow-admin-card backdrop:bg-admin-ink/50 open:flex ${
         size === "xl" ? "max-w-4xl" : "max-w-lg"
       }`}

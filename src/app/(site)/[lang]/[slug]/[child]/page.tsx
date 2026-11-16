@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { getAllPages, getPage } from "@/lib/content";
-import { metadataFromSeo } from "@/lib/seo";
-import { STATIC_ROUTES } from "@/config/routes";
+import { PreviewBanner } from "@/components/content/PreviewBanner";
+import { SectionPage, loadPage, sectionPageMetadata } from "@/components/site/sections/SectionPage";
 import { GenericPageTemplate } from "@/components/templates/GenericPageTemplate";
+import { STATIC_ROUTES } from "@/config/routes";
 import { initLocale } from "@/i18n/request";
+import { getAllPages } from "@/lib/content";
+import { metadataFromSeo } from "@/lib/seo";
+import { isSectionTemplate } from "@/server/sections";
 
 type Props = { params: Promise<{ slug: string; child: string }> };
 
-/** Halaman anak yang belum punya route khusus (lihat STATIC_ROUTES). */
-export const dynamicParams = false;
+/**
+ * Halaman anak yang belum punya route khusus (lihat STATIC_ROUTES).
+ * `dynamicParams = true`: halaman anak yang dibuat di admin setelah build dirender saat pertama
+ * diminta; path yang tidak ada → 404.
+ */
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   return (await getAllPages())
@@ -24,14 +31,24 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await initLocale(params);
   const { slug, child } = await params;
-  const page = await getPage(`${slug}/${child}`);
-  return page ? metadataFromSeo(page.seo, { title: page.title, path: `/${slug}/${child}/` }) : {};
+  const path = `${slug}/${child}`;
+  const { page, preview } = await loadPage(path);
+  if (!page) return {};
+  if (preview || isSectionTemplate(page.template)) return sectionPageMetadata(path);
+  return metadataFromSeo(page.seo, { title: page.title, path: `/${path}/` });
 }
 
 export default async function ChildPage({ params }: Props) {
   await initLocale(params);
   const { slug, child } = await params;
-  const page = await getPage(`${slug}/${child}`);
+  const path = `${slug}/${child}`;
+  const { page, preview } = await loadPage(path);
   if (!page) notFound();
-  return <GenericPageTemplate page={page} />;
+  if (isSectionTemplate(page.template)) return <SectionPage path={path} />;
+  return (
+    <>
+      <GenericPageTemplate page={page} />
+      {preview ? <PreviewBanner /> : null}
+    </>
+  );
 }

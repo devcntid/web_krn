@@ -147,7 +147,7 @@ function PickerBody({ onSelect }: { onSelect: (media: MediaChoice) => void }) {
             e.preventDefault();
             if (alt.trim()) onSelect({ ...selected, alt: alt.trim() });
           }}
-          className="sticky bottom-0 -mx-5 -mb-5 flex flex-wrap items-end gap-3 border-t border-admin-line bg-white p-5"
+          className="sticky -bottom-5 -mx-5 -mb-5 flex flex-wrap items-end gap-3 border-t border-admin-line bg-white p-5"
         >
           <div className="min-w-56 flex-1">
             <label htmlFor={altId} className="text-xs font-bold text-admin-text">

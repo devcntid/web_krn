@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
-import { getAllPages, getAllPosts, getPage, getPost, getPostPreview } from "@/lib/content";
+import { getAllPages, getAllPosts, getPost, getPostPreview } from "@/lib/content";
 import { articleJsonLd, breadcrumbJsonLd, metadataFromSeo } from "@/lib/seo";
 import { STATIC_ROUTES } from "@/config/routes";
 import { PostTemplate } from "@/components/templates/PostTemplate";
 import { GenericPageTemplate } from "@/components/templates/GenericPageTemplate";
 import { PreviewBanner } from "@/components/content/PreviewBanner";
+import { SectionPage, loadPage, sectionPageMetadata } from "@/components/site/sections/SectionPage";
+import { isSectionTemplate } from "@/server/sections";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { initLocale } from "@/i18n/request";
 
@@ -64,7 +66,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const en = post.translation === "reviewed" ? { title: post.title, description: post.seo.description || post.excerpt } : undefined;
     return metadataFromSeo(post.seo, { title: post.title, path: `/${slug}/`, description: post.excerpt, en });
   }
-  const page = await getPage(slug);
+  const { page, preview: pagePreview } = await loadPage(slug);
+  if (page && (pagePreview || isSectionTemplate(page.template))) return sectionPageMetadata(slug);
   if (page) return metadataFromSeo(page.seo, { title: page.title, path: `/${slug}/` });
   return {};
 }
@@ -85,7 +88,9 @@ export default async function SlugPage({ params }: Props) {
     );
   }
 
-  const page = await getPage(slug);
+  const { page, preview: pagePreview } = await loadPage(slug);
+  // Halaman yang disusun dari section di admin (/admin/halaman).
+  if (page && isSectionTemplate(page.template)) return <SectionPage path={slug} />;
   if (page) {
     return (
       <>
@@ -96,6 +101,7 @@ export default async function SlugPage({ params }: Props) {
             { name: page.title, path: `/${slug}/` },
           ])}
         />
+        {pagePreview ? <PreviewBanner /> : null}
       </>
     );
   }
