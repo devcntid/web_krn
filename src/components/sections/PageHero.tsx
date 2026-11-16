@@ -8,8 +8,10 @@ type PageHeroProps = {
   /** Teks kecil di bawah judul (opsional). */
   subtitle?: string;
   image?: MediaRef | null;
-  /** Tinggi hero: "post" = template post (±743px), "page" = fullwidth header halaman. */
-  size?: "post" | "page";
+  /** Tinggi hero: "post" = template post (±743px), "page" = fullwidth header halaman, "medium" = halaman khusus (600px, artboard 04–09). */
+  size?: "post" | "page" | "medium";
+  /** Lebar blok judul: "wide" = 90% (template Divi), "container" = sejajar container-site. */
+  width?: "wide" | "container";
   overlay?: number;
 };
 
@@ -17,8 +19,12 @@ type PageHeroProps = {
  * Hero dengan gambar latar + overlay gelap (Divi fullwidth header / section
  * template post). Judul selalu H1 — satu-satunya H1 di halaman.
  */
-export function PageHero({ title, subtitle, image, size = "page", overlay = 0.61 }: PageHeroProps) {
-  const height = size === "post" ? "min-h-[520px] lg:min-h-[743px]" : "min-h-[420px] lg:min-h-[707px]";
+export function PageHero({ title, subtitle, image, size = "page", width = "wide", overlay = 0.61 }: PageHeroProps) {
+  const height = {
+    post: "min-h-[520px] lg:min-h-[743px]",
+    page: "min-h-[420px] lg:min-h-[707px]",
+    medium: "min-h-[380px] lg:min-h-[600px]",
+  }[size];
   return (
     <section className={`relative flex items-end bg-[#666] ${height}`}>
       {image && (
@@ -26,13 +32,13 @@ export function PageHero({ title, subtitle, image, size = "page", overlay = 0.61
           src={mediaUrl(image.src)}
           alt={image.alt}
           fill
-          priority
+          preload
           sizes="100vw"
           className="object-cover"
         />
       )}
       <div className="absolute inset-0" style={{ backgroundColor: `rgba(0,0,0,${overlay})` }} aria-hidden />
-      <div className="relative mx-auto w-[90%] pt-32 pb-12 lg:pb-[68px]">
+      <div className={`relative pt-32 pb-12 ${width === "container" ? "container-site lg:pb-16" : "mx-auto w-[90%] lg:pb-[68px]"}`}>
         <h1
           className={`text-white ${
             size === "post" ? "text-[32px] leading-[1.2] lg:text-[54px]" : "text-[40px] leading-[1.1] lg:text-[64px]"

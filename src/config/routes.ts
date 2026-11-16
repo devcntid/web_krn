@@ -7,6 +7,7 @@ export const STATIC_ROUTES = new Set<string>([
   "new-beranda", // front page → "/"
   "artikel",
   "berita",
+  "profil-relawan-nusantara",
 ]);
 
 /** Kategori yang dipakai tab grid Publikasi. */
