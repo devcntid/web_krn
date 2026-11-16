@@ -20,6 +20,7 @@ export const STATIC_ROUTES = new Set<string>([
   "pr0gram-kami/kerelawanan",
   "pr0gram-kami/kebencanaan",
   "kemitraan",
+  "e-report",
 ]);
 
 /** Kategori yang dipakai tab grid Publikasi. */
