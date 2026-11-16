@@ -10,6 +10,7 @@ import Link from "next/link";
 import {
   DataTableBody,
   type BulkAction,
+  type BulkActionResult,
   type ColumnMeta,
 } from "./DataTableBody";
 
@@ -53,7 +54,7 @@ type Props<Row> = {
   pageSize: number;
   total: number;
   bulkActions?: readonly BulkAction[];
-  bulkAction?: (formData: FormData) => Promise<void>;
+  bulkAction?: (formData: FormData) => Promise<BulkActionResult>;
   empty?: React.ReactNode;
 };
 

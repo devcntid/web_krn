@@ -25,6 +25,11 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.2.1",
     "@node-rs/argon2": "^2.2.2",
+    "@tiptap/core": "^3.34.0",
+    "@tiptap/extension-link": "^3.34.0",
+    "@tiptap/pm": "^3.34.0",
+    "@tiptap/react": "^3.34.0",
+    "@tiptap/starter-kit": "^3.34.0",
     "@vercel/blob": "^2.9.0",
     "drizzle-orm": "^0.45.4",
     "embla-carousel-autoplay": "^8.6.0",
@@ -35,6 +40,7 @@
     "otplib": "^13.6.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "sanitize-html": "^2.18.2",
     "server-only": "^0.0.1",
     "simple-icons": "^16.37.0"
   },
@@ -55,7 +61,6 @@
     "playwright-core": "^1.65.1",
     "pngjs": "^7.0.0",
     "prettier": "^3.10.1",
-    "sanitize-html": "^2.18.2",
     "tailwindcss": "4.3.3",
     "tsx": "^4.23.15",
     "typescript": "^5"

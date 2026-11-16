@@ -69,6 +69,14 @@
   --color-admin-info-text: #1d4a80;
   --color-admin-danger: #b3361f;
   --color-admin-danger-bg: #fbe9e5;
+  /* Indikator SEO (titik) & tepi kolom peringatan — artboard A2/A3 */
+  --color-admin-seo-good: #1e8a4c;
+  --color-admin-seo-warn: #c78400;
+  --color-admin-field-warn: #e0a83a;
+  /* Pratinjau hasil penelusuran Google di panel SEO (warna Google, bukan warna merek) */
+  --color-google-url: #202124;
+  --color-google-title: #1a0dab;
+  --color-google-text: #4d5156;
   --radius-admin: 10px;
   --shadow-admin-card: 0 10px 40px rgba(15, 46, 42, 0.08);
 }

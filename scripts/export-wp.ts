@@ -20,6 +20,14 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 import sanitizeHtml from "sanitize-html";
 
+import {
+  CONTENT_ALLOWED_ATTRIBUTES,
+  CONTENT_ALLOWED_IFRAME_HOSTS,
+  CONTENT_ALLOWED_SCHEMES,
+  CONTENT_ALLOWED_TAGS,
+  CONTENT_NON_TEXT_TAGS,
+} from "../src/lib/html-whitelist";
+
 /* ---------------------------------------------------------------- config */
 
 const ORIGIN = (process.env.WP_ORIGIN ?? "https://relawannusantara.org").replace(/\/$/, "");
@@ -170,7 +178,7 @@ function extractSeo($: cheerio.CheerioAPI): Seo {
 
 /* ---------------------------------------------------------------- HTML sanitizer */
 
-const ALLOWED_IFRAME_HOSTS = ["www.youtube.com", "youtube.com", "www.youtube-nocookie.com", "player.vimeo.com", "www.google.com"];
+const ALLOWED_IFRAME_HOSTS = CONTENT_ALLOWED_IFRAME_HOSTS;
 
 function cleanContent(rawHtml: string, ctx: string): string {
   const $ = cheerio.load(rawHtml, null, false);
@@ -214,21 +222,11 @@ function cleanContent(rawHtml: string, ctx: string): string {
   const html = $.html();
 
   const clean = sanitizeHtml(html, {
-    allowedTags: [
-      "h2", "h3", "h4", "h5", "h6", "p", "br", "hr", "a", "strong", "b", "em", "i", "u", "s", "sub", "sup",
-      "ul", "ol", "li", "blockquote", "figure", "figcaption", "img", "iframe", "table", "thead", "tbody",
-      "tfoot", "tr", "th", "td", "caption", "details", "summary", "code", "pre", "mark",
-    ],
-    allowedAttributes: {
-      a: ["href", "target", "rel", "data-button"],
-      img: ["src", "alt", "width", "height", "loading"],
-      iframe: ["src", "title", "allow", "allowfullscreen"],
-      th: ["colspan", "rowspan"],
-      td: ["colspan", "rowspan"],
-    },
-    allowedSchemes: ["http", "https", "mailto", "tel"],
+    allowedTags: CONTENT_ALLOWED_TAGS,
+    allowedAttributes: CONTENT_ALLOWED_ATTRIBUTES,
+    allowedSchemes: CONTENT_ALLOWED_SCHEMES,
     allowedIframeHostnames: ALLOWED_IFRAME_HOSTS,
-    nonTextTags: ["style", "script", "textarea", "option", "noscript", "svg", "form", "button"],
+    nonTextTags: CONTENT_NON_TEXT_TAGS,
     transformTags: {
       // Satu-satunya H1 adalah judul di hero → H1 konten diturunkan jadi H2.
       h1: "h2",

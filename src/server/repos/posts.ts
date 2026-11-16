@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, ne } from "drizzle-orm";
 
 import type { MediaRef, Post, PostSummary, SeoMeta, TermRef } from "@/types/content";
 import { getDb, schema } from "../db";
@@ -93,8 +93,11 @@ export async function listPublishedPosts(locale = "id"): Promise<PostSummary[]> 
   });
 }
 
-/** Satu post terbit lengkap dengan HTML dan SEO; null bila tidak ada. */
-export async function findPublishedPost(slug: string, locale = "id"): Promise<Post | null> {
+/**
+ * Satu post terbit lengkap dengan HTML dan SEO; null bila tidak ada.
+ * `includeUnpublished` (pratinjau Draft Mode) juga mengembalikan draf/review/terjadwal — tidak pernah yang di sampah.
+ */
+export async function findPublishedPost(slug: string, locale = "id", includeUnpublished = false): Promise<Post | null> {
   const db = getDb();
   const [row] = await db
     .select({
@@ -109,7 +112,7 @@ export async function findPublishedPost(slug: string, locale = "id"): Promise<Po
     })
     .from(posts)
     .leftJoin(media, eq(media.id, posts.featuredMediaId))
-    .where(and(eq(posts.slug, slug), published))
+    .where(and(eq(posts.slug, slug), includeUnpublished ? ne(posts.status, "trashed") : published))
     .limit(1);
   if (!row) return null;
 

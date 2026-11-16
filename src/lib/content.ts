@@ -7,6 +7,7 @@ import type { Page, PageSummary, Post, PostSummary, Term } from "@/types/content
 import { isDonationAppPath } from "@/config/routes";
 import type { Locale } from "@/i18n/config";
 import { getLocale } from "@/i18n/request";
+import { getCurrentUser } from "@/server/permissions";
 import { findPublishedPage, listPublishedPages } from "@/server/repos/pages";
 import { findPublishedPost, listPublishedPosts } from "@/server/repos/posts";
 import { listCategories, listTags } from "@/server/repos/taxonomy";
@@ -48,6 +49,16 @@ const postBySlug = cache((slug: string, locale: Locale) =>
 export async function getPost(slug: string): Promise<Post | null> {
   if (isDonationAppPath(slug)) return null;
   return postBySlug(slug, getLocale());
+}
+
+/**
+ * Pratinjau Draft Mode: post apa pun statusnya (kecuali sampah), langsung dari database tanpa cache.
+ * Hanya untuk pengguna admin yang sudah masuk — cookie Draft Mode saja tidak cukup.
+ */
+export async function getPostPreview(slug: string): Promise<Post | null> {
+  if (isDonationAppPath(slug)) return null;
+  if (!(await getCurrentUser())) return null;
+  return findPublishedPost(slug, getLocale(), true);
 }
 
 export async function getLatestPosts(limit: number): Promise<PostSummary[]> {

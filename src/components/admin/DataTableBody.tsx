@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 
 import { ConfirmDialog } from "./ConfirmDialog";
-import { useToast } from "./Toast";
+import { type ToastTone, useToast } from "./Toast";
 
 export type BulkAction = {
   value: string;
@@ -11,7 +11,12 @@ export type BulkAction = {
   tone?: "primary" | "danger";
   /** Bila diisi, minta konfirmasi lewat ConfirmDialog sebelum menjalankan aksi. */
   confirm?: { title: string; description?: string; confirmLabel?: string };
+  /** Bila diisi, aksi butuh pilihan tambahan (mis. kategori tujuan) yang dikirim sebagai `option`. */
+  options?: readonly { value: string; label: string }[];
+  optionLabel?: string;
 };
+/** Aksi massal boleh mengembalikan pesan sendiri untuk toast (mis. jumlah yang dilewati). */
+export type BulkActionResult = void | { message: string; tone?: ToastTone };
 export type ColumnMeta = {
   key: string;
   align: "left" | "right" | "center";
@@ -43,11 +48,12 @@ export function DataTableBody({
   columns: ColumnMeta[];
   rows: { id: string; cells: React.ReactNode[] }[];
   bulkActions: readonly BulkAction[];
-  bulkAction?: (formData: FormData) => Promise<void>;
+  bulkAction?: (formData: FormData) => Promise<BulkActionResult>;
 }) {
   const selectable = bulkActions.length > 0 && Boolean(bulkAction);
   const [selected, setSelected] = useState<ReadonlySet<string>>(new Set());
   const [pending, setPending] = useState<BulkAction | null>(null);
+  const [options, setOptions] = useState<Readonly<Record<string, string>>>({});
   const [busy, startTransition] = useTransition();
   const toast = useToast();
   const allRef = useRef<HTMLInputElement>(null);
@@ -76,14 +82,17 @@ export function DataTableBody({
     startTransition(async () => {
       const fd = new FormData();
       fd.set("action", action.value);
+      if (action.options) fd.set("option", options[action.value] ?? "");
       for (const id of chosen) fd.append("ids", id);
       try {
-        await bulkAction(fd);
-        toast.show(
-          `${action.label}: ${chosen.length} item diproses.`,
-          "success",
-        );
-        setSelected(new Set());
+        const result = await bulkAction(fd);
+        if (result) toast.show(result.message, result.tone ?? "success");
+        else
+          toast.show(
+            `${action.label}: ${chosen.length} item diproses.`,
+            "success",
+          );
+        if (!result || result.tone !== "error") setSelected(new Set());
       } catch {
         toast.show(`${action.label} gagal. Coba lagi.`, "error");
       } finally {
@@ -103,10 +112,30 @@ export function DataTableBody({
             {visibleSelected.length} dipilih
           </p>
           {bulkActions.map((a) => (
+            <span key={a.value} className="flex items-center gap-1.5">
+              {a.options ? (
+                <select
+                  aria-label={a.optionLabel ?? a.label}
+                  value={options[a.value] ?? ""}
+                  onChange={(e) =>
+                    setOptions((prev) => ({
+                      ...prev,
+                      [a.value]: e.target.value,
+                    }))
+                  }
+                  className="min-h-11 max-w-44 rounded-admin border border-admin-field bg-white px-2 text-sm font-semibold text-admin-ink focus-visible:outline-2 focus-visible:outline-primary"
+                >
+                  <option value="">{a.optionLabel ?? "Pilih…"}</option>
+                  {a.options.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              ) : null}
             <button
-              key={a.value}
               type="button"
-              disabled={busy}
+              disabled={busy || (a.options ? !options[a.value] : false)}
               onClick={() => (a.confirm ? setPending(a) : run(a))}
               className={`min-h-11 rounded-admin border bg-white px-3 text-sm font-bold focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-60 ${
                 a.tone === "danger"
@@ -116,6 +145,7 @@ export function DataTableBody({
             >
               {a.label}
             </button>
+            </span>
           ))}
           <button
             type="button"

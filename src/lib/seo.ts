@@ -2,7 +2,7 @@ import { getLocale } from "@/i18n/request";
 import type { Metadata } from "next";
 
 import { SITE_URL, site } from "@/config/site";
-import type { SeoMeta } from "@/types/content";
+import type { Post, SeoMeta } from "@/types/content";
 import { mediaUrl } from "@/lib/media";
 
 const BRAND_SUFFIX = ` - ${site.name}`;
@@ -81,6 +81,22 @@ export function organizationJsonLd() {
     url: SITE_URL,
     logo: absoluteUrl(mediaUrl(site.logo.src)),
     description: site.description,
+  };
+}
+
+/** BlogPosting untuk post yang dibuat di admin (post lama memakai JSON-LD asli Rank Math). */
+export function articleJsonLd(post: Post) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.seo.description || post.excerpt || undefined,
+    datePublished: post.seo.publishedTime,
+    dateModified: post.seo.modifiedTime,
+    image: post.featuredImage ? [absoluteUrl(mediaUrl(post.featuredImage.src))] : undefined,
+    mainEntityOfPage: absoluteUrl(`/${post.slug}/`),
+    author: { "@id": `${SITE_URL}/#organization` },
+    publisher: { "@id": `${SITE_URL}/#organization` },
   };
 }
 
