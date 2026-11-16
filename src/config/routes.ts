@@ -9,6 +9,7 @@ export const STATIC_ROUTES = new Set<string>([
   "berita",
   "profil-relawan-nusantara",
   "audit-keuangan",
+  "asas-legalitas",
 ]);
 
 /** Kategori yang dipakai tab grid Publikasi. */

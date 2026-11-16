@@ -8,8 +8,8 @@ type PageHeroProps = {
   /** Teks kecil di bawah judul (opsional). */
   subtitle?: string;
   image?: MediaRef | null;
-  /** Tinggi hero: "post" = template post (±743px), "page" = fullwidth header halaman, "medium"/"compact" = halaman khusus (600px/520px, artboard 04–09). */
-  size?: "post" | "page" | "medium" | "compact";
+  /** Tinggi hero: "post" = template post (±743px), "page" = fullwidth header halaman, "medium"/"compact"/"small" = halaman khusus (600/520/480px, artboard 04–09). */
+  size?: "post" | "page" | "medium" | "compact" | "small";
   /** Lebar blok judul: "wide" = 90% (template Divi), "container" = sejajar container-site. */
   width?: "wide" | "container";
   overlay?: number;
@@ -25,6 +25,7 @@ export function PageHero({ title, subtitle, image, size = "page", width = "wide"
     page: "min-h-[420px] lg:min-h-[707px]",
     medium: "min-h-[380px] lg:min-h-[600px]",
     compact: "min-h-[340px] lg:min-h-[520px]",
+    small: "min-h-[320px] lg:min-h-[480px]",
   }[size];
   return (
     <section className={`relative flex items-end bg-[#666] ${height}`}>
