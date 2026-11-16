@@ -15,6 +15,10 @@ export const STATIC_ROUTES = new Set<string>([
   "lingkungan",
   "pendidikan",
   "ekonomi",
+  // Program Kami (slug dengan angka nol dipertahankan) + halaman anak
+  "pr0gram-kami",
+  "pr0gram-kami/kerelawanan",
+  "pr0gram-kami/kebencanaan",
 ]);
 
 /** Kategori yang dipakai tab grid Publikasi. */

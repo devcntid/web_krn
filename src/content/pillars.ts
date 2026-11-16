@@ -21,8 +21,12 @@ export type PillarProgram = {
 };
 
 export type Pillar = {
-  /** Path halaman tanpa slash, sama dengan slug WordPress. */
-  path: PillarSlug;
+  /** Path halaman tanpa slash depan/belakang, sama dengan path WordPress. */
+  path: string;
+  /** Halaman induk untuk breadcrumb (halaman anak saja). */
+  parent?: { name: string; path: string };
+  /** Label kecil di atas judul hero; default "Pilar Program". */
+  eyebrow?: string;
   /** Judul halaman (H1). */
   title: string;
   hero: MediaRef;
@@ -30,6 +34,8 @@ export type Pillar = {
   tagline: string;
   description: string;
   /** Judul bagian program — halaman asli memakai "Program Pilihan" atau "Program". */
+  /** Angka ringkas di bawah deskripsi (hanya Kerelawanan & Kebencanaan). */
+  stats?: { title: string; description: string }[];
   programsHeading: string;
   programs: PillarProgram[];
   /**
@@ -54,14 +60,14 @@ export const PILLAR_STORY_COUNT = 6;
 /** Bila kategori terpetakan punya lebih sedikit dari ini, carousel dilengkapi publikasi terbaru. */
 export const PILLAR_STORY_MIN = 3;
 
-const sharedCta = {
+export const sharedCta = {
   heading: "Mari Gerakan Kebaikan",
   description:
     "Setiap kontribusi memiliki arti. Bersama kami, Anda dapat ikut menghadirkan perubahan nyata bagi masyarakat melalui aksi, kepedulian, dan dukungan berkelanjutan.",
   label: "Mari Berdonasi",
 };
 
-const img = (file: string, width: number, height: number): MediaRef => ({ src: `${U}/${file}`, width, height, alt: "" });
+export const img = (file: string, width: number, height: number): MediaRef => ({ src: `${U}/${file}`, width, height, alt: "" });
 
 export const pillars: Record<PillarSlug, Pillar> = {
   "aksi-kemanusiaan": {

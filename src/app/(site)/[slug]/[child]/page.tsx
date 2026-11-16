@@ -3,16 +3,17 @@ import { notFound } from "next/navigation";
 
 import { getAllPages, getPage } from "@/lib/content";
 import { metadataFromSeo } from "@/lib/seo";
+import { STATIC_ROUTES } from "@/config/routes";
 import { GenericPageTemplate } from "@/components/templates/GenericPageTemplate";
 
 type Props = { params: Promise<{ slug: string; child: string }> };
 
-/** Halaman anak, mis. /pr0gram-kami/kerelawanan/. */
+/** Halaman anak yang belum punya route khusus (lihat STATIC_ROUTES). */
 export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getAllPages()
-    .filter((p) => p.path.split("/").length === 2)
+    .filter((p) => p.path.split("/").length === 2 && !STATIC_ROUTES.has(p.path))
     .map((p) => {
       const [slug, child] = p.path.split("/");
       return { slug, child };

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PILLAR_STORY_COUNT, PILLAR_STORY_MIN, type Pillar } from "@/content/pillars";
@@ -8,10 +7,9 @@ import { getAllPosts, getLatestPosts, getPage } from "@/lib/content";
 import { mediaUrl } from "@/lib/media";
 import { breadcrumbJsonLd, metadataFromSeo } from "@/lib/seo";
 import type { PostSummary } from "@/types/content";
-import { PostCard } from "@/components/cards/PostCard";
 import { PageHero } from "@/components/sections/PageHero";
+import { StoriesSection } from "@/components/sections/StoriesSection";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Carousel } from "@/components/ui/Carousel";
 
 /** Metadata dari SEO Rank Math halaman WordPress pilar. */
 export function pillarMetadata(pillar: Pillar): Metadata {
@@ -31,14 +29,17 @@ function pillarStories(pillar: Pillar): PostSummary[] {
   return [...stories, ...filler].slice(0, PILLAR_STORY_COUNT);
 }
 
-/** Template artboard "04 · Pilar Program" — dipakai empat halaman pilar. Data: src/content/pillars.ts. */
+/**
+ * Template artboard "04 · Pilar Program" — dipakai empat halaman pilar (src/content/pillars.ts)
+ * serta Kerelawanan & Kebencanaan (src/content/programs.ts).
+ */
 export function PillarPage({ pillar }: { pillar: Pillar }) {
   if (!getPage(pillar.path)) notFound();
   const stories = pillarStories(pillar);
 
   return (
     <>
-      <PageHero title={pillar.title} eyebrow="Pilar Program" image={pillar.hero} width="container" overlay={0.4} />
+      <PageHero title={pillar.title} eyebrow={pillar.eyebrow ?? "Pilar Program"} image={pillar.hero} width="container" overlay={0.4} />
 
       {/* Tagline + deskripsi */}
       <section className="py-12 md:py-20">
@@ -47,6 +48,20 @@ export function PillarPage({ pillar }: { pillar: Pillar }) {
           <p className="text-base leading-[1.6] text-ink">{pillar.description}</p>
         </div>
       </section>
+
+      {/* Angka ringkas (hanya halaman yang memilikinya) */}
+      {pillar.stats && (
+        <section className="pb-12 md:pb-20">
+          <ul className="container-site grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+            {pillar.stats.map((stat) => (
+              <li key={stat.title} className="rounded-[10px] border border-border p-5 md:p-6">
+                <h3 className="text-xl font-bold text-primary md:text-2xl">{stat.title}</h3>
+                <p className="mt-2 text-sm leading-[1.6] text-body">{stat.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Program */}
       <section className="bg-surface-alt py-12 md:py-[72px]">
@@ -73,37 +88,7 @@ export function PillarPage({ pillar }: { pillar: Pillar }) {
         </div>
       </section>
 
-      {/* Cerita Berdampak */}
-      {stories.length > 0 && (
-        <section className="py-12 md:py-[72px]">
-          <div className="container-site">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <h2 className="text-[28px] font-bold md:text-[36px]">Cerita Berdampak</h2>
-              <Link
-                href={pillar.storiesHref}
-                className="inline-flex min-h-11 items-center rounded-full border-2 border-primary px-[18px] py-2 text-[15px] font-medium text-primary transition-colors hover:bg-primary hover:text-white"
-              >
-                Lihat Semua Cerita
-              </Link>
-            </div>
-            <div className="mt-7 md:mt-9">
-              <Carousel
-                label={`Cerita berdampak ${pillar.title}`}
-                arrows="bottom-right"
-                loop={false}
-                slideClassName="basis-full sm:basis-1/2 lg:basis-1/3 pl-6 pb-5 pt-1"
-                gapClassName="-ml-6"
-              >
-                {stories.map((post) => (
-                  <div key={post.slug} className="h-full px-1">
-                    <PostCard post={post} showExcerpt={false} />
-                  </div>
-                ))}
-              </Carousel>
-            </div>
-          </div>
-        </section>
-      )}
+      <StoriesSection posts={stories} label={`Cerita berdampak ${pillar.title}`} href={pillar.storiesHref} />
 
       {/* CTA donasi */}
       <section className="pb-14 md:pb-20">
@@ -124,6 +109,7 @@ export function PillarPage({ pillar }: { pillar: Pillar }) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Beranda", path: "/" },
+          ...(pillar.parent ? [pillar.parent] : []),
           { name: pillar.title, path: `/${pillar.path}/` },
         ])}
       />
