@@ -92,7 +92,7 @@ export default async function AdminDashboard() {
       tag: "MEDIA",
       tagClass: "bg-admin-danger-bg text-admin-danger",
       text: `${num.format(todo.missingAlt)} gambar tanpa teks alt`,
-      href: "/admin/media/",
+      href: "/admin/media/?alt=kosong",
       ability: "media.manage",
     },
     {

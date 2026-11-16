@@ -5,6 +5,7 @@ import { useEffect, useId, useState, useTransition } from "react";
 
 import { searchMediaAction } from "@/app/admin/(panel)/publikasi/actions";
 import { Dialog } from "@/components/admin/Dialog";
+import { MediaDropzone } from "@/components/admin/media/MediaDropzone";
 import { mediaUrl } from "@/lib/media";
 import type { MediaChoice, MediaPage } from "@/types/admin-posts";
 
@@ -13,7 +14,7 @@ const btn =
 
 /**
  * Pemilih gambar dari pustaka media (modal). Teks alt WAJIB diisi sebelum gambar bisa dipakai;
- * bawaan diambil dari pustaka. Unggah gambar baru menyusul di Pustaka Media (B9).
+ * bawaan diambil dari pustaka. Gambar baru bisa diunggah langsung di sini (butuh hak "Unggah media").
  */
 export function MediaPicker({
   open,
@@ -90,6 +91,18 @@ function PickerBody({ onSelect }: { onSelect: (media: MediaChoice) => void }) {
           Cari
         </button>
       </form>
+
+      <MediaDropzone
+        compact
+        onUploaded={(item) => {
+          if (!item.mime.startsWith("image/")) return;
+          const choice = { id: item.id, url: item.url, alt: item.alt, width: item.width, height: item.height };
+          // Tampilkan unggahan baru di depan dan langsung pilih; teks alt tetap wajib diisi.
+          setData((d) => (d ? { ...d, items: [choice, ...d.items.filter((x) => x.id !== choice.id)], total: d.total + 1 } : d));
+          setSelected(choice);
+          setAlt(choice.alt);
+        }}
+      />
 
       {failed ? (
         <p role="alert" className="rounded-admin bg-admin-danger-bg p-3 text-sm font-semibold text-admin-danger">

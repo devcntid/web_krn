@@ -35,6 +35,14 @@ Cek: buka `https://<store-id>.public.blob.vercel-storage.com/wp-content/uploads/
 > Development sebelum migrasi: kosongkan `NEXT_PUBLIC_MEDIA_BASE_URL` → file dibaca dari `public/wp-content/uploads` lokal.
 
 ## 3. Gambar baru
+**Cara utama: Pustaka Media di `/admin/media`** (atau tombol unggah di pemilih gambar editor/beranda).
+- File dikirim langsung dari browser ke Blob (`@vercel/blob/client`); route `/api/media/upload` hanya menerbitkan token setelah memeriksa sesi dan hak "Unggah & hapus media".
+- Tipe & batas: JPG/PNG/WebP/AVIF/GIF ≤ 15 MB, PDF ≤ 30 MB, MP4/WebM ≤ 100 MB (aturan di `src/lib/media-upload.ts`). SVG tidak diizinkan.
+- Path: `media/YYYY/MM/nama-<acak>.ext`. Setelah unggah, ukuran & tipe diambil dari Blob, dimensi dibaca dari file, lalu dicatat di tabel `media`.
+- Hapus dari pustaka = hapus file di Blob + baris tabel; ditolak selama file masih dipakai publikasi, halaman, atau pengaturan.
+- Butuh `BLOB_READ_WRITE_TOKEN` di environment (lokal: `vercel env pull .env.local`). Tanpa token, pustaka tetap bisa dibuka tetapi unggah dan hapus ditolak dengan pesan.
+
+Lewat terminal (tanpa pencatatan di tabel `media`):
 ```bash
 npm run media:upload -- ~/Downloads/foto-kegiatan.jpg
 # ✓ ~/Downloads/foto-kegiatan.jpg
