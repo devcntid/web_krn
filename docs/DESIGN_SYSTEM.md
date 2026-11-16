@@ -7,7 +7,8 @@ Sumber: computed styles relawannusantara.org (Divi), 13 Nov 2026. Token didefini
 |---|---|---|
 | `primary` | #006659 | Hijau brand: tombol sekunder, tab aktif, panel statistik, bar footer, border dropdown |
 | `primary-600` | #01997F | Dot carousel aktif |
-| `primary-400` | #2CA395 | Peran pada testimoni |
+| `primary-400` | #2CA395 | Aksen dekoratif (kontras di atas putih < 4.5:1, jangan untuk teks kecil) |
+| `primary-500` | #1E7F73 | Peran pada testimoni (varian lolos kontras 4.5:1, dari kanvas desain) |
 | `accent` | #F4A62A | Tombol Donasi, CTA "Buka E-Report" |
 | `accent-soft` | #EEC044 | Tombol "Mari Berdonasi" |
 | `cream` | #F8F7F0 | Background footer |
@@ -17,6 +18,7 @@ Sumber: computed styles relawannusantara.org (Divi), 13 Nov 2026. Token didefini
 | `ink` / `ink-900` | #000 / #1D1D18 | Heading |
 | `body`, `body-strong`, `body-soft` | #444 / #333 / #666 | Teks |
 | `muted` | #A5A49A | Teks footer, meta |
+| `muted-strong` | #77756B | Teks abu di atas putih (deskripsi testimoni), kontras ≥4.5:1 |
 | (literal) | #F05E22 | Border titik-titik kotak asal dana |
 | (literal) | #F1B51C | Tanggal footer |
 

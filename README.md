@@ -27,6 +27,7 @@ Hasil & peringatan: `content/export-report.json`. Ekspor aman dijalankan ulang (
 | `npm run build` / `npm start` | Build & jalankan produksi |
 | `npm run lint` · `npm run typecheck` | ESLint · TypeScript |
 | `npm run export` | Ekspor WordPress → `content/` + media |
+| `npm run check:content` | Periksa konten ekspor → `content/check-report.json` (`-- --strict` untuk exit 1 bila ada temuan) |
 | `npm run media:migrate` | Unggah semua media lama ke Vercel Blob (sekali, bisa dilanjutkan) |
 | `npm run media:upload -- <file>` | Unggah gambar baru ke Vercel Blob |
 

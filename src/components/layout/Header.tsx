@@ -54,7 +54,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
             alt={site.name}
             width={site.logo.width}
             height={site.logo.height}
-            priority
+            preload
             className="h-[26px] w-auto lg:h-[34px]"
           />
         </Link>

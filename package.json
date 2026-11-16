@@ -9,6 +9,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "export": "tsx scripts/export-wp.ts",
+    "check:content": "tsx scripts/check-content.ts",
     "format": "prettier --write .",
     "media:upload": "tsx scripts/upload-media.ts",
     "media:migrate": "tsx scripts/migrate-media-to-blob.ts"

@@ -4,7 +4,11 @@ import { heroSlidesDesktop, heroSlidesMobile } from "@/content/home";
 import { Carousel } from "@/components/ui/Carousel";
 import { mediaUrl } from "@/lib/media";
 
-/** Hero beranda: slider desktop (5:3, link kampanye) & slider mobile (potret) terpisah, seperti Smart Slider 3. */
+/**
+ * Hero beranda: slider desktop (5:3, link kampanye) & slider mobile (potret) terpisah, seperti Smart Slider 3.
+ * `sizes` memakai 1px untuk slider yang tersembunyi agar preload tidak mengunduh banner ukuran penuh
+ * milik breakpoint lain.
+ */
 export function HeroSlider() {
   return (
     <section aria-label="Kampanye pilihan">
@@ -16,8 +20,8 @@ export function HeroSlider() {
                 src={mediaUrl(slide.image)}
                 alt={slide.title}
                 fill
-                priority={i === 0}
-                sizes="100vw"
+                preload={i === 0}
+                sizes="(min-width: 768px) 100vw, 1px"
                 className="object-cover"
               />
             </a>
@@ -32,8 +36,8 @@ export function HeroSlider() {
                 src={mediaUrl(src)}
                 alt={`Kampanye Relawan Nusantara ${i + 1}`}
                 fill
-                priority={i === 0}
-                sizes="100vw"
+                preload={i === 0}
+                sizes="(min-width: 768px) 1px, 100vw"
                 className="object-cover"
               />
             </div>

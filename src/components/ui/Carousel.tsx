@@ -15,6 +15,10 @@ type CarouselProps = {
   autoplayMs?: number;
   arrows?: "none" | "side" | "side-round" | "bottom-right";
   dots?: boolean;
+  /** Kelas tambahan tombol panah, mis. "max-md:hidden" atau "[--arrow-top:80px]". */
+  arrowsClassName?: string;
+  /** Kelas tambahan baris titik, mis. "md:hidden". */
+  dotsClassName?: string;
   align?: "start" | "center";
 };
 
@@ -32,6 +36,8 @@ export function Carousel({
   autoplayMs,
   arrows = "side",
   dots = false,
+  arrowsClassName = "",
+  dotsClassName = "",
   align = "start",
 }: CarouselProps) {
   const [plugins] = useState(() => {
@@ -61,7 +67,7 @@ export function Carousel({
   const arrowBase = "flex items-center justify-center transition-opacity hover:opacity-80";
   const arrowStyle = {
     side: `${arrowBase} absolute top-1/2 z-10 size-10 -translate-y-1/2 text-white/80 drop-shadow`,
-    "side-round": `${arrowBase} absolute top-1/2 z-10 size-[52px] -translate-y-1/2 rounded-full bg-white text-ink shadow-card`,
+    "side-round": `${arrowBase} absolute top-[var(--arrow-top,50%)] z-10 size-[52px] -translate-y-1/2 rounded-full bg-white text-ink shadow-card`,
     "bottom-right": `${arrowBase} size-10 rounded-[6px] bg-primary text-white`,
     none: "",
   }[arrows];
@@ -86,10 +92,10 @@ export function Carousel({
 
       {arrows === "side" || arrows === "side-round" ? (
         <>
-          <button type="button" aria-label="Sebelumnya" onClick={() => embla?.scrollPrev()} className={`${arrowStyle} ${arrows === "side-round" ? "left-0 lg:-left-[60px]" : "left-2"}`}>
+          <button type="button" aria-label="Sebelumnya" onClick={() => embla?.scrollPrev()} className={`${arrowStyle} ${arrowsClassName} ${arrows === "side-round" ? "left-0 lg:-left-[60px]" : "left-2"}`}>
             <ChevronLeft className="size-7" />
           </button>
-          <button type="button" aria-label="Berikutnya" onClick={() => embla?.scrollNext()} className={`${arrowStyle} ${arrows === "side-round" ? "right-0 lg:-right-[60px]" : "right-2"}`}>
+          <button type="button" aria-label="Berikutnya" onClick={() => embla?.scrollNext()} className={`${arrowStyle} ${arrowsClassName} ${arrows === "side-round" ? "right-0 lg:-right-[60px]" : "right-2"}`}>
             <ChevronRight className="size-7" />
           </button>
         </>
@@ -107,7 +113,7 @@ export function Carousel({
       )}
 
       {dots && snaps.length > 1 && (
-        <div className="mt-6 flex justify-center gap-2">
+        <div className={`mt-6 flex justify-center gap-2 ${dotsClassName}`}>
           {snaps.map((_, i) => (
             <button
               key={i}

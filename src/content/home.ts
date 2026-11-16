@@ -5,12 +5,15 @@
 
 const U = "/wp-content/uploads";
 
-/** Smart Slider 3 — slide desktop (link ke kampanye donasi). */
+/**
+ * Smart Slider 3 — slide desktop (link ke kampanye donasi).
+ * Parameter ?source=webbanner dipertahankan dari situs asli (atribusi di aplikasi donasi).
+ */
 export const heroSlidesDesktop = [
-  { title: "Respon 72 Jam", image: `${U}/2026/10/Banner-Donol.png`, href: "/campaign/respon-tanggap-bencana" },
-  { title: "Respon Darurat Karhutla", image: `${U}/2026/10/Page-2.png`, href: "/campaign/respon-darurat-karhutla" },
-  { title: "Bantuan Kemanusiaan Sudan", image: `${U}/2026/10/Bantu-Kemanusiaan-Sudan.png`, href: "/campaign/sedekah-air-pangan-untuk-sudan" },
-  { title: "Musim Dingin Palestina", image: `${U}/2026/10/ORG-2.png`, href: "/campaign/hangatkan-palestina-di-tengah-musim-dingin" },
+  { title: "Respon 72 Jam", image: `${U}/2026/10/Banner-Donol.png`, href: "/campaign/respon-tanggap-bencana?source=webbanner" },
+  { title: "Respon Darurat Karhutla", image: `${U}/2026/10/Page-2.png`, href: "/campaign/respon-darurat-karhutla?source=webbanner" },
+  { title: "Bantuan Kemanusiaan Sudan", image: `${U}/2026/10/Bantu-Kemanusiaan-Sudan.png`, href: "/campaign/sedekah-air-pangan-untuk-sudan?source=webbanner" },
+  { title: "Musim Dingin Palestina", image: `${U}/2026/10/ORG-2.png`, href: "/campaign/hangatkan-palestina-di-tengah-musim-dingin?source=webbanner" },
 ];
 
 /** Smart Slider 3 — slide mobile (potret 1080×1350, tanpa link). */
@@ -36,9 +39,11 @@ export const featuredVideo = {
 };
 
 export const impactMap = {
-  image: { src: `${U}/2026/06/Map-e1782284458578.jpg`, width: 1193, height: 673 },
+  image: { src: `${U}/2026/06/Map-e1782284458578.jpg`, width: 976, height: 681 },
   alt: "Peta sebaran program Relawan Nusantara: Palestina, Sudan, Malaysia, dan Indonesia",
   heading: "Jejak Sebaran Kebaikan 2026",
+  /** Dimensi asli ikon Ellipse-278x.png */
+  iconSize: { width: 103, height: 96 },
   stats: [
     { value: 287507, label: "Penerima Manfaat", icon: `${U}/2026/06/Ellipse-2783.png` },
     { value: 3012, label: "Relawan", icon: `${U}/2026/06/Ellipse-2782.png` },
@@ -92,7 +97,15 @@ export const testimonials = {
   heading: "Bersama Menebar Dampak",
   description:
     "Cerita, pengalaman, dan kesan dari para donatur, mitra, penerima manfaat, serta relawan yang telah menjadi bagian dari perjalanan menghadirkan manfaat",
+  /** Urutan sama dengan slider testimoni di situs asli. */
   items: [
+    {
+      quote:
+        "Terima kasih kepada Relawan Nusantara dan seluruh pihak yang telah memberikan kesempatan untuk aku dapat menjadi bagian dari perjalanan kemanusiaan ini. Semoga setiap kebaikan yang disampaikan menjadi manfaat, membawa keberkahan dan menguatkan harapan bagi masyarakat Aceh Tamiang untuk bangkit dan pulih sepenuhnya.",
+      name: "Nabilah Ayu",
+      role: "Penyanyi",
+      photo: `${U}/2026/06/nabilah-120x120.jpg`,
+    },
     {
       quote:
         "Terima kasih karena selama ini sudah hadir dan peduli kepada masyarakat kecil seperti kami, terutama untuk anak saya, Ida. Semoga Relawan Nusantara semakin maju, semakin banyak membantu orang-orang yang membutuhkan, dan semua relawannya selalu diberikan kesehatan, keberkahan, serta dimudahkan dalam setiap kebaikannya.",
@@ -112,13 +125,6 @@ export const testimonials = {
       name: "Roy Widiartha",
       role: "Kepala Pokja Pengembangan Masyarakat SKK Migas",
       photo: `${U}/2026/06/roy-skk-120x120.jpg`,
-    },
-    {
-      quote:
-        "Terima kasih kepada Relawan Nusantara dan seluruh pihak yang telah memberikan kesempatan untuk aku dapat menjadi bagian dari perjalanan kemanusiaan ini. Semoga setiap kebaikan yang disampaikan menjadi manfaat, membawa keberkahan dan menguatkan harapan bagi masyarakat Aceh Tamiang untuk bangkit dan pulih sepenuhnya.",
-      name: "Nabilah Ayu",
-      role: "Penyanyi",
-      photo: `${U}/2026/06/nabilah-120x120.jpg`,
     },
   ],
 };

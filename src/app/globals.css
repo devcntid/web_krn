@@ -9,6 +9,8 @@
   --color-primary: #006659;
   --color-primary-600: #01997f;
   --color-primary-400: #2ca395;
+  /* Varian primary-400 yang lolos kontras 4.5:1 di atas putih (teks kecil) */
+  --color-primary-500: #1e7f73;
   --color-accent: #f4a62a;
   --color-accent-soft: #eec044;
 
@@ -25,6 +27,8 @@
   --color-body-strong: #333333;
   --color-body-soft: #666666;
   --color-muted: #a5a49a;
+  /* Abu yang digelapkan dari kanvas desain agar kontras teks ≥4.5:1 di atas putih */
+  --color-muted-strong: #77756b;
 
   /* Typography */
   --font-sans: var(--font-poppins-src), ui-sans-serif, system-ui, sans-serif;
