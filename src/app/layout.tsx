@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
-import { manrope, poppins } from "./fonts";
+import { manrope, poppins, poppinsExtra } from "./fonts";
 import { SITE_URL, site } from "@/config/site";
 import { siteIcons } from "@/lib/site-icons";
 
@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 /** Root layout: hanya <html>, font, dan metadata dasar. Kerangka situs ada di (site)/layout.tsx. */
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="id" className={`${poppins.variable} ${manrope.variable}`}>
+    <html lang="id" className={`${poppins.variable} ${poppinsExtra.variable} ${manrope.variable}`}>
       <body>{children}</body>
     </html>
   );

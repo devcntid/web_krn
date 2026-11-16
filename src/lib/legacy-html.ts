@@ -17,5 +17,10 @@ export function prepareLegacyHtml(html: string, pageTitle: string): string {
   // 3) Deretan gambar berurutan (kolom Divi yang diratakan) → grid galeri.
   out = out.replace(/(?:<img\b[^>]*>\s*){2,}/g, (run) => `<div class="wp-gallery">${run.trim()}</div>\n`);
 
+  // 4) Sisa modul blog Divi yang tidak punya tujuan di situs ini: tautan arsip penulis
+  //    (/author/…) dijadikan teks biasa; tautan pagination (/…/page/N/) dibuang.
+  out = out.replace(/<a\b[^>]*href="\/author\/[^"]*"[^>]*>([\s\S]*?)<\/a>/g, "$1");
+  out = out.replace(/<a\b[^>]*href="\/[^"]*\/page\/\d+\/[^"]*"[^>]*>[\s\S]*?<\/a>\s*/g, "");
+
   return out.trim();
 }

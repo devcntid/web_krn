@@ -16,8 +16,22 @@ type Props = { params: Promise<{ slug: string }> };
  */
 export const dynamicParams = false;
 
+/**
+ * Beberapa slug WordPress memuat karakter non-ASCII yang disimpan ter-encode
+ * (mis. "%ef%b7%ba"). Next.js memakai param yang SUDAH di-decode, jadi slug
+ * di-decode untuk generateStaticParams dan dipetakan kembali saat membaca konten.
+ */
+const decodeSlug = (slug: string) => {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+};
+const storedSlug = (param: string) => (/[^\x00-\x7f]/.test(param) ? encodeURIComponent(param).toLowerCase() : param);
+
 export function generateStaticParams() {
-  const posts = getAllPosts().map((p) => ({ slug: p.slug }));
+  const posts = getAllPosts().map((p) => ({ slug: decodeSlug(p.slug) }));
   const pages = getAllPages()
     .filter((p) => !p.path.includes("/") && !STATIC_ROUTES.has(p.path))
     .map((p) => ({ slug: p.path }));
@@ -25,7 +39,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const slug = storedSlug(decodeSlug((await params).slug));
   const post = getPost(slug);
   if (post) return metadataFromSeo(post.seo, { title: post.title, path: `/${slug}/`, description: post.excerpt });
   const page = getPage(slug);
@@ -34,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SlugPage({ params }: Props) {
-  const { slug } = await params;
+  const slug = storedSlug(decodeSlug((await params).slug));
 
   const post = getPost(slug);
   if (post) {

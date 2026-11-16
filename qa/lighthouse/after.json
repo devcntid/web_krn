@@ -1,0 +1,98 @@
+[
+  {
+    "page": "beranda",
+    "mode": "mobile",
+    "perf": 90,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "3.69",
+    "cls": "0.001",
+    "tbt": 41,
+    "failed": ""
+  },
+  {
+    "page": "beranda",
+    "mode": "desktop",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "0.90",
+    "cls": "0.000",
+    "tbt": 0,
+    "failed": ""
+  },
+  {
+    "page": "post",
+    "mode": "mobile",
+    "perf": 94,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "3.15",
+    "cls": "0.000",
+    "tbt": 43,
+    "failed": ""
+  },
+  {
+    "page": "post",
+    "mode": "desktop",
+    "perf": 98,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "1.12",
+    "cls": "0.000",
+    "tbt": 0,
+    "failed": ""
+  },
+  {
+    "page": "berita",
+    "mode": "mobile",
+    "perf": 89,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "3.59",
+    "cls": "0.000",
+    "tbt": 135,
+    "failed": ""
+  },
+  {
+    "page": "berita",
+    "mode": "desktop",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "0.98",
+    "cls": "0.000",
+    "tbt": 0,
+    "failed": ""
+  },
+  {
+    "page": "kemitraan",
+    "mode": "mobile",
+    "perf": 91,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "3.54",
+    "cls": "0.001",
+    "tbt": 33,
+    "failed": ""
+  },
+  {
+    "page": "kemitraan",
+    "mode": "desktop",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": "1.03",
+    "cls": "0.001",
+    "tbt": 0,
+    "failed": ""
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-11-16T04:37:17.410Z",
+  "origin": "http://localhost:3111",
+  "totals": {
+    "sitemapUrls": 741,
+    "pagesWithIssues": 0,
+    "internalLinksOutsideSitemap": 102,
+    "brokenLinks": 1,
+    "redirectedLinks": 0,
+    "imagesChecked": 1790,
+    "brokenImages": 3,
+    "donationAppLinks": 3695,
+    "robotsOk": true
+  },
+  "schemaTypes": {
+    "NGO": 741,
+    "WebSite": 671,
+    "Person": 670,
+    "Organization": 670,
+    "ImageObject": 670,
+    "WebPage": 670,
+    "BlogPosting": 670,
+    "BreadcrumbList": 70,
+    "ListItem": 70,
+    "SearchAction": 1
+  },
+  "issues": [],
+  "brokenLinks": [
+    {
+      "target": "/relawan-nusantara-salurkan-paket-pangan-spesial-hari-guru-untuk-pahlawan-tanpa-tanda-jasa-di-lombok-timur/Dalam%20suasana%20penuh%20kesederhanaan,%20Relawan%20Nusantara%20hadir%20membawa%20paket%20pangan%20yang%20tidak%20hanya%20berisi%20kebutuhan%20dasar,%20tetapi%20juga%20secercah%20kelegaan.%20Bantuan%20ini%20menjadi%20ruang%20bernafas%20bagi%20mereka%20yang%20harus%20terus%20menghitung%20setiap%20rupiah%20agar%20dapur%20tetap%20menyala.%20Setiap%20paket%20pangan%20yang%20diserahkan%20bukan%20hanya%20sembako,%20tetapi%20menjadi%20wujud%20kepedulian%20bahwa%20bahwa%20ada%20tangan-tangan%20baik%20yang%20ingin%20menguatkan%20langkah%20mereka.%20Penyaluran%20bantuan%20yang%20dilakukan%20di%20beberapa%20titik%20di%20Lombok%20Timur%20itu%20kembali%20membuka%20mata%20tentang%20realitas%20pengabdian%20para%20guru%20honorer.%20Mereka%20mengajar%20puluhan%20tahun%20tanpa%20jaminan%20kesejahteraan,%20tanpa%20kepastian%20masa%20depan,%20tetapi%20tetap%20datang%20ke%20sekolah%20setiap%20pagi%20dengan%20senyum%20yang%20sama,%20suara%20yang%20sama%20lembutnya,%20dan%20harapan%20yang%20sama%20besarnya%20untuk%20anak-anak%20yang%20mereka%20sebut%20sebagai%20masa%20depan%20bangsa.%20Meski%20hidup%20serba%20sederhana,%20para%20guru%20tersebut%20menyimpan%20keyakinan%20yang%20tak%20mudah%20padam.%20Bahwa%20ilmu%20harus%20terus%20diajarkan,%20meski%20perut%20kadang%20menanggung%20lapar.%20Dan%20di%20titik%20paling%20rawan%20itu,%20paket%20pangan%20dari%20Relawan%20Nusantara%20menjadi%20penyambung%20nafas,%20pengganti%20beban%20kebutuhan%20dapur%20yang%20seharusnya%20dapat%20tertutupi%20oleh%20upah%20yang%20layak.%20Inilah%20wajah%20pengabdian%20yang%20sesungguhnya.%20Hening,%20konsisten,%20dan%20penuh%20daya.%20Maka%20di%20Hari%20Guru%20Nasional,%20Relawan%20Nusantara%20bukan%20hanya%20memberikan%20bantuan,%20tetapi%20juga%20memberikan%20pesan,%20bahwa%20para%20guru%20honorer%20tidak%20sendirian.%20Masih%20banyak%20hati%20yang%20ingin%20membantu,%20masih%20banyak%20tangan%20yang%20ingin%20merangkul,%20dan%20masih%20banyak%20kesempatan%20bagi%20siapa%20pun%20untuk%20menjadi%20bagian%20dari%20kisah%20perjuangan%20mereka.%20Klik%20disini%20untuk%20ikut%20menjadi%20bagian%20dari%20kisah%20perjuangan%20mereka.%20Karena%20pendidikan%20tidak%20hanya%20dibangun%20oleh%20bangku%20dan%20papan%20tulis,%20tetapi%20oleh%20keteguhan%20orang-orang%20sederhana%20yang%20setiap%20hari%20memilih%20untuk%20tetap%20mengajar,%20meski%20gaji%20mereka%20bahkan%20tak%20cukup%20menutupi%20kebutuhan%20pokok.%20Dan%20setiap%20kebaikan%20kecil%20dari%20sahabat,%20adalah%20bahan%20bakar%20yang%20membuat%20keteguhan%20itu%20tetap%20menyala.",
+      "from": "/relawan-nusantara-salurkan-paket-pangan-spesial-hari-guru-untuk-pahlawan-tanpa-tanda-jasa-di-lombok-timur/",
+      "status": 404
+    }
+  ],
+  "redirectedLinks": [],
+  "brokenImages": [
+    {
+      "src": "/wp-content/uploads/2026/03/IMG_1429_11zon-scaled.jpg",
+      "from": "/sedekah-buka-puasa-di-sukasari-bandung-relawan-nusantara-salurkan-paket-untuk-warga/",
+      "status": 404
+    },
+    {
+      "src": "/wp-content/uploads/2025/04/ALBAWABA-The-Hajj-pilgrimage-is-one-of-the-most….jpeg",
+      "from": "/dam-karena-melanggar-larangan-ihram-pengertian-jenis-dan-ketentuannya/",
+      "status": 404
+    },
+    {
+      "src": "/wp-content/uploads/2025/02/Anti-Islam-Movement-Has-New-Rallying-Cry-—-Lets-Delete-Verses-of-the-Quran.jpg",
+      "from": "/menyambut-ramadan-dengan-hati-dan-persiapan-terbaik/",
+      "status": 404
+    }
+  ]
+}

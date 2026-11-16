@@ -28,6 +28,9 @@ Hasil & peringatan: `content/export-report.json`. Ekspor aman dijalankan ulang (
 | `npm run lint` · `npm run typecheck` | ESLint · TypeScript |
 | `npm run export` | Ekspor WordPress → `content/` + media |
 | `npm run check:content` | Periksa konten ekspor → `content/check-report.json` (`-- --strict` untuk exit 1 bila ada temuan) |
+| `npm run check:site` | Crawl sitemap situs yang berjalan: status, canonical, JSON-LD, tautan & gambar rusak → `qa/site-check.json` |
+| `npm run visual:compare` | Screenshot WordPress vs Next.js + skor beda piksel → `docs/VISUAL_QA_REPORT.md` |
+| `npm run db:generate` · `db:migrate` · `db:studio` | Migrasi & penjelajah database (Drizzle) — lihat `docs/DATABASE.md` |
 | `npm run media:migrate` | Unggah semua media lama ke Vercel Blob (sekali, bisa dilanjutkan) |
 | `npm run media:upload -- <file>` | Unggah gambar baru ke Vercel Blob |
 

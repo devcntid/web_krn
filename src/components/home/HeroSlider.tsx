@@ -21,6 +21,7 @@ export function HeroSlider() {
                 alt={slide.title}
                 fill
                 preload={i === 0}
+                fetchPriority={i === 0 ? "high" : "auto"}
                 sizes="(min-width: 768px) 100vw, 1px"
                 className="object-cover"
               />
@@ -37,6 +38,7 @@ export function HeroSlider() {
                 alt={`Kampanye Relawan Nusantara ${i + 1}`}
                 fill
                 preload={i === 0}
+                fetchPriority={i === 0 ? "high" : "auto"}
                 sizes="(min-width: 768px) 1px, 100vw"
                 className="object-cover"
               />
