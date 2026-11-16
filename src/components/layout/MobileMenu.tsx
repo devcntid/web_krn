@@ -1,10 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { Minus, Plus, Search } from "lucide-react";
 
 import { floatingContact, mainNav } from "@/config/site";
+import { localePath } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { Link, useLocale } from "@/i18n/Link";
+import { LanguageToggle } from "@/components/layout/LanguageToggle";
 
 type MobileMenuProps = {
   id: string;
@@ -25,6 +28,8 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const uid = useId();
+  const locale = useLocale();
+  const t = getDictionary(locale);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -83,23 +88,23 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
       className="flex h-[calc(100dvh-60px)] flex-col border-t-[3px] border-primary bg-white outline-none lg:hidden"
     >
       {/* Form GET biasa: halaman dimuat ulang ke /?s=…, jadi menu tertutup dengan sendirinya. */}
-      <form action="/" method="get" role="search" className="flex shrink-0 gap-2 p-4">
+      <form action={localePath("/", locale)} method="get" role="search" className="flex shrink-0 gap-2 p-4">
         <label htmlFor={`${uid}-cari`} className="sr-only">
-          Cari
+          {t.common.search}
         </label>
         <input
           id={`${uid}-cari`}
           name="s"
           type="search"
-          placeholder="Cari publikasi…"
+          placeholder={t.mobileMenu.searchPlaceholder}
           className="h-11 min-w-0 flex-1 rounded-lg border border-border px-3.5 text-sm text-ink placeholder:text-body-soft"
         />
-        <button type="submit" aria-label="Cari" className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary text-white">
+        <button type="submit" aria-label={t.common.search} className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary text-white">
           <Search aria-hidden className="size-5" />
         </button>
       </form>
 
-      <nav aria-label="Menu mobile" className="min-h-0 flex-1 overflow-y-auto">
+      <nav aria-label={t.mobileMenu.label} className="min-h-0 flex-1 overflow-y-auto">
         <ul>
           {mainNav.map((item, i) => {
             const expanded = openGroup === item.label;
@@ -115,7 +120,7 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
                       onClick={() => setOpenGroup(expanded ? null : item.label)}
                       className="flex min-h-[52px] w-full items-center justify-between px-5 text-left text-base font-semibold text-ink"
                     >
-                      {item.label}
+                      {t.nav[item.label] ?? item.label}
                       {expanded ? (
                         <Minus aria-hidden className="size-5 text-primary" />
                       ) : (
@@ -130,7 +135,7 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
                             onClick={onClose}
                             className="flex min-h-11 items-center px-9 py-2.5 text-[15px] font-medium text-ink"
                           >
-                            {child.label}
+                            {t.nav[child.label] ?? child.label}
                           </Link>
                         </li>
                       ))}
@@ -142,7 +147,7 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
                     onClick={onClose}
                     className="flex min-h-[52px] items-center px-5 text-base font-semibold text-ink"
                   >
-                    {item.label}
+                    {t.nav[item.label] ?? item.label}
                   </Link>
                 )}
               </li>
@@ -151,17 +156,20 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
         </ul>
       </nav>
 
-      <p className="shrink-0 border-t border-border/60 px-5 pt-2 pb-[calc(1rem+env(safe-area-inset-bottom))] text-[13px] text-body">
-        Butuh bantuan?{" "}
+      <div className="flex shrink-0 items-center justify-between gap-3 border-t border-border/60 px-5 pt-2 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+      <p className="text-[13px] text-body">
+        {t.mobileMenu.needHelp}{" "}
         <a
           href={floatingContact.href}
           target="_blank"
           rel="noopener noreferrer"
           className="ml-1 inline-flex min-h-11 items-center font-semibold text-primary underline-offset-4 hover:underline"
         >
-          {floatingContact.label} via WhatsApp
+          {floatingContact.label} {t.mobileMenu.askVia}
         </a>
       </p>
+      <LanguageToggle />
+      </div>
     </div>
   );
 }

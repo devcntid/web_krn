@@ -1,5 +1,7 @@
+import { getDictionary } from "@/i18n/dictionaries";
+import { getLocale } from "@/i18n/request";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/Link";
 import { CalendarDays } from "lucide-react";
 
 import { formatDateCard, formatDateLong, postCategoryLabel } from "@/lib/format";
@@ -27,6 +29,7 @@ export function PostCard({
 }: PostCardProps) {
   const href = `/${post.slug}/`;
   const category = showCategory ? postCategoryLabel(post) : "";
+  const t = getDictionary(getLocale());
   return (
     <article className="flex h-full flex-col rounded-[10px] bg-white p-4 shadow-card">
       <Link href={href} className="block overflow-hidden rounded-[6px]" tabIndex={-1} aria-hidden>
@@ -58,7 +61,7 @@ export function PostCard({
           href={href}
           className="inline-flex min-h-11 items-center rounded-[6px] bg-primary px-4 py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
         >
-          Selengkapnya
+          {t.common.readMore}
         </Link>
       </div>
     </article>
@@ -89,7 +92,7 @@ export function RelatedPostCard({ post }: { post: PostSummary }) {
           href={href}
           className="rounded-[8px] bg-primary px-[18px] py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
         >
-          Selengkapnya
+          {getDictionary(getLocale()).common.readMore}
         </Link>
       </div>
     </article>

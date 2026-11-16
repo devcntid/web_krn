@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-11-16T05:50:37.220Z",
+  "generatedAt": "2026-11-16T06:23:40.194Z",
   "origin": "http://localhost:3111",
   "totals": {
-    "sitemapUrls": 741,
+    "sitemapUrls": 754,
     "pagesWithIssues": 0,
-    "internalLinksOutsideSitemap": 102,
+    "internalLinksOutsideSitemap": 831,
     "brokenLinks": 1,
     "redirectedLinks": 0,
     "imagesChecked": 1790,
     "brokenImages": 3,
-    "donationAppLinks": 3695,
+    "donationAppLinks": 3719,
     "robotsOk": true
   },
   "schemaTypes": {
-    "NGO": 741,
-    "WebSite": 671,
+    "NGO": 754,
+    "WebSite": 672,
     "Person": 670,
     "Organization": 670,
     "ImageObject": 670,
     "WebPage": 670,
     "BlogPosting": 670,
-    "BreadcrumbList": 70,
-    "ListItem": 70,
-    "SearchAction": 1
+    "BreadcrumbList": 82,
+    "ListItem": 82,
+    "SearchAction": 2
   },
   "issues": [],
   "brokenLinks": [

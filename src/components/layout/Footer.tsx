@@ -1,5 +1,8 @@
+import { localePath } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getLocale } from "@/i18n/request";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/Link";
 import { Leaf, Mail, MapPin, Phone } from "lucide-react";
 
 import { contact, footerNav, site, whatsappUrl } from "@/config/site";
@@ -22,6 +25,8 @@ const WTP_BADGE = "/wp-content/uploads/2026/09/2021-2025-scaled.png";
 
 export async function Footer() {
   const latest = await getLatestPosts(2);
+  const locale = getLocale();
+  const t = getDictionary(locale);
 
   return (
     <footer className="font-manrope">
@@ -33,39 +38,37 @@ export async function Footer() {
               <Image src={mediaUrl(site.logo.src)} alt={site.name} width={160} height={36} className="h-9 w-auto" />
             </Link>
             <p className="mt-6 rounded-[10px] border border-dotted border-[#f05e22] p-[30px] text-[15px] leading-[1.5] font-medium text-muted-strong">
-              Dana yang didonasikan melalui Relawan Nusantara adalah milik sah, bukan berasal dari sumber yang
-              tidak halal, dan tidak digunakan untuk pencucian uang, terorisme, atau kejahatan lainnya
+              {t.footer.disclaimer}
             </p>
             {/* Blurb Divi: lencana opini WTP di kiri, teks di kanan */}
             <div className="mt-10 flex items-center gap-4">
               <Image
                 src={mediaUrl(WTP_BADGE)}
-                alt="Lencana opini Wajar Tanpa Pengecualian 2021–2025"
+                alt={t.footer.wtpBadgeAlt}
                 width={480}
                 height={480}
                 sizes="88px"
                 className="size-[88px] shrink-0"
               />
               <p className="text-[13px] leading-[1.3] font-medium text-muted-strong italic">
-                Relawan Nusantara telah meraih predikat opini Wajar Tanpa Pengecualian pada laporan keuangan
-                2021 – 2025 Sesuai Standar Akuntansi Keuangan Indonesia
+                {t.footer.wtp}
               </p>
             </div>
           </div>
 
           {/* Eksplor */}
-          <nav aria-label="Eksplor">
-            <FooterHeading>Eksplor</FooterHeading>
+          <nav aria-label={t.footer.explore}>
+            <FooterHeading>{t.footer.explore}</FooterHeading>
             <ul className="space-y-4">
               {footerNav.map((item) => (
                 <li key={item.label}>
                   <a
-                    href={item.href}
+                    href={localePath(item.href, locale)}
                     {...("external" in item && item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="flex items-center gap-2 text-[15px] font-medium text-muted-strong transition-colors hover:text-primary"
                   >
                     <Leaf aria-hidden className="size-4 fill-current" />
-                    {item.label}
+                    {t.nav[item.label] ?? item.label}
                   </a>
                 </li>
               ))}
@@ -74,7 +77,7 @@ export async function Footer() {
 
           {/* Publikasi terbaru */}
           <div>
-            <FooterHeading>Publikasi</FooterHeading>
+            <FooterHeading>{t.footer.publications}</FooterHeading>
             <ul className="divide-y divide-[#e5e3d8] border-b border-[#e5e3d8]">
               {latest.map((post) => (
                 <li key={post.slug} className="py-3 first:pt-0">
@@ -95,9 +98,9 @@ export async function Footer() {
           {/* Kontak */}
           <div>
             <FooterHeading>
-              Hubungi
+              {t.footer.contact[0]}
               <br />
-              Kami
+              {t.footer.contact[1]}
             </FooterHeading>
             <ul className="space-y-4 text-[15px] leading-[25.5px] font-medium text-muted-strong">
               <li className="flex gap-3">

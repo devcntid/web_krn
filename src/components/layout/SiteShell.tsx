@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 import { organizationJsonLd } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -10,14 +12,16 @@ import { JsonLd } from "@/components/seo/JsonLd";
  * JSON-LD organisasi, dan analytics. Dipakai layout route group (site) dan 404
  * tingkat root — tidak dipakai /admin.
  */
-export function SiteShell({ children }: Readonly<{ children: React.ReactNode }>) {
+export function SiteShell({ children, locale = "id" }: Readonly<{ children: React.ReactNode; locale?: Locale }>) {
+  const t = getDictionary(locale);
   return (
-    <>
+    // <html lang> di root layout tetap "id"; versi Inggris ditandai di pembungkus ini.
+    <div lang={locale}>
       <a
         href="#konten"
         className="sr-only z-[60] rounded bg-primary px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
       >
-        Lewati ke konten
+        {t.shell.skipToContent}
       </a>
       <Header />
       <main id="konten">{children}</main>
@@ -25,6 +29,6 @@ export function SiteShell({ children }: Readonly<{ children: React.ReactNode }>)
       <FloatingContact />
       <JsonLd data={organizationJsonLd()} />
       <Analytics />
-    </>
+    </div>
   );
 }

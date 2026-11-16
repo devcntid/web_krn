@@ -1,3 +1,5 @@
+import { pageLabels } from "@/content/localized";
+import { getLocale } from "@/i18n/request";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -12,10 +14,11 @@ import { StoriesSection } from "@/components/sections/StoriesSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 /** Metadata dari SEO Rank Math halaman WordPress pilar. */
-export async function pillarMetadata(pillar: Pillar): Promise<Metadata> {
+/** `pillar` = versi Indonesia (sumber path & SEO Rank Math); `english` = terjemahannya untuk versi /en/. */
+export async function pillarMetadata(pillar: Pillar, english: Pillar): Promise<Metadata> {
   const page = await getPage(pillar.path);
   if (!page) return {};
-  return metadataFromSeo(page.seo, { title: page.title, path: `/${pillar.path}/` });
+  return metadataFromSeo(page.seo, { title: page.title, path: `/${pillar.path}/`, en: { title: english.title, description: english.description } });
 }
 
 /** Publikasi dari kategori terpetakan; dilengkapi publikasi terbaru bila terlalu sedikit. */
@@ -39,7 +42,7 @@ export async function PillarPage({ pillar }: { pillar: Pillar }) {
 
   return (
     <>
-      <PageHero title={pillar.title} eyebrow={pillar.eyebrow ?? "Pilar Program"} image={pillar.hero} width="container" overlay={0.4} />
+      <PageHero title={pillar.title} eyebrow={pillar.eyebrow ?? pageLabels(getLocale()).pillarEyebrow} image={pillar.hero} width="container" overlay={0.4} />
 
       {/* Tagline + deskripsi */}
       <section className="py-12 md:py-20">

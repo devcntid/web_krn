@@ -54,7 +54,7 @@ function schemaTypes(node: unknown, out: string[] = []): string[] {
 }
 
 function kindOf(pathname: string, postPaths: Set<string>): "home" | "post" | "category" | "page" {
-  if (pathname === "/") return "home";
+  if (pathname === "/" || pathname === "/en/") return "home";
   if (pathname.startsWith("/category/")) return "category";
   return postPaths.has(pathname) ? "post" : "page";
 }

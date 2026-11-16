@@ -1,4 +1,7 @@
-import Link from "next/link";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getLocale } from "@/i18n/request";
+import { localePath } from "@/i18n/config";
+import { Link } from "@/i18n/Link";
 import { Search } from "lucide-react";
 
 import { getPostsByCategory, paginate } from "@/lib/content";
@@ -40,6 +43,7 @@ type PostGridProps = {
  * tautan biasa sehingga berfungsi tanpa JavaScript.
  */
 export async function PostGrid({ basePath, category, defaultCategory, page, query, loaded = 1, perPage = 9 }: PostGridProps) {
+  const t = getDictionary(getLocale()).listing;
   const q = query.trim().toLowerCase();
   const all = (await getPostsByCategory(category)).filter(
     (p) => !q || `${p.title} ${p.excerpt}`.toLowerCase().includes(q),
@@ -67,7 +71,7 @@ export async function PostGrid({ basePath, category, defaultCategory, page, quer
   return (
     <div>
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <ul className="-mx-[5vw] flex gap-2 overflow-x-auto px-[5vw] pb-1 md:mx-0 md:flex-wrap md:gap-4 md:overflow-visible md:px-0 md:pb-0" aria-label="Kategori">
+        <ul className="-mx-[5vw] flex gap-2 overflow-x-auto px-[5vw] pb-1 md:mx-0 md:flex-wrap md:gap-4 md:overflow-visible md:px-0 md:pb-0" aria-label={t.categories}>
           {GRID_TABS.map((tab) => {
             const active = tab.slug === category;
             return (
@@ -79,16 +83,16 @@ export async function PostGrid({ basePath, category, defaultCategory, page, quer
                     active ? "bg-primary text-white" : "bg-white text-ink hover:bg-primary hover:text-white"
                   }`}
                 >
-                  {tab.label}
+                  {t.tabs[tab.slug] ?? tab.label}
                 </Link>
               </li>
             );
           })}
         </ul>
-        <form action={basePath} method="get" role="search" className="relative md:w-[362px]">
+        <form action={localePath(basePath, getLocale())} method="get" role="search" className="relative md:w-[362px]">
           <input type="hidden" name="kategori" value={category} />
           <label htmlFor="grid-search" className="sr-only">
-            Cari berita
+            {t.searchLabel}
           </label>
           <Search aria-hidden className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted" />
           <input
@@ -96,7 +100,7 @@ export async function PostGrid({ basePath, category, defaultCategory, page, quer
             name="q"
             type="search"
             defaultValue={query}
-            placeholder="Search for News"
+            placeholder={t.searchPlaceholder}
             className="h-11 w-full rounded-[6px] bg-[#e4e4e4] pr-4 pl-10 text-sm text-ink outline-none placeholder:text-body-soft focus:ring-2 focus:ring-primary md:h-9"
           />
         </form>
@@ -112,7 +116,7 @@ export async function PostGrid({ basePath, category, defaultCategory, page, quer
           ))}
         </div>
       ) : (
-        <p className="mt-12 text-center text-body-soft">Tidak ada publikasi yang cocok.</p>
+        <p className="mt-12 text-center text-body-soft">{t.empty}</p>
       )}
 
       {hasMore && (
@@ -120,7 +124,7 @@ export async function PostGrid({ basePath, category, defaultCategory, page, quer
           href={`${href({ q: query || undefined, muat: batches + 1 })}#muat-${batches + 1}`}
           className="mt-5 flex h-12 items-center justify-center rounded-lg border-2 border-primary text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white md:hidden"
         >
-          Muat lebih banyak
+          {t.loadMore}
         </Link>
       )}
 

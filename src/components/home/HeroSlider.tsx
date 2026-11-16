@@ -1,6 +1,7 @@
 import Image from "next/image";
 
-import { heroSlidesDesktop, heroSlidesMobile } from "@/content/home";
+import { homeContent, pageLabels } from "@/content/localized";
+import { getLocale } from "@/i18n/request";
 import { Carousel } from "@/components/ui/Carousel";
 import { mediaUrl } from "@/lib/media";
 
@@ -10,11 +11,12 @@ import { mediaUrl } from "@/lib/media";
  * milik breakpoint lain.
  */
 export function HeroSlider() {
+  const c = homeContent(getLocale());
   return (
-    <section aria-label="Kampanye pilihan">
+    <section aria-label={pageLabels(getLocale()).featuredCampaigns}>
       <div className="hidden md:block">
-        <Carousel label="Kampanye pilihan" autoplayMs={5000} arrows="side">
-          {heroSlidesDesktop.map((slide, i) => (
+        <Carousel label={pageLabels(getLocale()).featuredCampaigns} autoplayMs={5000} arrows="side">
+          {c.heroSlidesDesktop.map((slide, i) => (
             <a key={slide.href} href={slide.href} className="relative block aspect-[1193/620] w-full">
               <Image
                 src={mediaUrl(slide.image)}
@@ -30,8 +32,8 @@ export function HeroSlider() {
         </Carousel>
       </div>
       <div className="pt-[60px] md:hidden">
-        <Carousel label="Kampanye pilihan" autoplayMs={5000} arrows="none" dots>
-          {heroSlidesMobile.map((src, i) => (
+        <Carousel label={pageLabels(getLocale()).featuredCampaigns} autoplayMs={5000} arrows="none" dots>
+          {c.heroSlidesMobile.map((src, i) => (
             <div key={src} className="relative aspect-[1080/1350] w-full">
               <Image
                 src={mediaUrl(src)}

@@ -1,3 +1,6 @@
+import { getDictionary } from "@/i18n/dictionaries";
+import { getLocale } from "@/i18n/request";
+import { TranslationNotice } from "@/components/content/TranslationNotice";
 import { getAllPosts } from "@/lib/content";
 import type { Post } from "@/types/content";
 import { PageHero } from "@/components/sections/PageHero";
@@ -16,16 +19,20 @@ async function relatedPosts(slug: string) {
 /** Replikasi Divi Theme Builder body template untuk single post. */
 export async function PostTemplate({ post }: { post: Post }) {
   const related = await relatedPosts(post.slug);
+  const t = getDictionary(getLocale());
   return (
     <article data-template="post">
       <PageHero title={post.title} image={post.featuredImage} size="post" width="narrow" />
 
       <div className="mx-auto grid w-[90%] max-w-[1080px] gap-10 py-8 md:gap-12 md:py-12 lg:grid-cols-[696fr_319fr] lg:gap-[59px]">
-        <RichContent html={post.html} className="text-[15px] leading-[1.7] text-ink lg:text-[14px] lg:leading-[23.8px]" />
+        <div>
+          <TranslationNotice className="mb-6" />
+          <RichContent html={post.html} className="text-[15px] leading-[1.7] text-ink lg:text-[14px] lg:leading-[23.8px]" />
+        </div>
 
         <aside aria-labelledby="kisah-lainnya">
           <h2 id="kisah-lainnya" className="text-xl font-bold text-ink">
-            Kisah Lainnya
+            {t.post.moreStories}
           </h2>
           <div className="mt-6 space-y-10">
             {related.map((p) => (

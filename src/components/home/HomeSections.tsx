@@ -1,7 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/Link";
 
-import { featuredVideo, impactMap, intro, pillars, publications, reportCta, testimonials } from "@/content/home";
+import { homeContent, pageLabels } from "@/content/localized";
+import { getLocale } from "@/i18n/request";
 import { getPostsByCategory, getLatestPosts } from "@/lib/content";
 import { formatDateLong } from "@/lib/format";
 import { Carousel } from "@/components/ui/Carousel";
@@ -15,57 +16,58 @@ const outlineBtn =
 /* ---------- Intro + video + peta ---------- */
 
 export function IntroSection() {
+  const c = homeContent(getLocale());
   return (
     <section className="relative pt-7 pb-10 md:py-16 lg:pt-[100px]">
       {/* Label vertikal "Scroll Untuk Eksplorasi" */}
       <div className="absolute top-10 left-6 hidden flex-col items-center gap-2 xl:flex" aria-hidden>
-        <Image src={mediaUrl(intro.scrollIcon)} alt="" width={40} height={40} unoptimized />
+        <Image src={mediaUrl(c.intro.scrollIcon)} alt="" width={40} height={40} unoptimized />
         <p className="text-xs leading-[1.3] font-extralight text-ink">
-          Scroll
-          <br />
-          Untuk
-          <br />
-          Eksplorasi
+          {(getLocale() === "en" ? ["Scroll", "to", "Explore"] : ["Scroll", "Untuk", "Eksplorasi"]).map((word) => (
+            <span key={word} className="block">
+              {word}
+            </span>
+          ))}
         </p>
       </div>
 
       <div className="container-site">
         <div className="grid gap-[18px] md:grid-cols-2 md:gap-[5.5%] lg:gap-[60px]">
           <h2 className="max-md:text-center">
-            <span className="block text-[22px] leading-none font-bold lg:text-[28px]">{intro.eyebrow}</span>
-            <span className="mt-1.5 block text-[32px] leading-[1.05] font-extrabold italic md:mt-2 md:leading-none lg:text-[45px]">{intro.heading}</span>
+            <span className="block text-[22px] leading-none font-bold lg:text-[28px]">{c.intro.eyebrow}</span>
+            <span className="mt-1.5 block text-[32px] leading-[1.05] font-extrabold italic md:mt-2 md:leading-none lg:text-[45px]">{c.intro.heading}</span>
           </h2>
           <div className="space-y-3 text-[15px] leading-[1.5] text-ink max-md:text-center md:space-y-4 md:text-base md:leading-[1.45]">
-            {intro.paragraphs.map((p) => (
+            {c.intro.paragraphs.map((p) => (
               <p key={p}>{p}</p>
             ))}
           </div>
         </div>
 
         <div className="mt-6 md:mt-14">
-          <YouTubeFacade id={featuredVideo.youtubeId} title={featuredVideo.title} />
+          <YouTubeFacade id={c.featuredVideo.youtubeId} title={c.featuredVideo.title} />
         </div>
 
         {/* Peta sebaran + statistik */}
         <div className="mt-7 grid overflow-hidden md:mt-14 md:grid-cols-[75%_25%]">
           <Image
-            src={mediaUrl(impactMap.image.src)}
-            alt={impactMap.alt}
-            width={impactMap.image.width}
-            height={impactMap.image.height}
+            src={mediaUrl(c.impactMap.image.src)}
+            alt={c.impactMap.alt}
+            width={c.impactMap.image.width}
+            height={c.impactMap.image.height}
             sizes="(min-width: 768px) 60vw, 90vw"
             className="h-auto w-full self-start"
           />
           <div className="rounded-b-2xl bg-primary p-[22px] text-white md:rounded-[0_0_20px_0] md:py-8">
-            <h2 className="text-lg leading-[1.3] font-bold text-white md:text-xl">{impactMap.heading}</h2>
+            <h2 className="text-lg leading-[1.3] font-bold text-white md:text-xl">{c.impactMap.heading}</h2>
             <ul className="mt-4 grid grid-cols-2 gap-4 md:mt-[22px] md:grid-cols-1 md:gap-[22px]">
-              {impactMap.stats.map((s) => (
+              {c.impactMap.stats.map((s) => (
                 <li key={s.label} className="flex items-center gap-2.5 md:gap-3.5">
                   <Image
                     src={mediaUrl(s.icon)}
                     alt=""
-                    width={impactMap.iconSize.width}
-                    height={impactMap.iconSize.height}
+                    width={c.impactMap.iconSize.width}
+                    height={c.impactMap.iconSize.height}
                     sizes="72px"
                     className="h-auto w-11 shrink-0 md:w-14 lg:w-[72px]"
                   />
@@ -86,21 +88,22 @@ export function IntroSection() {
 /* ---------- Pilar program ---------- */
 
 export function PillarsSection() {
+  const c = homeContent(getLocale());
   return (
     <section className="pb-10 md:pb-16">
       <div className="container-site">
         <div className="flex flex-col gap-3.5 md:flex-row md:items-end md:justify-between md:gap-6">
           <h2 className="text-[22px] leading-[1.3] font-bold md:text-[24px] lg:text-[28px]">
-            {pillars.heading[0]} <br className="max-md:hidden" />
-            {pillars.heading[1]}
+            {c.pillars.heading[0]} <br className="max-md:hidden" />
+            {c.pillars.heading[1]}
           </h2>
-          <Link href={pillars.cta.href} className={outlineBtn}>
-            {pillars.cta.label}
+          <Link href={c.pillars.cta.href} className={outlineBtn}>
+            {c.pillars.cta.label}
           </Link>
         </div>
 
         <ul className="mt-5 grid gap-3.5 sm:grid-cols-2 md:mt-14 md:gap-8">
-          {pillars.items.map((item) => (
+          {c.pillars.items.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
@@ -132,22 +135,23 @@ export function PillarsSection() {
 /* ---------- Publikasi ---------- */
 
 export async function PublicationsSection() {
+  const c = homeContent(getLocale());
   const berita = await getPostsByCategory("berita");
-  const posts = (berita.length ? berita : (await getLatestPosts(publications.count))).slice(0, publications.count);
+  const posts = (berita.length ? berita : (await getLatestPosts(c.publications.count))).slice(0, c.publications.count);
   if (!posts.length) return null;
 
   return (
     <section className="pb-10 md:pb-20">
       <div className="container-site">
         <div className="flex flex-col gap-3.5 md:flex-row md:items-center md:justify-between md:gap-6">
-          <h2 className="text-2xl font-bold md:text-[28px]">{publications.heading}</h2>
-          <Link href={publications.cta.href} className={outlineBtn}>
-            {publications.cta.label}
+          <h2 className="text-2xl font-bold md:text-[28px]">{c.publications.heading}</h2>
+          <Link href={c.publications.cta.href} className={outlineBtn}>
+            {c.publications.cta.label}
           </Link>
         </div>
         <div className="mt-5 md:mt-14 lg:px-[60px]">
           <Carousel
-            label="Publikasi terbaru"
+            label={pageLabels(getLocale()).latestPublications}
             arrows="side-round"
             arrowsClassName="max-md:hidden md:[--arrow-top:93px] lg:[--arrow-top:81px]"
             dots
@@ -186,14 +190,15 @@ export async function PublicationsSection() {
 /* ---------- Testimoni ---------- */
 
 export function TestimonialsSection() {
+  const c = homeContent(getLocale());
   return (
     <section className="pb-10 md:pb-20">
       <div className="container-site text-center">
-        <h2 className="text-[26px] font-bold md:text-[30px] lg:text-[36px]">{testimonials.heading}</h2>
-        <p className="mx-auto mt-2 text-[15px] leading-[1.35] text-muted-strong md:text-lg">{testimonials.description}</p>
+        <h2 className="text-[26px] font-bold md:text-[30px] lg:text-[36px]">{c.testimonials.heading}</h2>
+        <p className="mx-auto mt-2 text-[15px] leading-[1.35] text-muted-strong md:text-lg">{c.testimonials.description}</p>
       </div>
       <div className="container-site mt-[18px] md:mt-8">
-        <TestimonialCarousel items={testimonials.items} />
+        <TestimonialCarousel items={c.testimonials.items} />
       </div>
     </section>
   );
@@ -202,17 +207,18 @@ export function TestimonialsSection() {
 /* ---------- CTA e-Report ---------- */
 
 export function ReportCtaSection() {
+  const c = homeContent(getLocale());
   return (
     <section className="relative py-7 md:py-12">
-      <Image src={mediaUrl(reportCta.background)} alt="" fill sizes="100vw" className="object-cover" />
+      <Image src={mediaUrl(c.reportCta.background)} alt="" fill sizes="100vw" className="object-cover" />
       <div className="container-site relative rounded-2xl bg-[rgba(217,217,217,0.88)] p-6 md:rounded-[20px] md:py-10 lg:px-[50px]">
-        <h2 className="text-[22px] font-bold md:text-[26px] lg:text-[32px]">{reportCta.heading}</h2>
-        <p className="mt-2.5 max-w-[810px] text-sm leading-[1.5] text-ink md:mt-3 md:text-base lg:text-lg">{reportCta.description}</p>
+        <h2 className="text-[22px] font-bold md:text-[26px] lg:text-[32px]">{c.reportCta.heading}</h2>
+        <p className="mt-2.5 max-w-[810px] text-sm leading-[1.5] text-ink md:mt-3 md:text-base lg:text-lg">{c.reportCta.description}</p>
         <Link
-          href={reportCta.cta.href}
+          href={c.reportCta.cta.href}
           className="mt-[18px] inline-flex min-h-11 items-center rounded-full bg-accent px-8 py-3 text-sm font-semibold text-ink transition-opacity hover:opacity-90 md:mt-8 md:px-[50px] md:text-base"
         >
-          {reportCta.cta.label}
+          {c.reportCta.cta.label}
         </Link>
       </div>
     </section>

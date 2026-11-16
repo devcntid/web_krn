@@ -3,12 +3,18 @@
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 
+import { localePath } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { useLocale } from "@/i18n/Link";
+
 /**
  * Overlay pencarian seperti Divi: form GET ke "/?s=" (URL WordPress lama
  * dipertahankan; proxy.ts me-rewrite ke /search).
  */
 export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const locale = useLocale();
+  const t = getDictionary(locale);
 
   useEffect(() => {
     if (!open) return;
@@ -23,13 +29,13 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
   return (
     <div className="absolute inset-x-0 top-0 hidden lg:block">
       <form
-        action="/"
+        action={localePath("/", locale)}
         method="get"
         role="search"
         className="container-site flex h-[76px] items-center gap-4 rounded-[10px] bg-white px-5"
       >
         <label htmlFor="site-search" className="sr-only">
-          Cari
+          {t.common.search}
         </label>
         <input
           ref={inputRef}
@@ -39,7 +45,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
           placeholder="Search …"
           className="h-full flex-1 bg-transparent text-lg font-semibold text-ink outline-none placeholder:text-body-soft"
         />
-        <button type="button" onClick={onClose} aria-label="Tutup pencarian" className="text-ink">
+        <button type="button" onClick={onClose} aria-label={t.header.closeSearch} className="text-ink">
           <X className="size-6" />
         </button>
       </form>

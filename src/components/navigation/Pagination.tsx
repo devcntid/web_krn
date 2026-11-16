@@ -1,4 +1,6 @@
-import Link from "next/link";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getLocale } from "@/i18n/request";
+import { Link } from "@/i18n/Link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type PaginationProps = {
@@ -22,12 +24,13 @@ function pageList(page: number, total: number): (number | "…")[] {
 
 export function Pagination({ page, totalPages, hrefFor }: PaginationProps) {
   if (totalPages <= 1) return null;
+  const t = getDictionary(getLocale()).common;
   const base =
     "flex size-11 items-center justify-center rounded-[6px] border border-primary text-sm font-semibold transition-colors";
   return (
-    <nav aria-label="Navigasi halaman" className="mt-12 flex flex-wrap items-center justify-center gap-2">
+    <nav aria-label={t.pagination} className="mt-12 flex flex-wrap items-center justify-center gap-2">
       {page > 1 ? (
-        <Link href={hrefFor(page - 1)} className={`${base} text-primary hover:bg-primary hover:text-white`} aria-label="Sebelumnya">
+        <Link href={hrefFor(page - 1)} className={`${base} text-primary hover:bg-primary hover:text-white`} aria-label={t.previous}>
           <ChevronLeft className="size-4" />
         </Link>
       ) : (
@@ -52,7 +55,7 @@ export function Pagination({ page, totalPages, hrefFor }: PaginationProps) {
         ),
       )}
       {page < totalPages ? (
-        <Link href={hrefFor(page + 1)} className={`${base} text-primary hover:bg-primary hover:text-white`} aria-label="Berikutnya">
+        <Link href={hrefFor(page + 1)} className={`${base} text-primary hover:bg-primary hover:text-white`} aria-label={t.next}>
           <ChevronRight className="size-4" />
         </Link>
       ) : (

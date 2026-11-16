@@ -44,16 +44,27 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    return legacyRedirects;
+    return [
+      ...legacyRedirects,
+      // /id/… adalah alamat internal — pengunjung selalu diarahkan ke URL tanpa prefiks.
+      { source: "/id", destination: "/", statusCode: 301 as const },
+      { source: "/id/:path+", destination: "/:path+/", statusCode: 301 as const },
+    ];
   },
 
   async rewrites() {
     return {
       beforeFiles: [
         // Pencarian WordPress: /?s=kata → halaman /search
-        { source: "/", has: [{ type: "query", key: "s" }], destination: "/search/" },
+        { source: "/", has: [{ type: "query", key: "s" }], destination: "/id/search/" },
+        { source: "/en", has: [{ type: "query", key: "s" }], destination: "/en/search/" },
       ],
-      afterFiles: [],
+      // Bahasa Indonesia tanpa prefiks: /berita/ dilayani route internal /id/berita/
+      // (src/app/(site)/[lang]). File statis & route non-dinamis dicocokkan lebih dulu.
+      afterFiles: [
+        { source: "/", destination: "/id/" },
+        { source: "/:path((?!en/|en$|id/|id$|_next/|api/|admin|wp-content/).*)", destination: "/id/:path" },
+      ],
       // URL gambar lama (backlink, Google Images) diteruskan ke Vercel Blob.
       fallback: MEDIA_BASE_URL
         ? [{ source: "/wp-content/uploads/:path*", destination: `${MEDIA_BASE_URL}/wp-content/uploads/:path*` }]

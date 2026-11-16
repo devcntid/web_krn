@@ -1,3 +1,5 @@
+import { localePath } from "@/i18n/config";
+import { getLocale } from "@/i18n/request";
 import { optimizeContentImages, rewriteMediaInHtml } from "@/lib/media";
 
 /**
@@ -15,8 +17,15 @@ function fixLeadingSpaceLinks(html: string): string {
  * Render HTML konten WordPress yang SUDAH disanitasi saat ekspor
  * (scripts/export-wp.ts — whitelist tag/atribut, tanpa script/style/event handler).
  */
+/** Di versi Inggris, tautan internal di dalam konten diarahkan ke /en/… agar pengunjung tidak berpindah bahasa. */
+function localizeLinks(html: string): string {
+  const locale = getLocale();
+  if (locale === "id") return html;
+  return html.replace(/href="(\/[^"]*)"/g, (_, href: string) => `href="${localePath(href, locale)}"`);
+}
+
 export function RichContent({ html, className = "" }: { html: string; className?: string }) {
   return (
-    <div className={`wp-content ${className}`} dangerouslySetInnerHTML={{ __html: rewriteMediaInHtml(optimizeContentImages(fixLeadingSpaceLinks(html))) }} />
+    <div className={`wp-content ${className}`} dangerouslySetInnerHTML={{ __html: rewriteMediaInHtml(optimizeContentImages(localizeLinks(fixLeadingSpaceLinks(html)))) }} />
   );
 }

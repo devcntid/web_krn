@@ -1,4 +1,6 @@
-import Link from "next/link";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getLocale } from "@/i18n/request";
+import { Link } from "@/i18n/Link";
 
 import type { PostSummary, Term } from "@/types/content";
 import { PostCard } from "@/components/cards/PostCard";
@@ -33,11 +35,12 @@ export function ArchiveTemplate({
   query,
   relatedCategories = [],
   posts,
-  emptyMessage = "Belum ada publikasi.",
+  emptyMessage,
   page,
   totalPages,
   hrefFor,
 }: ArchiveTemplateProps) {
+  const t = getDictionary(getLocale());
   return (
     <div className="bg-surface-alt pt-28 pb-16 md:pb-[88px] lg:pt-[170px]">
       <div className="container-site">
@@ -46,12 +49,12 @@ export function ArchiveTemplate({
         <h1 className="mt-2 text-[32px] leading-[1.15] font-bold lg:text-[45px]">{title}</h1>
         {description && <p className="mt-2.5 max-w-3xl text-base text-body">{description}</p>}
 
-        <SearchForm id="arsip-cari" label="Kata kunci" defaultValue={query} className="mt-6 max-w-[640px] md:mt-7" />
+        <SearchForm id="arsip-cari" label={t.common.keyword} defaultValue={query} className="mt-6 max-w-[640px] md:mt-7" />
 
         {relatedCategories.length > 0 && (
           <div className="mt-5 flex flex-wrap items-center gap-2.5">
             <span id="kategori-terkait" className="text-[13px] text-body">
-              Kategori terkait:
+              {t.archive.related}
             </span>
             <ul aria-labelledby="kategori-terkait" className="contents">
               {relatedCategories.map((term) => (
@@ -75,7 +78,7 @@ export function ArchiveTemplate({
             ))}
           </div>
         ) : (
-          <p className="mt-10 text-body">{emptyMessage}</p>
+          <p className="mt-10 text-body">{emptyMessage ?? t.archive.empty}</p>
         )}
 
         <Pagination page={page} totalPages={totalPages} hrefFor={hrefFor} />

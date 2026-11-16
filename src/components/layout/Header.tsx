@@ -1,13 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/Link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, Search, X } from "lucide-react";
 
 import { mainNav, site } from "@/config/site";
 import { DonateButton } from "@/components/ui/DonateButton";
+import { getDictionary } from "@/i18n/dictionaries";
+import { useLocale } from "@/i18n/Link";
+import { LanguageToggle } from "@/components/layout/LanguageToggle";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { mediaUrl } from "@/lib/media";
@@ -24,6 +27,7 @@ type HeaderProps = {
  */
 export function Header({ donateVariant = "accent" }: HeaderProps) {
   const pathname = usePathname();
+  const t = getDictionary(useLocale());
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -57,7 +61,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
           scrolled ? "border-border" : "border-transparent"
         }`}
       >
-        <Link href="/" aria-label={`${site.name} — Beranda`} className="shrink-0">
+        <Link href="/" aria-label={`${site.name} — ${t.shell.homeAria}`} className="shrink-0">
           <Image
             src={mediaUrl(site.logo.src)}
             alt={site.name}
@@ -69,7 +73,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
         </Link>
 
         {/* Navigasi desktop */}
-        <nav aria-label="Menu utama" className="hidden h-full lg:block">
+        <nav aria-label={t.header.mainMenu} className="hidden h-full lg:block">
           <ul className="flex h-full items-center gap-[22px]">
             {mainNav.map((item) => (
               <li key={item.label} className="group relative flex h-full items-center">
@@ -80,7 +84,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
                       aria-haspopup="true"
                       className="flex items-center gap-1 text-base font-semibold text-ink transition-opacity group-focus-within:opacity-70 group-hover:opacity-70"
                     >
-                      {item.label}
+                      {t.nav[item.label] ?? item.label}
                       <ChevronDown aria-hidden className="size-4" strokeWidth={2.5} />
                     </button>
                     <ul className="invisible absolute top-full left-0 w-60 border-t-[3px] border-primary bg-white py-5 opacity-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] transition-[opacity,visibility] duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
@@ -90,7 +94,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
                             href={child.href}
                             className="block px-5 py-1.5 text-sm leading-7 font-semibold text-ink transition-opacity hover:opacity-70"
                           >
-                            {child.label}
+                            {t.nav[child.label] ?? child.label}
                           </Link>
                         </li>
                       ))}
@@ -101,7 +105,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
                     href={item.href ?? "/"}
                     className="text-base font-semibold text-ink transition-opacity hover:opacity-70"
                   >
-                    {item.label}
+                    {t.nav[item.label] ?? item.label}
                   </Link>
                 )}
               </li>
@@ -109,7 +113,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
             <li>
               <button
                 type="button"
-                aria-label="Cari"
+                aria-label={t.header.search}
                 onClick={() => setSearchOpen(true)}
                 className="flex items-center text-ink transition-opacity hover:opacity-70"
               >
@@ -120,12 +124,13 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
         </nav>
 
         <div className="flex items-center gap-1.5 lg:gap-3">
-          <DonateButton variant={donateVariant} />
+          <LanguageToggle className="max-lg:hidden" />
+          <DonateButton variant={donateVariant} label={t.header.donate} />
           <button
             ref={toggleRef}
             type="button"
             className="flex size-11 items-center justify-center text-ink lg:hidden"
-            aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
+            aria-label={mobileOpen ? t.header.closeMenu : t.header.openMenu}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             onClick={() => setMobileOpen((v) => !v)}

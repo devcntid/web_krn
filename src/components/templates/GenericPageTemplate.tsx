@@ -1,3 +1,4 @@
+import { TranslationNotice } from "@/components/content/TranslationNotice";
 import type { Page } from "@/types/content";
 import { prepareLegacyHtml } from "@/lib/legacy-html";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,6 +15,7 @@ export function GenericPageTemplate({ page }: { page: Page }) {
     <>
       <PageHero title={page.title} size="small" width="container" />
       <div className="container-site py-10 md:py-14">
+        <TranslationNotice className="mx-auto mb-6 max-w-[920px]" />
         {html ? (
           <RichContent html={html} className="wp-page mx-auto max-w-[920px]" />
         ) : (

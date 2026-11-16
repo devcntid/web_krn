@@ -34,6 +34,21 @@ content/*.json ──npm run db:seed──► Postgres ──src/server/repos/*�
 - `next build` kini membutuhkan `DATABASE_URL` (halaman statis dirender dari database).
 - Konten beranda dan halaman khusus masih dari `src/content/*.ts`; pindah ke database di B7–B11.
 
+## Dua bahasa (id / en)
+- **URL**: Indonesia tanpa prefiks (tidak berubah); Inggris di bawah `/en/…`. Bahasa awal selalu Indonesia.
+- **Route**: semua halaman publik ada di `src/app/(site)/[lang]/`. `next.config.ts` me-rewrite URL tanpa prefiks
+  ke `/id/…` (afterFiles) dan me-redirect `/id/…` yang diketik langsung ke URL tanpa prefiks (301).
+- **Bahasa saat render**: tiap layout/halaman memanggil `initLocale(params)`; komponen server memakai
+  `getLocale()` (`src/i18n/request.ts`), komponen client `useLocale()` (`src/i18n/Link.tsx`).
+- **Tautan**: `Link` dari `@/i18n/Link` menambahkan `/en` otomatis. Path aplikasi donasi tidak diberi prefiks.
+- **Teks antarmuka**: `src/i18n/dictionaries/{id,en}.ts`. **Konten halaman**: `src/content/*.ts` (Indonesia, sumber)
+  dan `src/content/en/*.ts` (Inggris), dipilih lewat `src/content/localized.ts`.
+- **SEO**: halaman yang sudah diterjemahkan terdaftar di `src/i18n/translated.ts` → masuk sitemap dan diberi
+  hreflang. Halaman lain di bawah `/en/` (artikel, arsip, halaman lama) menampilkan isi Indonesia dengan
+  keterangan, diberi `noindex`, dan canonical-nya menunjuk ke URL Indonesia.
+- **Status terjemahan**: semua teks Inggris adalah DRAF (16 Nov 2026) dan perlu ditinjau tim sebelum cut-over.
+- Pengalih bahasa: `LanguageToggle` (header desktop dan menu mobile).
+
 ## Routing
 | URL | Route | Render |
 |---|---|---|

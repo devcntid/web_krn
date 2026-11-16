@@ -1,3 +1,5 @@
+import { getDictionary } from "@/i18n/dictionaries";
+import { getLocale } from "@/i18n/request";
 import { PageHero } from "@/components/sections/PageHero";
 import { GRID_TABS, PostGrid, type GridTab } from "@/components/sections/PostGrid";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -25,16 +27,17 @@ export async function PublicationListing({
   searchParams: ListingSearchParams;
 }) {
   const sp = await searchParams;
+  const t = getDictionary(getLocale()).listing;
   const category = (GRID_TABS.find((t) => t.slug === sp.kategori)?.slug ?? defaultCategory) as GridTab;
 
   return (
     <>
-      <PageHero title={title} image={HERO_IMAGE} overlay={0.2} width="container" />
+      <PageHero title={t.titles[title] ?? title} image={HERO_IMAGE} overlay={0.2} width="container" />
       <section className="bg-surface-alt py-6 md:py-12 lg:py-16">
         <div className="container-site">
-          <h2 className="text-[26px] leading-[1.15] font-extrabold md:text-[30px] md:leading-[1.1] lg:text-[45px]">Kilas Perjuangan dari Nusantara</h2>
+          <h2 className="text-[26px] leading-[1.15] font-extrabold md:text-[30px] md:leading-[1.1] lg:text-[45px]">{t.heading}</h2>
           <p className="mt-3 text-base text-body">
-            Cerita tentang langkah-langkah kecil dari Nusantara yang menjadi kekuatan besar bagi kemanusiaan
+            {t.lead}
           </p>
           <div className="mt-[18px] md:mt-10">
             <PostGrid
@@ -51,7 +54,7 @@ export async function PublicationListing({
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Beranda", path: "/" },
-          { name: title, path: basePath },
+          { name: t.titles[title] ?? title, path: basePath },
         ])}
       />
     </>
