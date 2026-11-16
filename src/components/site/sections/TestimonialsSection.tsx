@@ -1,14 +1,14 @@
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
-import { homeContent } from "@/content/localized";
+import { getHomeContent } from "@/lib/home";
 import type { SectionData } from "@/server/sections";
 
 import type { SectionContext } from "./types";
 
 /** Judul + carousel testimoni. Tanpa butir sendiri, memakai daftar testimoni beranda. */
-export function TestimonialsSection({ data, ctx }: { data: SectionData<"testimonials">; ctx: SectionContext }) {
+export async function TestimonialsSection({ data, ctx }: { data: SectionData<"testimonials">; ctx: SectionContext }) {
   const items = data.items.length
     ? data.items.map((t) => ({ quote: t.quote, name: t.name, role: t.role, photo: t.photo.src }))
-    : homeContent(ctx.locale).testimonials.items;
+    : (await getHomeContent(ctx.locale)).testimonials.items.filter((t) => t.visible);
   return (
     <section className="pb-12 md:pb-20">
       <div className="container-site text-center">

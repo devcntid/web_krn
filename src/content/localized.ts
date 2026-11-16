@@ -1,6 +1,8 @@
 /**
  * Pemilih konten per bahasa untuk halaman yang kontennya dikelola di kode.
  * Indonesia = src/content/*.ts (sumber, verbatim dari WordPress);
+ * Beranda TIDAK lagi dibaca dari sini: isinya di `settings.home` (src/lib/home.ts, /admin/beranda);
+ * src/content/home.ts dan en/home.ts hanya sumber `npm run db:seed:home` + judul SEO Inggris.
  * Inggris   = src/content/en/*.ts (draf terjemahan, mewarisi struktur & gambar).
  */
 import type { Locale } from "@/i18n/config";
@@ -14,7 +16,6 @@ import * as profileEn from "./en/profile";
 import * as programsEn from "./en/programs";
 import * as reportsEn from "./en/reports";
 import * as auditId from "./audit";
-import * as homeId from "./home";
 import * as legalId from "./legal";
 import * as partnershipId from "./partnership";
 import * as pillarsId from "./pillars";
@@ -24,7 +25,6 @@ import * as reportsId from "./reports";
 
 const en = (locale: Locale) => locale === "en";
 
-export const homeContent = (l: Locale) => (en(l) ? homeEn : homeId);
 export const profileContent = (l: Locale) => (en(l) ? profileEn : profileId);
 export const auditContent = (l: Locale) => (en(l) ? auditEn : auditId);
 export const legalContent = (l: Locale) => (en(l) ? legalEn : legalId);

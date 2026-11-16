@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { Link } from "@/i18n/Link";
 
-import { homeContent, pageLabels } from "@/content/localized";
+import { pageLabels } from "@/content/localized";
+import { getHomeContent } from "@/lib/home";
 import { getLocale } from "@/i18n/request";
 import { getPostsByCategory, getLatestPosts } from "@/lib/content";
 import { formatDateLong } from "@/lib/format";
@@ -15,8 +16,8 @@ const outlineBtn =
 
 /* ---------- Intro + video + peta ---------- */
 
-export function IntroSection() {
-  const c = homeContent(getLocale());
+export async function IntroSection() {
+  const c = await getHomeContent(getLocale());
   return (
     <section className="relative pt-7 pb-10 md:py-16 lg:pt-[100px]">
       {/* Label vertikal "Scroll Untuk Eksplorasi" */}
@@ -87,8 +88,8 @@ export function IntroSection() {
 
 /* ---------- Pilar program ---------- */
 
-export function PillarsSection() {
-  const c = homeContent(getLocale());
+export async function PillarsSection() {
+  const c = await getHomeContent(getLocale());
   return (
     <section className="pb-10 md:pb-16">
       <div className="container-site">
@@ -135,7 +136,7 @@ export function PillarsSection() {
 /* ---------- Publikasi ---------- */
 
 export async function PublicationsSection() {
-  const c = homeContent(getLocale());
+  const c = await getHomeContent(getLocale());
   const berita = await getPostsByCategory("berita");
   const posts = (berita.length ? berita : (await getLatestPosts(c.publications.count))).slice(0, c.publications.count);
   if (!posts.length) return null;
@@ -189,8 +190,8 @@ export async function PublicationsSection() {
 
 /* ---------- Testimoni ---------- */
 
-export function TestimonialsSection() {
-  const c = homeContent(getLocale());
+export async function TestimonialsSection() {
+  const c = await getHomeContent(getLocale());
   return (
     <section className="pb-10 md:pb-20">
       <div className="container-site text-center">
@@ -198,7 +199,7 @@ export function TestimonialsSection() {
         <p className="mx-auto mt-2 text-[15px] leading-[1.35] text-muted-strong md:text-lg">{c.testimonials.description}</p>
       </div>
       <div className="container-site mt-[18px] md:mt-8">
-        <TestimonialCarousel items={c.testimonials.items} />
+        <TestimonialCarousel items={c.testimonials.items.filter((t) => t.visible)} />
       </div>
     </section>
   );
@@ -206,8 +207,8 @@ export function TestimonialsSection() {
 
 /* ---------- CTA e-Report ---------- */
 
-export function ReportCtaSection() {
-  const c = homeContent(getLocale());
+export async function ReportCtaSection() {
+  const c = await getHomeContent(getLocale());
   return (
     <section className="relative py-7 md:py-12">
       <Image src={mediaUrl(c.reportCta.background)} alt="" fill sizes="100vw" className="object-cover" />

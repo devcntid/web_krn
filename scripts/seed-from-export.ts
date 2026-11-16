@@ -20,7 +20,7 @@ import { inArray, sql } from "drizzle-orm";
 import { legacyRedirects } from "../src/config/redirects";
 import { isDonationAppPath } from "../src/config/routes";
 import { contact, floatingContact, footerNav, mainNav, site, socials } from "../src/config/site";
-import * as home from "../src/content/home";
+import { buildHomeSettings } from "./seed-home";
 import type { Page, PageSummary, Post, PostSummary, Term } from "../src/types/content";
 
 loadEnvConfig(process.cwd());
@@ -206,7 +206,8 @@ async function main() {
     { key: "socials", value: socials },
     { key: "menu", value: { main: mainNav, footer: footerNav } },
     { key: "integrations", value: { donateUrl: site.donateUrl, floatingContact } },
-    { key: "home", value: { ...home } },
+    // Bentuk { id, en } yang dibaca beranda publik & /admin/beranda (lihat src/server/home.ts).
+    { key: "home", value: buildHomeSettings() },
   ];
   // Pengaturan yang sudah ada TIDAK ditimpa — setelah seed pertama, admin yang mengelolanya.
   await db.insert(settings).values(settingRows).onConflictDoNothing();

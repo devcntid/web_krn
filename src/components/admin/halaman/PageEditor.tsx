@@ -1,16 +1,7 @@
 "use client";
 
-import {
-  type Announcements,
-  DndContext,
-  type DragEndEvent,
-  KeyboardSensor,
-  PointerSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { DndContext, type DragEndEvent, PointerSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
+import { SortableContext, arrayMove, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Eye, EyeOff, GripVertical, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -20,6 +11,7 @@ import { useEffect, useId, useState } from "react";
 import { savePageAction } from "@/app/admin/(panel)/halaman/actions";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { Dialog } from "@/components/admin/Dialog";
+import { SORT_INSTRUCTIONS, arrowStep, moveById } from "@/components/admin/sortable";
 import { useToast } from "@/components/admin/Toast";
 import { type JsonObject, SECTION_DEFS, initialData, sectionDef, sectionSummary } from "@/lib/section-fields";
 import type { PageTemplate, SectionIssue } from "@/server/sections";
@@ -72,10 +64,9 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
   const [removing, setRemoving] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
-  );
+  const [announce, setAnnounce] = useState("");
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }));
+
 
   useEffect(() => {
     if (!dirty) return;
@@ -92,18 +83,6 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
     setSections(next);
     setIssues([]);
     touch();
-  };
-
-  const position = (id: string | number) => sections.findIndex((s) => s.id === id) + 1;
-  const nameOf = (id: string | number) => {
-    const s = sections.find((x) => x.id === id);
-    return s ? typeLabel(s.type) : "section";
-  };
-  const announcements: Announcements = {
-    onDragStart: ({ active }) => `Mengangkat section ${nameOf(active.id)}, posisi ${position(active.id)} dari ${sections.length}.`,
-    onDragOver: ({ active, over }) => (over ? `Section ${nameOf(active.id)} dipindah ke posisi ${position(over.id)} dari ${sections.length}.` : undefined),
-    onDragEnd: ({ active, over }) => (over ? `Section ${nameOf(active.id)} diletakkan di posisi ${position(over.id)} dari ${sections.length}.` : `Section ${nameOf(active.id)} diletakkan.`),
-    onDragCancel: ({ active }) => `Pemindahan dibatalkan. Section ${nameOf(active.id)} kembali ke posisi semula.`,
   };
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
@@ -297,18 +276,15 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
         </div>
       </details>
 
+      <p role="status" aria-live="polite" className="sr-only" data-sort-status>
+        {announce}
+      </p>
       <DndContext
         id={dndId}
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={onDragEnd}
-        accessibility={{
-          announcements,
-          screenReaderInstructions: {
-            draggable:
-              "Untuk mengubah urutan, tekan Spasi atau Enter pada tombol geser, pindahkan dengan panah atas/bawah, lalu tekan Spasi atau Enter lagi untuk meletakkan. Tekan Escape untuk membatalkan.",
-          },
-        }}
+        accessibility={{ screenReaderInstructions: SORT_INSTRUCTIONS }}
       >
         <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
           <ol className="mt-4.5 flex flex-col gap-2.5" aria-label="Section halaman, berurutan">
@@ -318,6 +294,12 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
                 section={s}
                 index={i}
                 issues={issues.filter((x) => x.index === i)}
+                onMove={(step) => {
+                  const moved = moveById(sections, s.id, step);
+                  if (!moved) return;
+                  updateSections(moved.list);
+                  setAnnounce(`Section ${typeLabel(s.type)} dipindah ke posisi ${moved.position} dari ${sections.length}.`);
+                }}
                 onEdit={() => setEditing(s.id)}
                 onToggle={() => updateSections(sections.map((x) => (x.id === s.id ? { ...x, visible: !x.visible } : x)))}
                 onRemove={() => setRemoving(s.id)}
@@ -398,6 +380,7 @@ function SectionRow({
   section,
   index,
   issues,
+  onMove,
   onEdit,
   onToggle,
   onRemove,
@@ -405,6 +388,7 @@ function SectionRow({
   section: EditorSection;
   index: number;
   issues: SectionIssue[];
+  onMove: (step: -1 | 1) => void;
   onEdit: () => void;
   onToggle: () => void;
   onRemove: () => void;
@@ -427,6 +411,12 @@ function SectionRow({
           type="button"
           {...attributes}
           {...listeners}
+          onKeyDown={(e) => {
+            const step = arrowStep(e);
+            if (!step) return;
+            e.preventDefault();
+            onMove(step);
+          }}
           aria-label={`Geser section ${index + 1}: ${label}`}
           className="flex size-11 shrink-0 cursor-grab touch-none items-center justify-center rounded-lg text-admin-sidebar-muted hover:bg-admin-neutral-bg hover:text-admin-ink focus-visible:outline-2 focus-visible:outline-primary active:cursor-grabbing"
         >

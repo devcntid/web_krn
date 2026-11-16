@@ -1,6 +1,8 @@
 import { Node, mergeAttributes } from "@tiptap/core";
 import Link from "@tiptap/extension-link";
 
+import { youtubeId } from "@/lib/youtube";
+
 /*
  * Node & mark tambahan editor publikasi. HTML yang dihasilkan sengaja memakai bentuk yang
  * sama dengan konten hasil ekspor WordPress (lihat src/lib/html-whitelist.ts), sehingga post
@@ -125,25 +127,10 @@ export const ContentLink = Link.extend({
   HTMLAttributes: { target: null, rel: null, class: null },
 });
 
-/** Ambil ID video dari berbagai bentuk URL YouTube; null bila bukan URL YouTube. */
+/** URL sematan dari berbagai bentuk URL YouTube; null bila bukan URL YouTube. */
 export function youtubeEmbedUrl(input: string): string | null {
-  let url: URL;
-  try {
-    url = new URL(input.trim());
-  } catch {
-    return null;
-  }
-  const host = url.hostname.replace(/^www\.|^m\./, "");
-  let id: string | null = null;
-  if (host === "youtu.be") id = url.pathname.slice(1).split("/")[0] ?? null;
-  else if (host === "youtube.com" || host === "youtube-nocookie.com") {
-    if (url.pathname === "/watch") id = url.searchParams.get("v");
-    else {
-      const m = url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?]+)/);
-      id = m?.[1] ?? null;
-    }
-  }
-  return id && /^[\w-]{6,20}$/.test(id) ? `https://www.youtube.com/embed/${id}` : null;
+  const id = youtubeId(input);
+  return id ? `https://www.youtube.com/embed/${id}` : null;
 }
 
 /** Tag di HTML lama yang belum punya padanan di editor (akan hilang bila badan tulisan diedit). */

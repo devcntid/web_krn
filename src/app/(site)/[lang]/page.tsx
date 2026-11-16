@@ -9,13 +9,21 @@ import {
   ReportCtaSection,
   TestimonialsSection,
 } from "@/components/home/HomeSections";
+import { PreviewBanner } from "@/components/content/PreviewBanner";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/config/site";
 import { englishSeo } from "@/content/localized";
 import { initLocale } from "@/i18n/request";
+import { isHomePreview } from "@/lib/home";
 import { languageAlternates } from "@/lib/seo";
 
 type LangProps = { params: Promise<{ lang: string }> };
+
+/**
+ * Beranda dirender ulang paling lama tiap 10 menit agar jadwal tayang slide (mulai/selesai,
+ * diatur di /admin/beranda) berlaku tanpa menunggu ada yang menekan "Terbitkan Perubahan".
+ */
+export const revalidate = 600;
 
 // Perbaikan SEO (disetujui 13 Nov 2026): title "New Beranda" & description
 // "ScrollUntukEksplorasi" diganti; halaman kini punya satu H1.
@@ -64,6 +72,7 @@ export default async function HomePage({ params }: LangProps) {
           },
         }}
       />
+      {(await isHomePreview()) ? <PreviewBanner /> : null}
     </>
   );
 }

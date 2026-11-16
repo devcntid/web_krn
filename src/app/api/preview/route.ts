@@ -6,7 +6,7 @@ import { getDb, schema } from "@/server/db";
 import { getCurrentUser } from "@/server/permissions";
 
 /**
- * Pratinjau draf: /api/preview/?id=<id post> atau /api/preview/?page=<id halaman>.
+ * Pratinjau draf: /api/preview/?id=<id post>, ?page=<id halaman>, atau ?home=1 (beranda).
  * Hanya untuk pengguna admin yang sudah masuk.
  * Mengaktifkan Draft Mode (cookie __prerender_bypass) lalu mengalihkan ke permalink post;
  * tujuan redirect diambil dari database, bukan dari query, agar tidak menjadi open redirect.
@@ -15,6 +15,12 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const user = await getCurrentUser();
   if (!user) redirect(`/admin/login/?callbackUrl=${encodeURIComponent(url.pathname + url.search)}`);
+
+  // Pratinjau beranda: salinan kerja dari /admin/beranda (settings["home.draft"]).
+  if (url.searchParams.has("home")) {
+    (await draftMode()).enable();
+    redirect("/");
+  }
 
   const pageId = Number.parseInt(url.searchParams.get("page") ?? "", 10);
   if (Number.isInteger(pageId)) {
