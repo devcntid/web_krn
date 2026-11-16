@@ -35,3 +35,15 @@ export function formatDateShort(iso: string) {
   const { y, m, d } = parts(iso);
   return `${MONTHS_SHORT[m]} ${String(d).padStart(2, "0")}, ${y}`;
 }
+
+/** Kategori jenis publikasi; "blog" adalah kategori induk teknis WordPress dan tidak ditampilkan. */
+const TYPE_CATEGORIES = ["berita", "artikel"];
+const HIDDEN_CATEGORIES = ["blog"];
+
+/** Label kategori kartu: jenis · topik pertama, mis. "Berita · Sudan". */
+export function postCategoryLabel(post: { categories: { slug: string; name: string }[] }): string {
+  const cats = post.categories.filter((c) => !HIDDEN_CATEGORIES.includes(c.slug));
+  const type = cats.find((c) => TYPE_CATEGORIES.includes(c.slug));
+  const topic = cats.find((c) => !TYPE_CATEGORIES.includes(c.slug));
+  return [type?.name, topic?.name].filter((n): n is string => Boolean(n)).join(" · ");
+}

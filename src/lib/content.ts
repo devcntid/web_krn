@@ -90,6 +90,26 @@ export function getTag(slug: string): Term | undefined {
   return getTags().find((t) => t.slug === slug);
 }
 
+/**
+ * Kategori yang paling sering muncul pada sekumpulan post (untuk chip "Kategori terkait").
+ * Kategori yang terlalu umum ("blog" serta jenis "berita"/"artikel") dan slug di `exclude` dilewati.
+ */
+export function getRelatedCategories(posts: PostSummary[], exclude: string[] = [], limit = 5): Term[] {
+  const skip = new Set(["blog", "berita", "artikel", ...exclude]);
+  const tally = new Map<string, number>();
+  for (const post of posts) {
+    for (const c of post.categories) {
+      if (!skip.has(c.slug)) tally.set(c.slug, (tally.get(c.slug) ?? 0) + 1);
+    }
+  }
+  const bySlug = new Map(getCategories().map((c) => [c.slug, c]));
+  return [...tally.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([slug]) => bySlug.get(slug))
+    .filter((t): t is Term => Boolean(t && t.count > 0))
+    .slice(0, limit);
+}
+
 /* ---------- Pagination ---------- */
 
 export function paginate<T>(items: T[], page: number, perPage: number) {

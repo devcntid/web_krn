@@ -23,7 +23,7 @@ function pageList(page: number, total: number): (number | "…")[] {
 export function Pagination({ page, totalPages, hrefFor }: PaginationProps) {
   if (totalPages <= 1) return null;
   const base =
-    "flex size-10 items-center justify-center rounded-[6px] border border-primary text-sm font-semibold transition-colors";
+    "flex size-11 items-center justify-center rounded-[6px] border border-primary text-sm font-semibold transition-colors";
   return (
     <nav aria-label="Navigasi halaman" className="mt-12 flex flex-wrap items-center justify-center gap-2">
       {page > 1 ? (

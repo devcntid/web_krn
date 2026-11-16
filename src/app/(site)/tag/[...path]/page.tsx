@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { getPostsByTag, getTag, paginate } from "@/lib/content";
+import { getPostsByTag, getRelatedCategories, getTag, paginate } from "@/lib/content";
 import { pageTitle } from "@/lib/seo";
 import { ArchiveTemplate } from "@/components/templates/ArchiveTemplate";
 
@@ -44,13 +44,17 @@ export default async function TagPage({ params }: Props) {
   const tag = parsed && getTag(parsed.slug);
   if (!parsed || !tag) notFound();
 
-  const result = paginate(getPostsByTag(tag.slug), parsed.page, PER_PAGE);
+  const all = getPostsByTag(tag.slug);
+  const result = paginate(all, parsed.page, PER_PAGE);
   if (parsed.page > result.totalPages) notFound();
 
   return (
     <ArchiveTemplate
       eyebrow="Tag"
       title={tag.name}
+      description={`${result.total} publikasi dengan tag ini.`}
+      breadcrumb={[{ name: "Beranda", href: "/" }, { name: tag.name }]}
+      relatedCategories={getRelatedCategories(all)}
       posts={result.items}
       page={result.page}
       totalPages={result.totalPages}

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { getCategories, getCategoryByPath, getPostsByCategory, paginate } from "@/lib/content";
-import { pageTitle } from "@/lib/seo";
+import { getCategories, getCategoryByPath, getPostsByCategory, getRelatedCategories, paginate } from "@/lib/content";
+import { breadcrumbJsonLd, pageTitle } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ArchiveTemplate } from "@/components/templates/ArchiveTemplate";
 
 type Props = { params: Promise<{ path: string[] }> };
@@ -54,18 +55,33 @@ export default async function CategoryPage({ params }: Props) {
   const term = getCategoryByPath(termPath);
   if (!term) notFound();
 
-  const result = paginate(getPostsByCategory(term.slug), page, PER_PAGE);
+  const all = getPostsByCategory(term.slug);
+  const result = paginate(all, page, PER_PAGE);
   if (page > result.totalPages) notFound();
 
+  // Kategori anak (mis. hewan-lingkungan/air-bersih) menampilkan induknya di breadcrumb.
+  const parentPath = term.path.split("/").slice(0, -1).join("/");
+  const parent = parentPath ? getCategoryByPath(parentPath) : undefined;
+  const crumbs = [
+    { name: "Beranda", href: "/" },
+    ...(parent ? [{ name: parent.name, href: `/category/${parent.path}/` }] : []),
+    { name: term.name, href: `/category/${term.path}/` },
+  ];
+
   return (
-    <ArchiveTemplate
-      eyebrow="Kategori"
-      title={term.name}
-      description={term.description}
-      posts={result.items}
-      page={result.page}
-      totalPages={result.totalPages}
-      hrefFor={(n) => `/category/${term.path}/${n > 1 ? `page/${n}/` : ""}`}
-    />
+    <>
+      <ArchiveTemplate
+        eyebrow="Kategori"
+        title={term.name}
+        description={term.description || `${result.total} publikasi dalam kategori ini.`}
+        breadcrumb={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))}
+        relatedCategories={getRelatedCategories(all, [term.slug])}
+        posts={result.items}
+        page={result.page}
+        totalPages={result.totalPages}
+        hrefFor={(n) => `/category/${term.path}/${n > 1 ? `page/${n}/` : ""}`}
+      />
+      <JsonLd data={breadcrumbJsonLd(crumbs.map((c) => ({ name: c.name, path: c.href })))} />
+    </>
   );
 }

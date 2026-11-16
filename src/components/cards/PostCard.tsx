@@ -2,13 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 
-import { formatDateCard, formatDateLong } from "@/lib/format";
+import { formatDateCard, formatDateLong, postCategoryLabel } from "@/lib/format";
 import type { PostSummary } from "@/types/content";
 import { mediaUrl } from "@/lib/media";
 
 /** Kartu grid Artikel/Berita (`pkp-card`): putih, gambar, judul, excerpt, tanggal + tombol. */
-export function PostCard({ post, showExcerpt = true }: { post: PostSummary; showExcerpt?: boolean }) {
+type PostCardProps = {
+  post: PostSummary;
+  showExcerpt?: boolean;
+  /** Label kategori di atas judul, mis. "Berita · Sudan" (arsip & pencarian). */
+  showCategory?: boolean;
+  /** Tingkat heading judul — "h2" bila kartu langsung di bawah H1 halaman. */
+  headingTag?: "h2" | "h3";
+};
+
+export function PostCard({ post, showExcerpt = true, showCategory = false, headingTag: Heading = "h3" }: PostCardProps) {
   const href = `/${post.slug}/`;
+  const category = showCategory ? postCategoryLabel(post) : "";
   return (
     <article className="flex h-full flex-col rounded-[10px] bg-white p-4 shadow-card">
       <Link href={href} className="block overflow-hidden rounded-[6px]" tabIndex={-1} aria-hidden>
@@ -24,11 +34,12 @@ export function PostCard({ post, showExcerpt = true }: { post: PostSummary; show
           )}
         </div>
       </Link>
-      <h3 className="mt-5 text-lg leading-[1.35] font-extrabold text-ink">
+      {category && <p className="mt-4 text-xs font-semibold text-primary">{category}</p>}
+      <Heading className={`${category ? "mt-1.5" : "mt-5"} text-lg leading-[1.35] font-extrabold text-ink`}>
         <Link href={href} className="hover:text-primary">
           {post.title}
         </Link>
-      </h3>
+      </Heading>
       {showExcerpt && <p className="mt-6 line-clamp-3 text-sm leading-[1.45] text-body-soft">{post.excerpt}</p>}
       <div className="mt-auto flex items-center justify-between gap-3 pt-6">
         <time dateTime={post.date} className="flex items-center gap-2 text-xs text-body-soft">
@@ -37,7 +48,7 @@ export function PostCard({ post, showExcerpt = true }: { post: PostSummary; show
         </time>
         <Link
           href={href}
-          className="rounded-[6px] bg-primary px-4 py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+          className="inline-flex min-h-11 items-center rounded-[6px] bg-primary px-4 py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
         >
           Selengkapnya
         </Link>
