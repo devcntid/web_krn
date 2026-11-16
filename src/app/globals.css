@@ -212,3 +212,33 @@ body:has([data-template="post"]) .donate-btn[data-donate="accent"] {
     margin-bottom: 0.75em;
   }
 }
+
+/* Marquee logo mitra (halaman Kemitraan): dua salinan daftar bergeser -50%. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@layer components {
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+  /* Tanpa animasi: daftar dibungkus menjadi grid statis, salinan kedua disembunyikan. */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      width: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: none;
+    }
+    .marquee-track > [aria-hidden="true"] {
+      display: none;
+    }
+  }
+}

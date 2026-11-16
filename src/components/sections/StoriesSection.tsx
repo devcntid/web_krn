@@ -11,10 +11,12 @@ type StoriesSectionProps = {
   /** Tujuan tombol "Lihat Semua Cerita". */
   href: string;
   heading?: string;
+  /** Tampilkan ringkasan di kartu (default: tidak). */
+  showExcerpt?: boolean;
 };
 
 /** "Cerita Berdampak": carousel kartu publikasi dengan panah kanan-bawah (artboard 04 · Pilar Program). */
-export function StoriesSection({ posts, label, href, heading = "Cerita Berdampak" }: StoriesSectionProps) {
+export function StoriesSection({ posts, label, href, heading = "Cerita Berdampak", showExcerpt = false }: StoriesSectionProps) {
   if (!posts.length) return null;
   return (
     <section className="py-12 md:py-[72px]">
@@ -38,7 +40,7 @@ export function StoriesSection({ posts, label, href, heading = "Cerita Berdampak
           >
             {posts.map((post) => (
               <div key={post.slug} className="h-full px-1">
-                <PostCard post={post} showExcerpt={false} />
+                <PostCard post={post} showExcerpt={showExcerpt} />
               </div>
             ))}
           </Carousel>
