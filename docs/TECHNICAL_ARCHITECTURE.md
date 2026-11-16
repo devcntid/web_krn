@@ -24,15 +24,17 @@ public/wp-content/uploads/…  media dengan path ASLI WordPress
 ## Routing
 | URL | Route | Render |
 |---|---|---|
-| `/` | `app/page.tsx` (rekonstruksi komponen, data `src/content/home.ts`) | Static |
-| `/<slug>/` (post & halaman level atas) | `app/[slug]` | SSG, `dynamicParams=false` |
-| `/<parent>/<child>/` | `app/[slug]/[child]` | SSG |
+| `/` | `app/(site)/page.tsx` (rekonstruksi komponen, data `src/content/home.ts`) | Static |
+| `/<slug>/` (post & halaman level atas) | `app/(site)/[slug]` | SSG, `dynamicParams=false` |
+| `/<parent>/<child>/` | `app/(site)/[slug]/[child]` | SSG |
 | `/artikel/`, `/berita/` | route khusus, `?kategori=&q=&hal=` | Dinamis |
-| `/category/<path>/(page/<n>/)` | `app/category/[...path]` | SSG |
-| `/tag/<slug>/(page/<n>/)` | `app/tag/[...path]` | ISR saat diakses, `noindex` |
-| `/?s=…` | rewrite → `app/search` | Dinamis, `noindex` |
+| `/category/<path>/(page/<n>/)` | `app/(site)/category/[...path]` | SSG |
+| `/tag/<slug>/(page/<n>/)` | `app/(site)/tag/[...path]` | ISR saat diakses, `noindex` |
+| `/?s=…` | rewrite → `app/(site)/search` | Dinamis, `noindex` |
 | `/campaign*`, `/donasi/*` | — (hanya tautan) | Aplikasi donasi existing, tidak disentuh |
 | `/sitemap.xml`, `/robots.txt` | metadata routes | Static |
+
+Route publik berada di route group `(site)` (tidak mengubah URL) agar `/admin` kelak memakai layout sendiri tanpa header/footer situs; kerangkanya ada di `src/components/layout/SiteShell.tsx`.
 
 Halaman yang mendapat route khusus didaftarkan di `src/config/routes.ts` (`STATIC_ROUTES`) agar tidak dirender ganda oleh `[slug]`.
 
@@ -44,7 +46,8 @@ Halaman yang mendapat route khusus didaftarkan di `src/config/routes.ts` (`STATI
 ## Folder
 ```
 scripts/export-wp.ts
-src/app/            routes, layout, sitemap, robots, fonts
+src/app/            root layout (<html>, font, metadata), sitemap, robots, not-found
+src/app/(site)/     semua route publik + layout situs (Header, Footer, Tanya Saffa, Analytics)
 src/components/     layout/ home/ sections/ cards/ navigation/ templates/ content/ seo/ ui/
 src/config/         site.ts (brand, menu, kontak), routes.ts, redirects.ts
 src/content/        home.ts (konten beranda yang dikelola di kode)
