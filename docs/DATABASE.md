@@ -21,6 +21,7 @@ membaca `content/*.json`.
 | `npm run db:migrate` | Terapkan migrasi yang belum dijalankan ke database di `DATABASE_URL_UNPOOLED` |
 | `npm run db:studio` | Buka Drizzle Studio (penjelajah data) |
 | `npm run db:seed` | Impor `content/` (hasil ekspor WordPress) ke database; idempoten |
+| `npm run db:seed:translations` | Muat terjemahan artikel dari `content/translations/` ke `post_translations`; idempoten |
 
 Alur perubahan skema: ubah `schema.ts` → `db:generate` → periksa SQL-nya → commit → `db:migrate`.
 
@@ -109,6 +110,15 @@ kecuali `users` (uuid, kebutuhan Auth.js) dan tabel berkunci alami (`settings.ke
 | `categories` | Kategori: `slug`, `path` arsip (mis. `hewan-lingkungan/air-bersih`), nama, deskripsi, `parent_id` | `slug` dan `path` unik. |
 | `tags` | Tag: `slug`, nama, deskripsi | Tidak berhierarki, jadi tanpa `path` dan `parent_id` (berbeda dari ringkasan di playbook). |
 | `post_categories`, `post_tags` | Relasi many-to-many | Kunci utama gabungan; baris terhapus bila post atau istilahnya dihapus. |
+
+### Terjemahan
+| Tabel | Isi | Catatan |
+|---|---|---|
+| `post_translations` | Terjemahan post per bahasa: judul, ringkasan, `content_html`, SEO, `status` (`draft`/`reviewed`), `source_updated_at`, peninjau | Kunci utama (`post_id`, `locale`); terhapus bersama post-nya. Enum `translation_status`. Draf tampil di `/en/…` dengan keterangan dan `noindex`; hanya `reviewed` yang diindeks dan diberi hreflang. |
+
+Sumber terjemahan saat ini adalah file `content/translations/en/posts/<slug>.json` (satu per artikel).
+Alur tinjauan sampai editor admin tersedia: sunting file → ubah `"status"` menjadi `"reviewed"` →
+`npm run db:seed:translations` → build/deploy ulang.
 
 ### Halaman & media
 | Tabel | Isi | Catatan |

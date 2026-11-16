@@ -5,6 +5,8 @@ import { cache } from "react";
 
 import type { Page, PageSummary, Post, PostSummary, Term } from "@/types/content";
 import { isDonationAppPath } from "@/config/routes";
+import type { Locale } from "@/i18n/config";
+import { getLocale } from "@/i18n/request";
 import { findPublishedPage, listPublishedPages } from "@/server/repos/pages";
 import { findPublishedPost, listPublishedPosts } from "@/server/repos/posts";
 import { listCategories, listTags } from "@/server/repos/taxonomy";
@@ -29,17 +31,24 @@ export const CACHE_TAGS = {
 
 /* ---------- Posts ---------- */
 
-/** Semua post terbit, terbaru dulu. */
-export const getAllPosts = cache(
-  unstable_cache(async (): Promise<PostSummary[]> => (await listPublishedPosts()).filter((p) => !isDonationAppPath(p.slug)), ["content:posts"], {
+const allPosts = cache((locale: Locale) =>
+  unstable_cache(async (): Promise<PostSummary[]> => (await listPublishedPosts(locale)).filter((p) => !isDonationAppPath(p.slug)), ["content:posts", locale], {
     tags: [CACHE_TAGS.posts, CACHE_TAGS.taxonomy],
-  }),
+  })(),
 );
 
-export const getPost = cache(async (slug: string): Promise<Post | null> => {
+/** Semua post terbit, terbaru dulu. Di versi Inggris, judul & ringkasan memakai terjemahan bila ada. */
+export const getAllPosts = (): Promise<PostSummary[]> => allPosts(getLocale());
+
+const postBySlug = cache((slug: string, locale: Locale) =>
+  unstable_cache(() => findPublishedPost(slug, locale), ["content:post", slug, locale], { tags: [CACHE_TAGS.posts, CACHE_TAGS.post(slug)] })(),
+);
+
+/** Satu post dalam bahasa halaman saat ini (isi Indonesia bila belum diterjemahkan). */
+export async function getPost(slug: string): Promise<Post | null> {
   if (isDonationAppPath(slug)) return null;
-  return unstable_cache(() => findPublishedPost(slug), ["content:post", slug], { tags: [CACHE_TAGS.posts, CACHE_TAGS.post(slug)] })();
-});
+  return postBySlug(slug, getLocale());
+}
 
 export async function getLatestPosts(limit: number): Promise<PostSummary[]> {
   return (await getAllPosts()).slice(0, limit);

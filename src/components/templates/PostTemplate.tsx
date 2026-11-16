@@ -26,7 +26,7 @@ export async function PostTemplate({ post }: { post: Post }) {
 
       <div className="mx-auto grid w-[90%] max-w-[1080px] gap-10 py-8 md:gap-12 md:py-12 lg:grid-cols-[696fr_319fr] lg:gap-[59px]">
         <div>
-          <TranslationNotice className="mb-6" />
+          <TranslationNotice className="mb-6" translation={post.translation} />
           <RichContent html={post.html} className="text-[15px] leading-[1.7] text-ink lg:text-[14px] lg:leading-[23.8px]" />
         </div>
 

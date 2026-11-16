@@ -48,6 +48,7 @@ export const id = {
     donateNow: "Donasi Sekarang",
     quickActions: "Aksi cepat",
     notTranslated: "Halaman ini belum tersedia dalam bahasa Inggris dan ditampilkan dalam bahasa Indonesia.",
+    draftTranslation: "Terjemahan bahasa Inggris ini masih draf dan sedang ditinjau.",
   },
   archive: {
     category: "Kategori",

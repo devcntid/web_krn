@@ -52,6 +52,7 @@ export const en: Dictionary = {
     donateNow: "Donate Now",
     quickActions: "Quick actions",
     notTranslated: "This page is not yet available in English and is shown in Indonesian.",
+    draftTranslation: "This English translation is a draft and is still under review.",
   },
   archive: {
     category: "Category",

@@ -47,6 +47,10 @@ content/*.json ──npm run db:seed──► Postgres ──src/server/repos/*�
   hreflang. Halaman lain di bawah `/en/` (artikel, arsip, halaman lama) menampilkan isi Indonesia dengan
   keterangan, diberi `noindex`, dan canonical-nya menunjuk ke URL Indonesia.
 - **Status terjemahan**: semua teks Inggris adalah DRAF (16 Nov 2026) dan perlu ditinjau tim sebelum cut-over.
+- **Artikel**: terjemahan disimpan di tabel `post_translations` (sumber: `content/translations/en/posts/*.json`,
+  dimuat dengan `npm run db:seed:translations`). Artikel berterjemahan draf tampil dalam bahasa Inggris dengan
+  keterangan dan tetap `noindex`; setelah berstatus `reviewed` baru diindeks dan diberi hreflang. Artikel tanpa
+  terjemahan menampilkan isi Indonesia. Diterjemahkan bertahap, terbaru dulu.
 - Pengalih bahasa: `LanguageToggle` (header desktop dan menu mobile).
 
 ## Routing

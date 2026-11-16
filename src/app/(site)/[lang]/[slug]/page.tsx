@@ -43,7 +43,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await initLocale(params);
   const slug = storedSlug(decodeSlug((await params).slug));
   const post = await getPost(slug);
-  if (post) return metadataFromSeo(post.seo, { title: post.title, path: `/${slug}/`, description: post.excerpt });
+  if (post) {
+    // Hanya terjemahan yang SUDAH DITINJAU yang diindeks dan diberi hreflang; draf tetap noindex.
+    const en = post.translation === "reviewed" ? { title: post.title, description: post.seo.description || post.excerpt } : undefined;
+    return metadataFromSeo(post.seo, { title: post.title, path: `/${slug}/`, description: post.excerpt, en });
+  }
   const page = await getPage(slug);
   if (page) return metadataFromSeo(page.seo, { title: page.title, path: `/${slug}/` });
   return {};

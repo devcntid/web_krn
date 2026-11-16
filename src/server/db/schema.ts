@@ -181,6 +181,36 @@ export const postRevisions = pgTable(
   (t) => [index("post_revisions_post_id_idx").on(t.postId, t.createdAt.desc())],
 );
 
+/** draft = hasil terjemahan yang belum ditinjau; reviewed = sudah disetujui tim. */
+export const translationStatus = pgEnum("translation_status", ["draft", "reviewed"]);
+
+/**
+ * Terjemahan post per bahasa (saat ini hanya "en"). Kolom yang null/kosong berarti
+ * memakai nilai bahasa Indonesia. Sumbernya file di content/translations/ (seed) dan,
+ * nantinya, editor admin.
+ */
+export const postTranslations = pgTable(
+  "post_translations",
+  {
+    postId: integer("post_id")
+      .notNull()
+      .references(() => posts.id, { onDelete: "cascade" }),
+    locale: text("locale").notNull(),
+    title: text("title").notNull(),
+    excerpt: text("excerpt").notNull().default(""),
+    contentHtml: text("content_html").notNull().default(""),
+    seoTitle: text("seo_title"),
+    seoDescription: text("seo_description"),
+    status: translationStatus("status").notNull().default("draft"),
+    /** `updated_at` post sumber saat diterjemahkan — untuk mendeteksi terjemahan yang usang. */
+    sourceUpdatedAt: timestamp("source_updated_at", { withTimezone: true }),
+    reviewedBy: uuid("reviewed_by").references(() => users.id, { onDelete: "set null" }),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [primaryKey({ columns: [t.postId, t.locale] }), index("post_translations_locale_status_idx").on(t.locale, t.status)],
+);
+
 /* ---------- Taksonomi ---------- */
 
 export const categories = pgTable(

@@ -35,6 +35,8 @@ export type PostSummary = {
   featuredImage: MediaRef | null;
   categories: TermRef[];
   tags: TermRef[];
+  /** Status terjemahan bila judul/isi berasal dari terjemahan (bahasa selain Indonesia). */
+  translation?: "draft" | "reviewed";
 };
 
 export type Post = PostSummary & {
