@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, Search, X } from "lucide-react";
 
 import { mainNav, site } from "@/config/site";
 import { DonateButton } from "@/components/ui/DonateButton";
+import { MobileMenu } from "@/components/layout/MobileMenu";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { mediaUrl } from "@/lib/media";
 
@@ -19,7 +20,7 @@ type HeaderProps = {
 /**
  * Replikasi header Divi Theme Builder: kartu putih melayang (fixed, top 20px,
  * lebar container 1080px, radius 10px). Dropdown desktop murni CSS (hover +
- * focus-within) agar tetap bisa diakses keyboard.
+ * focus-within) agar tetap bisa diakses keyboard. Menu mobile: MobileMenu.
  */
 export function Header({ donateVariant = "accent" }: HeaderProps) {
   const pathname = usePathname();
@@ -27,6 +28,14 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [lastPath, setLastPath] = useState(pathname);
+  const headerRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  /** Tutup menu mobile dan kembalikan fokus ke tombol menu. */
+  const closeMobile = useCallback(() => {
+    setMobileOpen(false);
+    toggleRef.current?.focus();
+  }, []);
 
   // Tutup menu mobile saat pindah halaman (pola "adjust state during render").
   if (pathname !== lastPath) {
@@ -42,7 +51,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 lg:top-5">
+    <header ref={headerRef} className="fixed inset-x-0 top-0 z-50 lg:top-5">
       <div
         className={`container-site flex h-[60px] items-center justify-between bg-white px-4 transition-[border-color] max-lg:!w-full lg:h-[76px] lg:rounded-[10px] lg:border lg:px-5 ${
           scrolled ? "border-border" : "border-transparent"
@@ -110,11 +119,12 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 lg:gap-3">
           <DonateButton variant={donateVariant} />
           <button
+            ref={toggleRef}
             type="button"
-            className="text-ink lg:hidden"
+            className="flex size-11 items-center justify-center text-ink lg:hidden"
             aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
@@ -125,41 +135,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
         </div>
       </div>
 
-      {/* Menu mobile: daftar penuh, submenu langsung tampil (sesuai Divi) */}
-      {mobileOpen && (
-        <nav
-          id="mobile-menu"
-          aria-label="Menu mobile"
-          className="max-h-[calc(100dvh-60px)] overflow-y-auto border-t-[3px] border-primary bg-white shadow-[0_2px_5px_rgba(0,0,0,0.1)] lg:hidden"
-        >
-          <ul className="py-2 text-center">
-            {mainNav.map((item) => (
-              <li key={item.label}>
-                {item.href ? (
-                  <Link href={item.href} className="block px-5 py-2.5 text-sm font-semibold text-ink">
-                    {item.label}
-                  </Link>
-                ) : (
-                  <span className="block bg-black/[0.03] px-5 py-2.5 text-sm font-semibold text-ink">
-                    {item.label}
-                  </span>
-                )}
-                {item.children && (
-                  <ul>
-                    {item.children.map((child) => (
-                      <li key={child.href}>
-                        <Link href={child.href} className="block px-5 py-2 text-sm font-medium text-ink">
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
+      {mobileOpen && <MobileMenu id="mobile-menu" onClose={closeMobile} headerRef={headerRef} />}
 
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>

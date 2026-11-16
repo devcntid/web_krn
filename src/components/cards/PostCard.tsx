@@ -10,13 +10,21 @@ import { mediaUrl } from "@/lib/media";
 type PostCardProps = {
   post: PostSummary;
   showExcerpt?: boolean;
+  /** Kelas tambahan ringkasan, mis. "max-md:hidden". */
+  excerptClassName?: string;
   /** Label kategori di atas judul, mis. "Berita · Sudan" (arsip & pencarian). */
   showCategory?: boolean;
   /** Tingkat heading judul — "h2" bila kartu langsung di bawah H1 halaman. */
   headingTag?: "h2" | "h3";
 };
 
-export function PostCard({ post, showExcerpt = true, showCategory = false, headingTag: Heading = "h3" }: PostCardProps) {
+export function PostCard({
+  post,
+  showExcerpt = true,
+  excerptClassName = "",
+  showCategory = false,
+  headingTag: Heading = "h3",
+}: PostCardProps) {
   const href = `/${post.slug}/`;
   const category = showCategory ? postCategoryLabel(post) : "";
   return (
@@ -40,7 +48,7 @@ export function PostCard({ post, showExcerpt = true, showCategory = false, headi
           {post.title}
         </Link>
       </Heading>
-      {showExcerpt && <p className="mt-6 line-clamp-3 text-sm leading-[1.45] text-body-soft">{post.excerpt}</p>}
+      {showExcerpt && <p className={`mt-6 line-clamp-3 text-sm leading-[1.45] text-body-soft ${excerptClassName}`}>{post.excerpt}</p>}
       <div className="mt-auto flex items-center justify-between gap-3 pt-6">
         <time dateTime={post.date} className="flex items-center gap-2 text-xs text-body-soft">
           <CalendarDays aria-hidden className="size-4" />

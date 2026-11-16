@@ -13,6 +13,9 @@ export const GRID_TABS = [
 
 export type GridTab = (typeof GRID_TABS)[number]["slug"];
 
+/** Batas "Muat lebih banyak" (× perPage kartu); setelah itu pagination biasa yang dipakai. */
+const MAX_LOADED_BATCHES = 5;
+
 type PostGridProps = {
   /** Path halaman listing, mis. "/artikel/". */
   basePath: string;
@@ -21,27 +24,42 @@ type PostGridProps = {
   defaultCategory: GridTab;
   page: number;
   query: string;
+  /**
+   * Jumlah "halaman" yang dimuat sekaligus dari awal (tombol "Muat lebih banyak" di mobile).
+   * Hanya berlaku di halaman pertama.
+   */
+  loaded?: number;
   perPage?: number;
 };
 
 /**
  * Pengganti shortcode `pkp-post-grid` (admin-ajax) — tab kategori, pencarian,
  * dan pagination kini memakai URL (?kategori=&q=&hal=) sehingga bisa di-crawl
- * dan dibagikan.
+ * dan dibagikan. Mobile (artboard "M4 · Publikasi"): tab bisa digeser dan tombol
+ * "Muat lebih banyak" (?muat=) menggantikan pagination; semuanya tetap berupa
+ * tautan biasa sehingga berfungsi tanpa JavaScript.
  */
-export function PostGrid({ basePath, category, defaultCategory, page, query, perPage = 9 }: PostGridProps) {
+export function PostGrid({ basePath, category, defaultCategory, page, query, loaded = 1, perPage = 9 }: PostGridProps) {
   const q = query.trim().toLowerCase();
   const all = getPostsByCategory(category).filter(
     (p) => !q || `${p.title} ${p.excerpt}`.toLowerCase().includes(q),
   );
   const result = paginate(all, page, perPage);
 
-  const href = (opts: { kategori?: string; hal?: number; q?: string }) => {
+  // Mode "Muat lebih banyak": dari halaman 1, tampilkan `batches` halaman sekaligus.
+  const loadMoreMode = result.page === 1;
+  const maxBatches = Math.min(result.totalPages, MAX_LOADED_BATCHES);
+  const batches = loadMoreMode ? Math.min(Math.max(1, Math.floor(loaded) || 1), maxBatches) : 1;
+  const items = batches > 1 ? all.slice(0, batches * perPage) : result.items;
+  const hasMore = loadMoreMode && batches < maxBatches;
+
+  const href = (opts: { kategori?: string; hal?: number; q?: string; muat?: number }) => {
     const sp = new URLSearchParams();
     const kat = opts.kategori ?? category;
     if (kat !== defaultCategory) sp.set("kategori", kat);
     if (opts.q) sp.set("q", opts.q);
     if (opts.hal && opts.hal > 1) sp.set("hal", String(opts.hal));
+    if (opts.muat && opts.muat > 1) sp.set("muat", String(opts.muat));
     const s = sp.toString();
     return s ? `${basePath}?${s}` : basePath;
   };
@@ -49,15 +67,15 @@ export function PostGrid({ basePath, category, defaultCategory, page, query, per
   return (
     <div>
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <ul className="flex flex-wrap gap-4" aria-label="Kategori">
+        <ul className="-mx-[5vw] flex gap-2 overflow-x-auto px-[5vw] pb-1 md:mx-0 md:flex-wrap md:gap-4 md:overflow-visible md:px-0 md:pb-0" aria-label="Kategori">
           {GRID_TABS.map((tab) => {
             const active = tab.slug === category;
             return (
-              <li key={tab.slug}>
+              <li key={tab.slug} className="shrink-0">
                 <Link
                   href={href({ kategori: tab.slug })}
                   aria-current={active ? "true" : undefined}
-                  className={`inline-flex h-9 min-w-[104px] items-center justify-center rounded-[10px] border-2 border-primary px-5 text-sm font-medium transition-colors ${
+                  className={`inline-flex h-11 min-w-[104px] items-center justify-center rounded-[10px] border-2 border-primary px-5 text-sm font-medium whitespace-nowrap transition-colors md:h-9 ${
                     active ? "bg-primary text-white" : "bg-white text-ink hover:bg-primary hover:text-white"
                   }`}
                 >
@@ -79,26 +97,41 @@ export function PostGrid({ basePath, category, defaultCategory, page, query, per
             type="search"
             defaultValue={query}
             placeholder="Search for News"
-            className="h-9 w-full rounded-[6px] bg-[#e4e4e4] pr-4 pl-10 text-sm text-ink outline-none placeholder:text-muted focus:ring-2 focus:ring-primary"
+            className="h-11 w-full rounded-[6px] bg-[#e4e4e4] pr-4 pl-10 text-sm text-ink outline-none placeholder:text-body-soft focus:ring-2 focus:ring-primary md:h-9"
           />
         </form>
       </div>
 
-      {result.items.length ? (
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {result.items.map((post) => (
-            <PostCard key={post.slug} post={post} />
+      {items.length ? (
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 md:mt-8 md:gap-5 lg:grid-cols-3">
+          {items.map((post, i) => (
+            // Kartu pertama tiap kelompok menjadi jangkar gulir setelah "Muat lebih banyak".
+            <div key={post.slug} id={i > 0 && i % perPage === 0 ? `muat-${i / perPage + 1}` : undefined} className="scroll-mt-20">
+              <PostCard post={post} excerptClassName="max-md:hidden" />
+            </div>
           ))}
         </div>
       ) : (
         <p className="mt-12 text-center text-body-soft">Tidak ada publikasi yang cocok.</p>
       )}
 
-      <Pagination
-        page={result.page}
-        totalPages={result.totalPages}
-        hrefFor={(n) => href({ hal: n, q: query || undefined })}
-      />
+      {hasMore && (
+        <Link
+          href={`${href({ q: query || undefined, muat: batches + 1 })}#muat-${batches + 1}`}
+          className="mt-5 flex h-12 items-center justify-center rounded-lg border-2 border-primary text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white md:hidden"
+        >
+          Muat lebih banyak
+        </Link>
+      )}
+
+      {/* Di mobile, pagination hanya menjadi cadangan (halaman ≥2 atau semua sudah dimuat). */}
+      <div className={hasMore ? "max-md:hidden" : undefined}>
+        <Pagination
+          page={result.page}
+          totalPages={result.totalPages}
+          hrefFor={(n) => href({ hal: n, q: query || undefined })}
+        />
+      </div>
     </div>
   );
 }

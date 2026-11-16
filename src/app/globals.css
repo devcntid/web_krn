@@ -9,10 +9,12 @@
   --color-primary: #006659;
   --color-primary-600: #01997f;
   --color-primary-400: #2ca395;
-  /* Varian primary-400 yang lolos kontras 4.5:1 di atas putih (teks kecil) */
-  --color-primary-500: #1e7f73;
+  /* Varian primary-400 yang lolos kontras 4.5:1 di atas putih dan surface-alt (teks kecil) */
+  --color-primary-500: #1a7368;
   --color-accent: #f4a62a;
   --color-accent-soft: #eec044;
+  /* Aksen gelap untuk teks kecil di atas krem/putih (kontras ≥4.5:1), mis. tanggal di footer */
+  --color-accent-700: #8f5d00;
 
   /* Surfaces */
   --color-cream: #f8f7f0;
@@ -27,8 +29,9 @@
   --color-body-strong: #333333;
   --color-body-soft: #666666;
   --color-muted: #a5a49a;
-  /* Abu yang digelapkan dari kanvas desain agar kontras teks ≥4.5:1 di atas putih */
-  --color-muted-strong: #77756b;
+  /* Abu yang digelapkan agar kontras teks ≥4.5:1 di atas putih DAN krem footer
+     (nilai kanvas #77756b hanya 4.3:1 di atas krem #f8f7f0) */
+  --color-muted-strong: #706e64;
 
   /* Typography */
   --font-sans: var(--font-poppins-src), ui-sans-serif, system-ui, sans-serif;
@@ -304,5 +307,31 @@ body:has([data-template="post"]) .donate-btn[data-donate="accent"] {
   }
   .wp-page details[open] > summary::after {
     content: "−";
+  }
+}
+
+/* Judul di dalam konten artikel lebih kecil di mobile (artboard "M3 · Detail Post"). */
+@media (max-width: 767.98px) {
+  .wp-content h2 {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .wp-content h3 {
+    font-size: 19px;
+    line-height: 1.25;
+  }
+  .wp-content h4 {
+    font-size: 17px;
+  }
+}
+
+/* Halaman post di mobile: bar bawah lengket menggantikan tombol melayang "Tanya Saffa". */
+@media (max-width: 767.98px) {
+  body:has([data-template="post"]) .floating-contact {
+    display: none;
+  }
+  /* Ruang agar ujung footer tidak tertutup bar (tinggi bar ±71px + safe area). */
+  body:has([data-template="post"]) {
+    padding-bottom: calc(71px + env(safe-area-inset-bottom));
   }
 }

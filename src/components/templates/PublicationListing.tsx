@@ -1,5 +1,7 @@
 import { PageHero } from "@/components/sections/PageHero";
 import { GRID_TABS, PostGrid, type GridTab } from "@/components/sections/PostGrid";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 const HERO_IMAGE = {
   src: "/wp-content/uploads/2026/06/Clean-Water.jpg",
@@ -8,7 +10,7 @@ const HERO_IMAGE = {
   alt: "Anak-anak Gaza bergembira saat kegiatan bantuan Relawan Nusantara",
 };
 
-export type ListingSearchParams = Promise<{ kategori?: string; q?: string; hal?: string }>;
+export type ListingSearchParams = Promise<{ kategori?: string; q?: string; hal?: string; muat?: string }>;
 
 /** Halaman /artikel/ dan /berita/: hero + "Kilas Perjuangan dari Nusantara" + grid. */
 export async function PublicationListing({
@@ -27,24 +29,31 @@ export async function PublicationListing({
 
   return (
     <>
-      <PageHero title={title} image={HERO_IMAGE} overlay={0.2} />
-      <section className="bg-surface-alt py-12 lg:py-16">
+      <PageHero title={title} image={HERO_IMAGE} overlay={0.2} width="container" />
+      <section className="bg-surface-alt py-6 md:py-12 lg:py-16">
         <div className="container-site">
-          <h2 className="text-[30px] leading-[1.1] font-extrabold lg:text-[45px]">Kilas Perjuangan dari Nusantara</h2>
+          <h2 className="text-[26px] leading-[1.15] font-extrabold md:text-[30px] md:leading-[1.1] lg:text-[45px]">Kilas Perjuangan dari Nusantara</h2>
           <p className="mt-3 text-base text-body">
             Cerita tentang langkah-langkah kecil dari Nusantara yang menjadi kekuatan besar bagi kemanusiaan
           </p>
-          <div className="mt-10">
+          <div className="mt-[18px] md:mt-10">
             <PostGrid
               basePath={basePath}
               category={category}
               defaultCategory={defaultCategory}
               page={Number(sp.hal) || 1}
               query={sp.q ?? ""}
+              loaded={Number(sp.muat) || 1}
             />
           </div>
         </div>
       </section>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Beranda", path: "/" },
+          { name: title, path: basePath },
+        ])}
+      />
     </>
   );
 }

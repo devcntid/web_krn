@@ -11,7 +11,7 @@ export function FloatingContact() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${floatingContact.label} via WhatsApp`}
-      className="fixed right-5 bottom-5 z-40 block size-[100px] overflow-hidden rounded-full transition-transform hover:scale-105 max-sm:size-[70px]"
+      className="floating-contact fixed right-5 bottom-5 z-40 block size-[100px] overflow-hidden rounded-full transition-transform hover:scale-105 max-sm:size-[70px]"
     >
       <Image src={mediaUrl(floatingContact.image)} alt="" width={100} height={100} className="size-full object-cover" />
     </a>
