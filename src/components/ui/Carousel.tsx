@@ -68,7 +68,7 @@ export function Carousel({
   const arrowStyle = {
     side: `${arrowBase} absolute top-1/2 z-10 size-10 -translate-y-1/2 text-white/80 drop-shadow`,
     "side-round": `${arrowBase} absolute top-[var(--arrow-top,50%)] z-10 size-[52px] -translate-y-1/2 rounded-full bg-white text-ink shadow-card`,
-    "bottom-right": `${arrowBase} size-10 rounded-[6px] bg-primary text-white`,
+    "bottom-right": `${arrowBase} size-11 rounded-[6px] bg-primary text-white`,
     none: "",
   }[arrows];
 

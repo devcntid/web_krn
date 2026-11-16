@@ -10,6 +10,11 @@ export const STATIC_ROUTES = new Set<string>([
   "profil-relawan-nusantara",
   "audit-keuangan",
   "asas-legalitas",
+  // Pilar program (template PillarPage)
+  "aksi-kemanusiaan",
+  "lingkungan",
+  "pendidikan",
+  "ekonomi",
 ]);
 
 /** Kategori yang dipakai tab grid Publikasi. */

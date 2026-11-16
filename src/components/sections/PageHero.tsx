@@ -5,6 +5,8 @@ import { mediaUrl } from "@/lib/media";
 
 type PageHeroProps = {
   title: string;
+  /** Label kecil di atas judul (opsional), mis. "Pilar Program". */
+  eyebrow?: string;
   /** Teks kecil di bawah judul (opsional). */
   subtitle?: string;
   image?: MediaRef | null;
@@ -19,7 +21,7 @@ type PageHeroProps = {
  * Hero dengan gambar latar + overlay gelap (Divi fullwidth header / section
  * template post). Judul selalu H1 — satu-satunya H1 di halaman.
  */
-export function PageHero({ title, subtitle, image, size = "page", width = "wide", overlay = 0.61 }: PageHeroProps) {
+export function PageHero({ title, eyebrow, subtitle, image, size = "page", width = "wide", overlay = 0.61 }: PageHeroProps) {
   const height = {
     post: "min-h-[520px] lg:min-h-[743px]",
     page: "min-h-[420px] lg:min-h-[707px]",
@@ -41,6 +43,7 @@ export function PageHero({ title, subtitle, image, size = "page", width = "wide"
       )}
       <div className="absolute inset-0" style={{ backgroundColor: `rgba(0,0,0,${overlay})` }} aria-hidden />
       <div className={`relative pt-32 pb-12 ${width === "container" ? "container-site lg:pb-16" : "mx-auto w-[90%] lg:pb-[68px]"}`}>
+        {eyebrow && <p className="mb-2 text-sm font-semibold tracking-[0.08em] text-white uppercase">{eyebrow}</p>}
         <h1
           className={`text-white ${
             size === "post" ? "text-[32px] leading-[1.2] lg:text-[54px]" : "text-[40px] leading-[1.1] lg:text-[64px]"

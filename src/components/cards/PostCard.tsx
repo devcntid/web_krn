@@ -7,10 +7,10 @@ import type { PostSummary } from "@/types/content";
 import { mediaUrl } from "@/lib/media";
 
 /** Kartu grid Artikel/Berita (`pkp-card`): putih, gambar, judul, excerpt, tanggal + tombol. */
-export function PostCard({ post }: { post: PostSummary }) {
+export function PostCard({ post, showExcerpt = true }: { post: PostSummary; showExcerpt?: boolean }) {
   const href = `/${post.slug}/`;
   return (
-    <article className="flex flex-col rounded-[10px] bg-white p-4 shadow-card">
+    <article className="flex h-full flex-col rounded-[10px] bg-white p-4 shadow-card">
       <Link href={href} className="block overflow-hidden rounded-[6px]" tabIndex={-1} aria-hidden>
         <div className="relative aspect-[4/3] bg-surface-alt">
           {post.featuredImage && (
@@ -29,7 +29,7 @@ export function PostCard({ post }: { post: PostSummary }) {
           {post.title}
         </Link>
       </h3>
-      <p className="mt-6 line-clamp-3 text-sm leading-[1.45] text-body-soft">{post.excerpt}</p>
+      {showExcerpt && <p className="mt-6 line-clamp-3 text-sm leading-[1.45] text-body-soft">{post.excerpt}</p>}
       <div className="mt-auto flex items-center justify-between gap-3 pt-6">
         <time dateTime={post.date} className="flex items-center gap-2 text-xs text-body-soft">
           <CalendarDays aria-hidden className="size-4" />
