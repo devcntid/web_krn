@@ -5,7 +5,12 @@
   "date": "2026-11-11T10:42:11",
   "modified": "2026-11-12T09:58:23",
   "excerpt": "Relawan Nusantara menyalurkan 9.500 liter air bersih untuk membantu 350 KK terdampak kekeringan di Desa Biluhu Tengah dan Biluhu Barat, Gorontalo.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2026/11/AIR-GORONTALO-rELAWAN-nusantara.jpg",
+    "width": 1600,
+    "height": 1066,
+    "alt": "Sebanyak 9.500 Liter Air Bersih Disalurkan untuk Warga Terdampak Kekeringan di Gorontalo"
+  },
   "categories": [
     {
       "slug": "blog",

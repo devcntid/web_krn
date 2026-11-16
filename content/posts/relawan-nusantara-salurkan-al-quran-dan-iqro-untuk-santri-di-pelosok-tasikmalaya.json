@@ -5,7 +5,12 @@
   "date": "2025-06-21T10:07:31",
   "modified": "2025-06-21T10:07:34",
   "excerpt": "Relawan Nusantara salurkan Al-Qur’an dan Iqro ke santri di Tasikmalaya. Hadirkan semangat baru untuk belajar Al-Qur’an. Yuk, luaskan manfaat dengan sedekah mushaf yang pahalanya terus mengalir.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2025/06/IMG_20250524_131310_343-1024x768.jpg",
+    "width": 1024,
+    "height": 768,
+    "alt": "Relawan Nusantara Salurkan Al-Qur’an dan Iqro untuk Santri di Pelosok Tasikmalaya"
+  },
   "categories": [
     {
       "slug": "blog",

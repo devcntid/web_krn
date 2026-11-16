@@ -5,7 +5,12 @@
   "date": "2026-09-15T09:09:18",
   "modified": "2026-09-16T09:52:53",
   "excerpt": "Relawan Nusantara menyalurkan ATK, PMT, dan Baby Kits bagi penyintas kebakaran Desa Sade, Lombok Tengah, sekaligus mendukung pemulihan pascabencana.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2026/09/penyerahan-simbolis-bantuan-relawan-nusantara-desa-sade-1024x576.jpg",
+    "width": 1024,
+    "height": 576,
+    "alt": "Relawan Nusantara Salurkan ATK, PMT, dan Baby Kits untuk Penyintas Kebakaran Desa Sade"
+  },
   "categories": [
     {
       "slug": "berita",

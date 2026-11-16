@@ -1,0 +1,30 @@
+# Daftar URL untuk `npm run visual:compare` (satu path per baris; baris kosong dan # diabaikan).
+# Path yang sama diambil dari WordPress (WP_ORIGIN) dan Next.js (NEXT_ORIGIN).
+
+# Beranda
+/
+
+# Halaman khusus
+/profil-relawan-nusantara/
+/audit-keuangan/
+/asas-legalitas/
+/aksi-kemanusiaan/
+/lingkungan/
+/pr0gram-kami/
+/kemitraan/
+/e-report/
+
+# Publikasi
+/berita/
+/artikel/
+/bantuan-makanan-pasien-terdampak-konflik-sudan/
+
+# Arsip & pencarian
+/category/sudan/
+/?s=sudan
+
+# Template generik
+/fidyah/
+
+# 404
+/halaman-yang-tidak-ada/

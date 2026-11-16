@@ -5,7 +5,12 @@
   "date": "2023-12-08T02:20:56",
   "modified": "2023-12-29T04:21:46",
   "excerpt": "Alhamdulillah hingga saat ini Relawan Nusantara telah menyalurkan sepatu sebanyak 90 untuk anak-anak sekolah yang tersebar di 12 Kabupaten/kota dengan 10 provinsi.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-07-at-16.21.49-2.jpeg",
+    "width": 1600,
+    "height": 1200,
+    "alt": "Berbagi Sepatu Nusantara bersama Relawan Nusantara"
+  },
   "categories": [
     {
       "slug": "blog",

@@ -17,6 +17,9 @@ function FooterHeading({ children }: { children: React.ReactNode }) {
 }
 
 /** Footer global (Divi Theme Builder) — Manrope, background krem. */
+/** Lencana WTP di footer WordPress (blurb kiri teks predikat opini). */
+const WTP_BADGE = "/wp-content/uploads/2026/09/2021-2025-scaled.png";
+
 export function Footer() {
   const latest = getLatestPosts(2);
 
@@ -29,14 +32,25 @@ export function Footer() {
             <Link href="/" aria-label={site.name}>
               <Image src={mediaUrl(site.logo.src)} alt={site.name} width={160} height={36} className="h-9 w-auto" />
             </Link>
-            <p className="mt-6 rounded-[10px] border border-dotted border-[#f05e22] p-[30px] text-[15px] leading-[1.5] font-medium text-muted">
+            <p className="mt-6 rounded-[10px] border border-dotted border-[#f05e22] p-[30px] text-[15px] leading-[1.5] font-medium text-muted-strong">
               Dana yang didonasikan melalui Relawan Nusantara adalah milik sah, bukan berasal dari sumber yang
               tidak halal, dan tidak digunakan untuk pencucian uang, terorisme, atau kejahatan lainnya
             </p>
-            <p className="mt-14 pl-[105px] text-[13px] leading-[1.3] font-medium text-muted italic max-sm:pl-0">
-              Relawan Nusantara telah meraih predikat opini Wajar Tanpa Pengecualian pada laporan keuangan
-              2021 – 2025 Sesuai Standar Akuntansi Keuangan Indonesia
-            </p>
+            {/* Blurb Divi: lencana opini WTP di kiri, teks di kanan */}
+            <div className="mt-10 flex items-center gap-4">
+              <Image
+                src={mediaUrl(WTP_BADGE)}
+                alt="Lencana opini Wajar Tanpa Pengecualian 2021–2025"
+                width={480}
+                height={480}
+                sizes="88px"
+                className="size-[88px] shrink-0"
+              />
+              <p className="text-[13px] leading-[1.3] font-medium text-muted-strong italic">
+                Relawan Nusantara telah meraih predikat opini Wajar Tanpa Pengecualian pada laporan keuangan
+                2021 – 2025 Sesuai Standar Akuntansi Keuangan Indonesia
+              </p>
+            </div>
           </div>
 
           {/* Eksplor */}
@@ -48,7 +62,7 @@ export function Footer() {
                   <a
                     href={item.href}
                     {...("external" in item && item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="flex items-center gap-2 text-[15px] font-medium text-muted transition-colors hover:text-primary"
+                    className="flex items-center gap-2 text-[15px] font-medium text-muted-strong transition-colors hover:text-primary"
                   >
                     <Leaf aria-hidden className="size-4 fill-current" />
                     {item.label}
@@ -66,11 +80,11 @@ export function Footer() {
                 <li key={post.slug} className="py-3 first:pt-0">
                   <Link
                     href={`/${post.slug}/`}
-                    className="block text-[15px] leading-[18px] font-bold text-muted transition-colors hover:text-primary"
+                    className="block text-[15px] leading-[18px] font-bold text-muted-strong transition-colors hover:text-primary"
                   >
                     {post.title}
                   </Link>
-                  <time dateTime={post.date} className="mt-2 block text-[13px] leading-[26px] text-[#f1b51c]">
+                  <time dateTime={post.date} className="mt-2 block text-[13px] leading-[26px] text-accent-700">
                     {formatDateShort(post.date)}
                   </time>
                 </li>
@@ -85,7 +99,7 @@ export function Footer() {
               <br />
               Kami
             </FooterHeading>
-            <ul className="space-y-4 text-[15px] leading-[25.5px] font-medium text-muted">
+            <ul className="space-y-4 text-[15px] leading-[25.5px] font-medium text-muted-strong">
               <li className="flex gap-3">
                 <Phone aria-hidden className="mt-1 size-4 shrink-0 fill-accent text-accent" />
                 <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-primary">

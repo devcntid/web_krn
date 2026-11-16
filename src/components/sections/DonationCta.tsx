@@ -5,7 +5,7 @@ import { mediaUrl } from "@/lib/media";
 /** CTA di akhir template post: "Jadilah Bagian Aksi Kemanusiaan" → /donasi/programs. */
 export function DonationCta() {
   return (
-    <section className="mx-auto grid w-[90%] items-center gap-10 py-12 md:grid-cols-2">
+    <section className="mx-auto grid w-[90%] max-w-[1080px] items-center gap-10 py-12 md:grid-cols-2">
       <div>
         <h2 className="text-[28px] leading-[1.2] font-bold text-ink lg:text-[34px]">
           Jadilah Bagian Aksi Kemanusiaan
@@ -16,7 +16,7 @@ export function DonationCta() {
         </p>
         <a
           href="/donasi/programs"
-          className="mt-8 inline-block rounded-[6px] bg-accent-soft px-5 py-3 text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
+          className="mt-8 inline-block rounded-[6px] bg-accent-soft px-5 py-3 text-[13px] font-semibold text-ink transition-opacity hover:opacity-90"
         >
           Mari Berdonasi
         </a>

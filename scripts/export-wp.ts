@@ -456,7 +456,11 @@ async function main() {
         date: p.date,
         modified: p.modified,
         excerpt: excerpt || scraped?.seo.description || "",
-        featuredImage: mediaRef(p._embedded?.["wp:featuredmedia"]?.[0], title),
+        // Sebagian post tidak mengembalikan featured media lewat REST padahal temanya menampilkan
+        // gambar utama; og:image Rank Math (gambar yang sama) dipakai sebagai cadangan.
+        featuredImage:
+          mediaRef(p._embedded?.["wp:featuredmedia"]?.[0], title) ??
+          (scraped?.seo.ogImage ? { src: scraped.seo.ogImage, width: 1200, height: 675, alt: title } : null),
         categories: p.categories.map((id) => catById.get(id)).filter(Boolean),
         tags: p.tags.map((id) => tagById.get(id)).filter(Boolean),
       };

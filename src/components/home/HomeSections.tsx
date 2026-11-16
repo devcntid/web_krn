@@ -15,7 +15,6 @@ const outlineBtn =
 /* ---------- Intro + video + peta ---------- */
 
 export function IntroSection() {
-  const nf = new Intl.NumberFormat("id-ID", { useGrouping: false });
   return (
     <section className="relative pt-7 pb-10 md:py-16 lg:pt-[100px]">
       {/* Label vertikal "Scroll Untuk Eksplorasi" */}
@@ -59,9 +58,9 @@ export function IntroSection() {
           />
           <div className="rounded-b-2xl bg-primary p-[22px] text-white md:rounded-[0_0_20px_0] md:py-8">
             <h2 className="text-lg leading-[1.3] font-bold text-white md:text-xl">{impactMap.heading}</h2>
-            <dl className="mt-4 grid grid-cols-2 gap-4 md:mt-[22px] md:grid-cols-1 md:gap-[22px]">
+            <ul className="mt-4 grid grid-cols-2 gap-4 md:mt-[22px] md:grid-cols-1 md:gap-[22px]">
               {impactMap.stats.map((s) => (
-                <div key={s.label} className="flex items-center gap-2.5 md:gap-3.5">
+                <li key={s.label} className="flex items-center gap-2.5 md:gap-3.5">
                   <Image
                     src={mediaUrl(s.icon)}
                     alt=""
@@ -70,13 +69,13 @@ export function IntroSection() {
                     sizes="72px"
                     className="h-auto w-11 shrink-0 md:w-14 lg:w-[72px]"
                   />
-                  <div className="min-w-0">
-                    <dd className="text-[22px] leading-none font-bold md:text-2xl">{nf.format(s.value)}</dd>
-                    <dt className="mt-1 text-[13px] leading-[1.25] md:text-sm">{s.label}</dt>
-                  </div>
-                </div>
+                  <p className="min-w-0">
+                    <span className="block text-[22px] leading-none font-bold md:text-2xl">{s.value}</span>
+                    <span className="mt-1 block text-[13px] leading-[1.25] md:text-sm">{s.label}</span>
+                  </p>
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
         </div>
       </div>

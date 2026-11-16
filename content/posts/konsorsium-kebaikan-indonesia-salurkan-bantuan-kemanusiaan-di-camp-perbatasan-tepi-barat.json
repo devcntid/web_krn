@@ -5,7 +5,12 @@
   "date": "2026-02-09T12:01:46",
   "modified": "2026-02-09T12:03:53",
   "excerpt": "Konsorsium Kebaikan Indonesia menyalurkan bantuan kemanusiaan di camp perbatasan Tepi Barat berupa makanan siap saji, winter aid, dan bahan pangan. Simak dampak nyata bagi keluarga Palestina serta ajakan berbagi kebaikan.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2026/02/SC101361-1024x683.jpg",
+    "width": 1024,
+    "height": 683,
+    "alt": "Konsorsium Kebaikan Indonesia Salurkan Bantuan Kemanusiaan di Camp Perbatasan Tepi Barat"
+  },
   "categories": [
     {
       "slug": "berita",

@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-11-16T02:29:39.404Z",
+  "generatedAt": "2026-11-16T04:28:34.615Z",
   "mediaSource": "public/wp-content/uploads",
   "totals": {
     "posts": 670,
     "pages": 51,
-    "checkedImages": 2418,
+    "checkedImages": 2431,
     "checkedInternalLinks": 2309,
     "donationAppLinks": 936,
     "skippedDonationAppDocuments": 5
   },
   "summary": {
-    "postsWithoutFeaturedImage": 21,
+    "postsWithoutFeaturedImage": 8,
     "imagesWithoutAlt": 1335,
     "documentsWithImagesWithoutAlt": 418,
     "emptyHtml": 4,
@@ -22,87 +22,9 @@
   "postsWithoutFeaturedImage": [
     {
       "type": "post",
-      "id": 262663,
-      "url": "/bantuan-air-bersih-warga-terdampak-kekeringan-gorontalo-3/",
-      "title": "Sebanyak 9.500 Liter Air Bersih Disalurkan untuk Warga Terdampak Kekeringan di Gorontalo"
-    },
-    {
-      "type": "post",
-      "id": 262046,
-      "url": "/jaga-satwa-jaga-alam-kalimantan-barat-ketika-karhutla-mengancam-habitat-satwa/",
-      "title": "Jaga Satwa, Jaga Alam Kalimantan Barat: Ketika Karhutla Mengancam Habitat Satwa"
-    },
-    {
-      "type": "post",
-      "id": 261959,
-      "url": "/kebakaran-desa-sade-relawan-nusantara-bantuan-penyintas/",
-      "title": "Relawan Nusantara Salurkan ATK, PMT, dan Baby Kits untuk Penyintas Kebakaran Desa Sade"
-    },
-    {
-      "type": "post",
-      "id": 260620,
-      "url": "/relawan-nusantara-dan-mui-resmi-berkolaborasi-di-kuii-2026-perkuat-aksi-kemanusiaan-untuk-indonesia-dan-palestina/",
-      "title": "Relawan Nusantara dan MUI Resmi Berkolaborasi di KUII 2026, Perkuat Aksi Kemanusiaan untuk Indonesia dan Palestina"
-    },
-    {
-      "type": "post",
-      "id": 258407,
-      "url": "/konsorsium-kebaikan-indonesia-salurkan-bantuan-kemanusiaan-di-camp-perbatasan-tepi-barat/",
-      "title": "Konsorsium Kebaikan Indonesia Salurkan Bantuan Kemanusiaan di Camp Perbatasan Tepi Barat"
-    },
-    {
-      "type": "post",
-      "id": 258341,
-      "url": "/dukung-operasi-sar-dan-dapur-umum-relawan-nusantara-salurkan-bantuan-pangan-bagi-penyintas-longsor-cisarua/",
-      "title": "Dukung Operasi SAR dan Dapur Umum, Relawan Nusantara Salurkan Bantuan Pangan bagi Penyintas Longsor Cisarua"
-    },
-    {
-      "type": "post",
-      "id": 257169,
-      "url": "/semarak-simbah-rona-nusantara-mengalirkan-kehangatan-untuk-para-lansia/",
-      "title": "Semarak Simbah Rona Nusantara: Mengalirkan Kehangatan untuk Para Lansia"
-    },
-    {
-      "type": "post",
-      "id": 256917,
-      "url": "/ketika-kebaikan-menjadi-modal-baznas-dan-relawan-nusantara-dorong-umkm-bandung-untuk-bangkit/",
-      "title": "Ketika Kebaikan Menjadi Modal: Baznas dan Relawan Nusantara Dorong UMKM Bandung untuk Bangkit"
-    },
-    {
-      "type": "post",
-      "id": 255920,
-      "url": "/semangat-kemerdekaan-tanpa-batas-relawan-nusantara-gelar-warna-difabel-di-banyuwangi/",
-      "title": "Semangat Kemerdekaan Tanpa Batas: Relawan Nusantara Gelar WARNA DIFABEL di Banyuwangi"
-    },
-    {
-      "type": "post",
-      "id": 255433,
-      "url": "/relawan-nusantara-salurkan-al-quran-dan-iqro-untuk-santri-di-pelosok-tasikmalaya/",
-      "title": "Relawan Nusantara Salurkan Al-Qur’an dan Iqro untuk Santri di Pelosok Tasikmalaya"
-    },
-    {
-      "type": "post",
-      "id": 254606,
-      "url": "/luaskan-manfaat-relawan-nusantara-hadir-untuk-lansia-di-lembata/",
-      "title": "Luaskan Manfaat: Relawan Nusantara Hadir untuk Lansia di Lembata"
-    },
-    {
-      "type": "post",
       "id": 253792,
       "url": "/dt-peduli-bersama-relawan-nusantara-salurkan-25-paket-sembako-untuk-korban-banjir-bandang-di-sijunjung/",
       "title": "DT Peduli Bersama Relawan Nusantara Salurkan 25 Paket Sembako untuk Korban Banjir Bandang di Sijunjung"
-    },
-    {
-      "type": "post",
-      "id": 252261,
-      "url": "/penyaluran-sepatu-relawan-nusantara/",
-      "title": "Berbagi Sepatu Nusantara bersama Relawan Nusantara"
-    },
-    {
-      "type": "post",
-      "id": 251446,
-      "url": "/rumah-zakat-bantu-lunasi-biaya-pendidikan-sekolah-anak-anak-juara/",
-      "title": "RUMAH ZAKAT BANTU LUNASI BIAYA PENDIDIKAN SEKOLAH ANAK-ANAK JUARA"
     },
     {
       "type": "post",

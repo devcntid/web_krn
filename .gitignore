@@ -48,3 +48,6 @@ next-env.d.ts
 
 # oh-my-claudecode (state operasional)
 .omc/
+
+# Screenshot visual QA (npm run visual:compare) — besar, dibuat ulang kapan saja
+/qa/screenshots/

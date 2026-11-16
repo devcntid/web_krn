@@ -6,7 +6,12 @@
     "date": "2026-11-11T10:42:11",
     "modified": "2026-11-12T09:58:23",
     "excerpt": "Relawan Nusantara menyalurkan 9.500 liter air bersih untuk membantu 350 KK terdampak kekeringan di Desa Biluhu Tengah dan Biluhu Barat, Gorontalo.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2026/11/AIR-GORONTALO-rELAWAN-nusantara.jpg",
+      "width": 1600,
+      "height": 1066,
+      "alt": "Sebanyak 9.500 Liter Air Bersih Disalurkan untuk Warga Terdampak Kekeringan di Gorontalo"
+    },
     "categories": [
       {
         "slug": "blog",
@@ -3173,7 +3178,12 @@
     "date": "2026-09-21T15:04:39",
     "modified": "2026-09-23T08:59:29",
     "excerpt": "Karhutla Kalimantan Barat mengancam habitat satwa. Relawan Nusantara bersama BKSDA Kalbar hadir melalui program Jaga Satwa.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-21-at-07.43.45.jpg",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Jaga Satwa, Jaga Alam Kalimantan Barat: Ketika Karhutla Mengancam Habitat Satwa"
+    },
     "categories": [
       {
         "slug": "berita",
@@ -3508,7 +3518,12 @@
     "date": "2026-09-15T09:09:18",
     "modified": "2026-09-16T09:52:53",
     "excerpt": "Relawan Nusantara menyalurkan ATK, PMT, dan Baby Kits bagi penyintas kebakaran Desa Sade, Lombok Tengah, sekaligus mendukung pemulihan pascabencana.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2026/09/penyerahan-simbolis-bantuan-relawan-nusantara-desa-sade-1024x576.jpg",
+      "width": 1024,
+      "height": 576,
+      "alt": "Relawan Nusantara Salurkan ATK, PMT, dan Baby Kits untuk Penyintas Kebakaran Desa Sade"
+    },
     "categories": [
       {
         "slug": "berita",
@@ -8637,7 +8652,12 @@
     "date": "2026-07-25T10:10:19",
     "modified": "2026-07-30T10:33:46",
     "excerpt": "Relawan Nusantara resmi menjalin kolaborasi dengan MUI dalam Kongres Umat Islam Indonesia (KUII) 2026. Sinergi ini memperkuat aksi kemanusiaan, bantuan Palestina, ketahanan pangan, dan respons kebencanaan di Indonesia.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-24-at-18.14.52-1024x576.jpg",
+      "width": 1024,
+      "height": 576,
+      "alt": "Relawan Nusantara dan MUI Resmi Berkolaborasi di KUII 2026, Perkuat Aksi Kemanusiaan untuk Indonesia dan Palestina"
+    },
     "categories": [
       {
         "slug": "berita",
@@ -21426,7 +21446,12 @@
     "date": "2026-02-09T12:01:46",
     "modified": "2026-02-09T12:03:53",
     "excerpt": "Konsorsium Kebaikan Indonesia menyalurkan bantuan kemanusiaan di camp perbatasan Tepi Barat berupa makanan siap saji, winter aid, dan bahan pangan. Simak dampak nyata bagi keluarga Palestina serta ajakan berbagi kebaikan.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2026/02/SC101361-1024x683.jpg",
+      "width": 1024,
+      "height": 683,
+      "alt": "Konsorsium Kebaikan Indonesia Salurkan Bantuan Kemanusiaan di Camp Perbatasan Tepi Barat"
+    },
     "categories": [
       {
         "slug": "berita",
@@ -21991,7 +22016,12 @@
     "date": "2026-01-30T08:33:35",
     "modified": "2026-01-30T08:33:37",
     "excerpt": "Relawan Nusantara mendukung operasi SAR dan dapur umum pascabencana longsor di Cisarua, Bandung Barat, dengan menyalurkan bantuan pangan bagi penyintas dan tim SAR gabungan.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-28-at-16.26.26.jpeg",
+      "width": 1280,
+      "height": 960,
+      "alt": "Dukung Operasi SAR dan Dapur Umum, Relawan Nusantara Salurkan Bantuan Pangan bagi Penyintas Longsor Cisarua"
+    },
     "categories": [
       {
         "slug": "bencana",
@@ -32366,7 +32396,12 @@
     "date": "2025-11-27T10:05:06",
     "modified": "2025-11-28T13:54:25",
     "excerpt": "Program Rona Nusantara. Semarak Simbah menghadirkan kehangatan bagi lansia dan veteran di Subang melalui kegiatan sosial penuh empati, kebersamaan, dan aksi nyata kepedulian.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2025/11/IMG_7351_11zon-1024x575.jpg",
+      "width": 1024,
+      "height": 575,
+      "alt": "Semarak Simbah Rona Nusantara: Mengalirkan Kehangatan untuk Para Lansia"
+    },
     "categories": [
       {
         "slug": "berita",
@@ -34367,7 +34402,12 @@
     "date": "2025-11-06T16:00:59",
     "modified": "2025-11-28T14:10:27",
     "excerpt": "Baznas bersama Relawan Nusantara menyalurkan bantuan untuk pelaku UMKM di Bandung. Melalui modal usaha dan perlengkapan dagang, program ini menyalakan kembali harapan dan kemandirian ekonomi umat. Mari ikut berkontribusi dalam melahirkan kebaikan yang menumbuhkan kehidupan.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2025/11/WhatsApp-Image-2025-11-06-at-10.11.36_18ea4982.jpg",
+      "width": 1280,
+      "height": 718,
+      "alt": "Ketika Kebaikan Menjadi Modal: Baznas dan Relawan Nusantara Dorong UMKM Bandung untuk Bangkit"
+    },
     "categories": [
       {
         "slug": "blog",
@@ -39884,7 +39924,12 @@
     "date": "2025-08-21T10:38:13",
     "modified": "2025-08-21T10:38:16",
     "excerpt": "Relawan Nusantara rayakan HUT ke-80 RI lewat WARNA DIFABEL di SLB Bhakti Pertiwi Banyuwangi, menghadirkan lomba seru, kebersamaan, dan bingkisan istimewa untuk anak-anak difabel.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2025/08/IMG_20250819_110851-1024x768.jpg",
+      "width": 1024,
+      "height": 768,
+      "alt": "Semangat Kemerdekaan Tanpa Batas: Relawan Nusantara Gelar WARNA DIFABEL di Banyuwangi"
+    },
     "categories": [
       {
         "slug": "berita",
@@ -43079,7 +43124,12 @@
     "date": "2025-06-21T10:07:31",
     "modified": "2025-06-21T10:07:34",
     "excerpt": "Relawan Nusantara salurkan Al-Qur’an dan Iqro ke santri di Tasikmalaya. Hadirkan semangat baru untuk belajar Al-Qur’an. Yuk, luaskan manfaat dengan sedekah mushaf yang pahalanya terus mengalir.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2025/06/IMG_20250524_131310_343-1024x768.jpg",
+      "width": 1024,
+      "height": 768,
+      "alt": "Relawan Nusantara Salurkan Al-Qur’an dan Iqro untuk Santri di Pelosok Tasikmalaya"
+    },
     "categories": [
       {
         "slug": "blog",
@@ -47748,7 +47798,12 @@
     "date": "2025-03-06T13:15:46",
     "modified": "2025-03-06T13:15:46",
     "excerpt": "Relawan Nusantara hadir membawa secercah harapan bagi para lansia yang tinggal Desa Hoelea. Melalui program Pangan Nusantara untuk Lansia, para relawan mendistribusikan bantuan berupa kebutuhan pangan langsung ke rumah-rumah mereka.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2025/03/WhatsApp-Image-2025-03-06-at-08.34.00_dbaa98f6.jpg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Luaskan Manfaat: Relawan Nusantara Hadir untuk Lansia di Lembata"
+    },
     "categories": [
       {
         "slug": "berita",
@@ -53617,7 +53672,12 @@
     "date": "2023-12-08T02:20:56",
     "modified": "2023-12-29T04:21:46",
     "excerpt": "Alhamdulillah hingga saat ini Relawan Nusantara telah menyalurkan sepatu sebanyak 90 untuk anak-anak sekolah yang tersebar di 12 Kabupaten/kota dengan 10 provinsi.",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2023/12/WhatsApp-Image-2023-12-07-at-16.21.49-2.jpeg",
+      "width": 1600,
+      "height": 1200,
+      "alt": "Berbagi Sepatu Nusantara bersama Relawan Nusantara"
+    },
     "categories": [
       {
         "slug": "blog",
@@ -54380,7 +54440,12 @@
     "date": "2023-08-07T07:32:20",
     "modified": "2023-12-08T07:12:16",
     "excerpt": "TANGERANG – Memasuki tahun ajaran baru, tidak jarang banyak para orang tua yang mempunyai penghasilan pas-pasan mengalami kesulitan dalam membayar biaya sekolah anaknya sehingga harus menunggak. Alhamdulillah, pada Sabtu (29/07) Rumah Zakat menyalurkan Bantuan Pendidikan titipan donatur kepada enam anak juara binaan Rumah Zakat yang mempunyai tunggakan biaya sekolah di wilayah Serua, Ciputat, Tangerang Selatan. “Terimakasih banget…",
-    "featuredImage": null,
+    "featuredImage": {
+      "src": "/wp-content/uploads/2023/08/RUMAH-ZAKAT-BANTU-LUNASI-BIAYA-PENDIDIKAN-SEKOLAH-ANAK-ANAK-JUARA-1.jpeg",
+      "width": 1280,
+      "height": 722,
+      "alt": "RUMAH ZAKAT BANTU LUNASI BIAYA PENDIDIKAN SEKOLAH ANAK-ANAK JUARA"
+    },
     "categories": [
       {
         "slug": "sekolah-madrasah",

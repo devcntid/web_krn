@@ -5,7 +5,12 @@
   "date": "2025-03-06T13:15:46",
   "modified": "2025-03-06T13:15:46",
   "excerpt": "Relawan Nusantara hadir membawa secercah harapan bagi para lansia yang tinggal Desa Hoelea. Melalui program Pangan Nusantara untuk Lansia, para relawan mendistribusikan bantuan berupa kebutuhan pangan langsung ke rumah-rumah mereka.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2025/03/WhatsApp-Image-2025-03-06-at-08.34.00_dbaa98f6.jpg",
+    "width": 1600,
+    "height": 1200,
+    "alt": "Luaskan Manfaat: Relawan Nusantara Hadir untuk Lansia di Lembata"
+  },
   "categories": [
     {
       "slug": "berita",

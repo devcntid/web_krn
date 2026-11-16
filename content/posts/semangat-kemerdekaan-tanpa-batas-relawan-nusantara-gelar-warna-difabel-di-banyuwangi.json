@@ -5,7 +5,12 @@
   "date": "2025-08-21T10:38:13",
   "modified": "2025-08-21T10:38:16",
   "excerpt": "Relawan Nusantara rayakan HUT ke-80 RI lewat WARNA DIFABEL di SLB Bhakti Pertiwi Banyuwangi, menghadirkan lomba seru, kebersamaan, dan bingkisan istimewa untuk anak-anak difabel.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2025/08/IMG_20250819_110851-1024x768.jpg",
+    "width": 1024,
+    "height": 768,
+    "alt": "Semangat Kemerdekaan Tanpa Batas: Relawan Nusantara Gelar WARNA DIFABEL di Banyuwangi"
+  },
   "categories": [
     {
       "slug": "berita",

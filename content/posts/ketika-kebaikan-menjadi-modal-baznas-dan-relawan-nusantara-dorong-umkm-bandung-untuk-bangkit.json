@@ -5,7 +5,12 @@
   "date": "2025-11-06T16:00:59",
   "modified": "2025-11-28T14:10:27",
   "excerpt": "Baznas bersama Relawan Nusantara menyalurkan bantuan untuk pelaku UMKM di Bandung. Melalui modal usaha dan perlengkapan dagang, program ini menyalakan kembali harapan dan kemandirian ekonomi umat. Mari ikut berkontribusi dalam melahirkan kebaikan yang menumbuhkan kehidupan.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2025/11/WhatsApp-Image-2025-11-06-at-10.11.36_18ea4982.jpg",
+    "width": 1280,
+    "height": 718,
+    "alt": "Ketika Kebaikan Menjadi Modal: Baznas dan Relawan Nusantara Dorong UMKM Bandung untuk Bangkit"
+  },
   "categories": [
     {
       "slug": "blog",

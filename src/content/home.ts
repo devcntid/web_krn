@@ -44,11 +44,12 @@ export const impactMap = {
   heading: "Jejak Sebaran Kebaikan 2026",
   /** Dimensi asli ikon Ellipse-278x.png */
   iconSize: { width: 103, height: 96 },
+  /** Angka ditulis persis seperti di situs asli (diperbarui 16 Nov 2026; sebelumnya 287507 / 3012 / 50 / 109). */
   stats: [
-    { value: 287507, label: "Penerima Manfaat", icon: `${U}/2026/06/Ellipse-2783.png` },
-    { value: 3012, label: "Relawan", icon: `${U}/2026/06/Ellipse-2782.png` },
-    { value: 50, label: "Mitra Kebaikan", icon: `${U}/2026/06/Ellipse-2784.png` },
-    { value: 109, label: "Jangkauan Wilayah", icon: `${U}/2026/06/Ellipse-2786.png` },
+    { value: "450.702", label: "Penerima Manfaat", icon: `${U}/2026/06/Ellipse-2783.png` },
+    { value: "5.455", label: "Relawan Terlibat", icon: `${U}/2026/06/Ellipse-2782.png` },
+    { value: "60+", label: "Mitra Kebaikan", icon: `${U}/2026/06/Ellipse-2784.png` },
+    { value: "109", label: "Jangkauan Wilayah", icon: `${U}/2026/06/Ellipse-2786.png` },
   ],
 };
 

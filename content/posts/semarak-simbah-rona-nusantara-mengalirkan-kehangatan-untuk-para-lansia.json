@@ -5,7 +5,12 @@
   "date": "2025-11-27T10:05:06",
   "modified": "2025-11-28T13:54:25",
   "excerpt": "Program Rona Nusantara. Semarak Simbah menghadirkan kehangatan bagi lansia dan veteran di Subang melalui kegiatan sosial penuh empati, kebersamaan, dan aksi nyata kepedulian.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2025/11/IMG_7351_11zon-1024x575.jpg",
+    "width": 1024,
+    "height": 575,
+    "alt": "Semarak Simbah Rona Nusantara: Mengalirkan Kehangatan untuk Para Lansia"
+  },
   "categories": [
     {
       "slug": "berita",

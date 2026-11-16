@@ -5,7 +5,12 @@
   "date": "2026-07-25T10:10:19",
   "modified": "2026-07-30T10:33:46",
   "excerpt": "Relawan Nusantara resmi menjalin kolaborasi dengan MUI dalam Kongres Umat Islam Indonesia (KUII) 2026. Sinergi ini memperkuat aksi kemanusiaan, bantuan Palestina, ketahanan pangan, dan respons kebencanaan di Indonesia.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-24-at-18.14.52-1024x576.jpg",
+    "width": 1024,
+    "height": 576,
+    "alt": "Relawan Nusantara dan MUI Resmi Berkolaborasi di KUII 2026, Perkuat Aksi Kemanusiaan untuk Indonesia dan Palestina"
+  },
   "categories": [
     {
       "slug": "berita",

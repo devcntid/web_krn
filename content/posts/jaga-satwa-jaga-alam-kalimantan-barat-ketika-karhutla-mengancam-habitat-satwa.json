@@ -5,7 +5,12 @@
   "date": "2026-09-21T15:04:39",
   "modified": "2026-09-23T08:59:29",
   "excerpt": "Karhutla Kalimantan Barat mengancam habitat satwa. Relawan Nusantara bersama BKSDA Kalbar hadir melalui program Jaga Satwa.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-21-at-07.43.45.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Jaga Satwa, Jaga Alam Kalimantan Barat: Ketika Karhutla Mengancam Habitat Satwa"
+  },
   "categories": [
     {
       "slug": "berita",

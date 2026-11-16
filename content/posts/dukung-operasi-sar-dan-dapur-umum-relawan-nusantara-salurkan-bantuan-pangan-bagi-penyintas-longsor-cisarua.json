@@ -5,7 +5,12 @@
   "date": "2026-01-30T08:33:35",
   "modified": "2026-01-30T08:33:37",
   "excerpt": "Relawan Nusantara mendukung operasi SAR dan dapur umum pascabencana longsor di Cisarua, Bandung Barat, dengan menyalurkan bantuan pangan bagi penyintas dan tim SAR gabungan.",
-  "featuredImage": null,
+  "featuredImage": {
+    "src": "/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-28-at-16.26.26.jpeg",
+    "width": 1280,
+    "height": 960,
+    "alt": "Dukung Operasi SAR dan Dapur Umum, Relawan Nusantara Salurkan Bantuan Pangan bagi Penyintas Longsor Cisarua"
+  },
   "categories": [
     {
       "slug": "bencana",
