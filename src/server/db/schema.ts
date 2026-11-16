@@ -55,7 +55,12 @@ export const users = pgTable(
     image: text("image"),
     role: userRole("role").notNull().default("viewer"),
     passwordHash: text("password_hash"),
+    /** Rahasia TOTP terenkripsi (AES-256-GCM, lihat src/server/auth/crypto.ts) — bukan plaintext. */
     totpSecret: text("totp_secret"),
+    /** Diisi saat pendaftaran TOTP dikonfirmasi dengan kode valid; null = belum aktif. */
+    totpEnabledAt: timestamp("totp_enabled_at", { withTimezone: true }),
+    /** Time step TOTP terakhir yang diterima — mencegah kode yang sama dipakai ulang. */
+    totpLastStep: integer("totp_last_step"),
     /** Diisi saat akun dinonaktifkan (B13); null = aktif. */
     disabledAt: timestamp("disabled_at", { withTimezone: true }),
     lastActiveAt: timestamp("last_active_at", { withTimezone: true }),
@@ -63,6 +68,20 @@ export const users = pgTable(
     updatedAt: updatedAt(),
   },
   (t) => [uniqueIndex("users_email_key").on(sql`lower(${t.email})`), index("users_role_idx").on(t.role)],
+);
+
+/**
+ * Percobaan login gagal (password & TOTP) untuk rate limiting tanpa infrastruktur baru.
+ * key = "email:<email>" | "ip:<ip>" | "totp:<userId>". Baris lama boleh dibersihkan berkala.
+ */
+export const authAttempts = pgTable(
+  "auth_attempts",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    key: text("key").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index("auth_attempts_key_created_idx").on(t.key, t.createdAt)],
 );
 
 /** Akun OAuth (Google) — bentuk standar adapter Auth.js. */

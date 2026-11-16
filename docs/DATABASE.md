@@ -98,9 +98,10 @@ kecuali `users` (uuid, kebutuhan Auth.js) dan tabel berkunci alami (`settings.ke
 ### Pengguna & autentikasi
 | Tabel | Isi | Catatan |
 |---|---|---|
-| `users` | Akun admin: nama, email, peran, `password_hash`, `totp_secret`, `disabled_at`, `last_active_at` | Email unik tanpa membedakan huruf besar/kecil. `email_verified` dan `image` adalah kolom standar Auth.js. |
-| `accounts` | Tautan akun OAuth (Google) per pengguna | Bentuk standar adapter Auth.js; kunci utama (`provider`, `provider_account_id`). Terhapus bersama penggunanya. |
-| `sessions` | Sesi login berbasis database | Terhapus bersama penggunanya; indeks pada `expires` untuk pembersihan. |
+| `users` | Akun admin: nama, email, peran, `password_hash` (argon2id), `totp_secret` (terenkripsi AES-256-GCM), `totp_enabled_at`, `totp_last_step`, `disabled_at`, `last_active_at` | Email unik tanpa membedakan huruf besar/kecil. `email_verified` dan `image` adalah kolom standar Auth.js. `totp_enabled_at` null = 2FA belum dikonfirmasi; `totp_last_step` mencegah kode TOTP dipakai ulang (migrasi 0002). |
+| `accounts` | Tautan akun OAuth (Google) per pengguna | Bentuk standar adapter Auth.js; kunci utama (`provider`, `provider_account_id`). Terhapus bersama penggunanya. **Belum dipakai** sejak B3 (sesi JWT tanpa adapter; Google dicocokkan lewat email) — lihat docs/AUTH.md. |
+| `auth_attempts` | Percobaan login/TOTP gagal untuk rate limiting (`key` = `email:…`, `ip:…`, `totp:<userId>`) | Indeks (`key`, `created_at`); baris >24 jam dibersihkan otomatis sesekali. Migrasi 0002. |
+| `sessions` | Sesi login berbasis database | Terhapus bersama penggunanya; indeks pada `expires` untuk pembersihan. **Belum dipakai** sejak B3: Auth.js hanya mendukung Credentials dengan sesi JWT (lihat docs/AUTH.md). |
 
 ### Publikasi
 | Tabel | Isi | Catatan |

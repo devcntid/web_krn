@@ -15,6 +15,13 @@
       "when": 1794810548767,
       "tag": "0001_daffy_sunspot",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794811320952,
+      "tag": "0002_colossal_blackheart",
+      "breakpoints": true
     }
   ]
 }
