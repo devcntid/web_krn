@@ -45,3 +45,6 @@ next-env.d.ts
 /public/wp-content/
 /content/blob-migrated.json
 /content/blob-failed.json
+
+# oh-my-claudecode (state operasional)
+.omc/
