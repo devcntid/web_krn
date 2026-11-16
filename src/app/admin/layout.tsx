@@ -5,7 +5,13 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/** Kerangka minimal admin (B3). Shell lengkap dibangun di B4. */
-export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <div className="min-h-screen bg-surface-alt px-4 py-10 font-manrope text-body">{children}</div>;
+/** Akar admin: hanya font & warna dasar. Shell (sidebar) ada di (panel)/layout.tsx; login tanpa shell. */
+export default function AdminLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <div className="min-h-screen bg-admin-canvas font-manrope text-admin-ink">
+      {children}
+    </div>
+  );
 }

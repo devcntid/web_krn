@@ -44,6 +44,33 @@
   --radius-btn: 5px;
 
   --shadow-card: 0 2px 18px rgba(0, 0, 0, 0.08);
+  /* Admin CMS (artboard Admin*.dc.html) — lihat docs/DESIGN_SYSTEM.md § Admin */
+  --color-admin-sidebar: #0f2e2a;
+  --color-admin-sidebar-raised: #2c5a52;
+  --color-admin-sidebar-text: #d6e6e2;
+  --color-admin-sidebar-muted: #9fbfb8;
+  --color-admin-sidebar-label: #8fb1aa;
+  --color-admin-sidebar-dot: #4f7d75;
+  --color-admin-hero-text: #c4dad5;
+  --color-admin-canvas: #f5f7f6;
+  --color-admin-ink: #10201d;
+  --color-admin-text: #55615e;
+  --color-admin-text-soft: #6b7774;
+  --color-admin-field: #cfd6d4;
+  --color-admin-line: #e2e7e5;
+  --color-admin-row-hover: #fafbfb;
+  --color-admin-primary-dark: #004d43;
+  --color-admin-ok-bg: #e3f0ed;
+  --color-admin-warn-bg: #fdf0d9;
+  --color-admin-warn-text: #7a4b00;
+  --color-admin-neutral-bg: #eceeed;
+  --color-admin-neutral-text: #3d4644;
+  --color-admin-info-bg: #e3ecf8;
+  --color-admin-info-text: #1d4a80;
+  --color-admin-danger: #b3361f;
+  --color-admin-danger-bg: #fbe9e5;
+  --radius-admin: 10px;
+  --shadow-admin-card: 0 10px 40px rgba(15, 46, 42, 0.08);
 }
 
 @layer base {

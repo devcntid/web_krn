@@ -44,3 +44,12 @@ Sumber: computed styles relawannusantara.org (Divi), 13 Nov 2026. Token didefini
 
 ## Komponen
 Header, MobileMenu, SearchOverlay, Footer, FloatingContact ("Tanya Saffa"), DonateButton (accent/primary), PageHero, PostCard, RelatedPostCard, Carousel (Embla), Pagination, PostGrid (tab+search), ArchiveTemplate, RichContent (`.wp-content`), DonationCta, YouTubeFacade, SocialIcons.
+
+## Admin CMS (B4)
+Admin memakai font Manrope (`font-manrope`) dan token `admin-*` di `@theme` (globals.css), diambil dari artboard `design/Admin*.dc.html`:
+- Sidebar: `admin-sidebar` #0F2E2A (latar sidebar & panel kiri login), `admin-sidebar-raised` #2C5A52 (avatar), `admin-sidebar-text` #D6E6E2, `admin-sidebar-muted` #9FBFB8, `admin-sidebar-label` #8FB1AA (label grup), `admin-sidebar-dot` #4F7D75, `admin-hero-text` #C4DAD5. Item aktif: `primary` + titik `accent`; badge review: `accent` teks hitam.
+- Kanvas & teks: `admin-canvas` #F5F7F6, `admin-ink` #10201D, `admin-text` #55615E, `admin-text-soft` #6B7774 (≥4.5:1 di putih), `admin-field` #CFD6D4 (border input/tombol), `admin-line` #E2E7E5 (pemisah), `admin-row-hover` #FAFBFB, `admin-primary-dark` #004D43 (hover primer).
+- Status (StatusBadge): Terbit `admin-ok-bg`/`admin-primary-dark`, Review `admin-warn-bg`/`admin-warn-text`, Draf `admin-neutral-bg`/`admin-neutral-text`, Terjadwal `admin-info-bg`/`admin-info-text`, Sampah `admin-danger-bg`/`admin-danger`.
+- Bentuk: `rounded-admin` 10px (input, tombol, kartu), `shadow-admin-card`.
+- Breakpoint: sidebar tetap di ≥1024px (`lg`), di bawahnya drawer.
+- Komponen bersama (`src/components/admin/`): AdminShell, AdminSidebar, PageHeader, Card, StatusBadge, DataTable, EmptyState, ConfirmDialog, Toast.
