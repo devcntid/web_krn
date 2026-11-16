@@ -39,9 +39,9 @@ type PostGridProps = {
  * "Muat lebih banyak" (?muat=) menggantikan pagination; semuanya tetap berupa
  * tautan biasa sehingga berfungsi tanpa JavaScript.
  */
-export function PostGrid({ basePath, category, defaultCategory, page, query, loaded = 1, perPage = 9 }: PostGridProps) {
+export async function PostGrid({ basePath, category, defaultCategory, page, query, loaded = 1, perPage = 9 }: PostGridProps) {
   const q = query.trim().toLowerCase();
-  const all = getPostsByCategory(category).filter(
+  const all = (await getPostsByCategory(category)).filter(
     (p) => !q || `${p.title} ${p.excerpt}`.toLowerCase().includes(q),
   );
   const result = paginate(all, page, perPage);

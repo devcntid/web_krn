@@ -20,8 +20,26 @@ membaca `content/*.json`.
 | `npm run db:generate` | Bandingkan `schema.ts` dengan migrasi terakhir, tulis file SQL baru (tidak menyentuh database) |
 | `npm run db:migrate` | Terapkan migrasi yang belum dijalankan ke database di `DATABASE_URL_UNPOOLED` |
 | `npm run db:studio` | Buka Drizzle Studio (penjelajah data) |
+| `npm run db:seed` | Impor `content/` (hasil ekspor WordPress) ke database; idempoten |
 
 Alur perubahan skema: ubah `schema.ts` → `db:generate` → periksa SQL-nya → commit → `db:migrate`.
+
+## Seed dari ekspor WordPress
+
+`npm run db:seed` (`scripts/seed-from-export.ts`) meng-upsert, berurutan:
+
+| Data | Kunci upsert | Catatan |
+|---|---|---|
+| Media lama (5.135) | `pathname` | Dari `content/media-manifest.json`; dimensi & alt hanya terisi untuk gambar utama post. Alt yang sudah diisi admin tidak ditimpa. |
+| Kategori (37), tag (1.857) | `legacy_id` | Induk kategori dipetakan dari ID WordPress. |
+| Post (670) | `legacy_id` | Status `published`, `published_at` = tanggal WordPress (WIB), SEO Rank Math, `legacy_jsonld`. Relasi kategori/tag post hasil migrasi diganti seluruhnya. |
+| Halaman (51) | `path` | Template `generic`; HTML ekspor menjadi satu section `richtext`. |
+| Redirect (21) | `source` | Dari `src/config/redirects.ts`; yang berpola tetap ditangani `next.config`. |
+| Pengaturan (6 kunci) | `key` | `identity`, `contact`, `socials`, `menu`, `integrations`, `home`. **Tidak ditimpa** bila sudah ada. |
+
+Post dan halaman di path aplikasi donasi (`/campaign`, `/donasi`, `/prog…`) dilewati. Menjalankan
+ulang seed menimpa judul/isi/SEO post dan halaman hasil migrasi dengan isi `content/` — setelah
+konten mulai disunting lewat admin, jangan jalankan lagi tanpa memeriksa dampaknya.
 
 Catatan teknis:
 - Semua file di `src/server/` diawali `import "server-only"` agar tidak pernah masuk bundle

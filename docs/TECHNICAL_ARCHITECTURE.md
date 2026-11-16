@@ -19,7 +19,20 @@ public/wp-content/uploads/…  media dengan path ASLI WordPress
 ```
 - REST API hanya memberi shortcode Divi mentah, jadi konten diambil dari **HTML publik yang sudah dirender** (`.rk-post-content` di template post; `.et-l--post` di halaman), lalu disanitasi: whitelist tag, H1 konten → H2, accordion Divi → `<details>`, tombol Divi → `a[data-button]`, URL absolut → relatif.
 - Path media dipertahankan → URL gambar lama tetap valid (SEO gambar) dan konten tidak perlu di-rewrite.
-- Data dibaca lewat `src/lib/content.ts` (server-only, fs + cache).
+- Folder `content/` adalah hasil ekspor dan **sumber seed**, bukan lagi sumber data situs.
+
+### Lapisan data (sejak B2)
+```
+content/*.json ──npm run db:seed──► Postgres ──src/server/repos/*──► src/lib/content.ts ──► halaman
+```
+- `src/lib/content.ts` adalah fasad data publik (server-only). Semua fungsinya **async** dan membaca
+  database lewat `src/server/repos/{posts,pages,taxonomy}.ts`; hanya konten berstatus `published`.
+- Cache: `unstable_cache` dengan tag `posts`, `post:<slug>`, `pages`, `page:<path>`, `taxonomy`
+  (`CACHE_TAGS` di `content.ts`), tanpa masa berlaku. Admin menyegarkannya dengan `revalidateTag`.
+  `cacheComponents`/`"use cache"` sengaja belum dipakai: mengaktifkannya mengharuskan semua route
+  publik dimigrasikan (tanpa `dynamicParams`/`revalidate`, `searchParams` di dalam `<Suspense>`).
+- `next build` kini membutuhkan `DATABASE_URL` (halaman statis dirender dari database).
+- Konten beranda dan halaman khusus masih dari `src/content/*.ts`; pindah ke database di B7–B11.
 
 ## Routing
 | URL | Route | Render |

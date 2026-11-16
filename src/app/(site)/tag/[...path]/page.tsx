@@ -29,7 +29,7 @@ function parse(segments: string[]) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const parsed = parse((await params).path);
-  const tag = parsed && getTag(parsed.slug);
+  const tag = parsed && (await getTag(parsed.slug));
   if (!parsed || !tag) return {};
   return {
     title: { absolute: pageTitle(tag.name) },
@@ -41,10 +41,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TagPage({ params }: Props) {
   const parsed = parse((await params).path);
-  const tag = parsed && getTag(parsed.slug);
+  const tag = parsed && (await getTag(parsed.slug));
   if (!parsed || !tag) notFound();
 
-  const all = getPostsByTag(tag.slug);
+  const all = await getPostsByTag(tag.slug);
   const result = paginate(all, parsed.page, PER_PAGE);
   if (parsed.page > result.totalPages) notFound();
 
@@ -54,7 +54,7 @@ export default async function TagPage({ params }: Props) {
       title={tag.name}
       description={`${result.total} publikasi dengan tag ini.`}
       breadcrumb={[{ name: "Beranda", href: "/" }, { name: tag.name }]}
-      relatedCategories={getRelatedCategories(all)}
+      relatedCategories={(await getRelatedCategories(all))}
       posts={result.items}
       page={result.page}
       totalPages={result.totalPages}

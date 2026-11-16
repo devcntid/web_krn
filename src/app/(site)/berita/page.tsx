@@ -4,8 +4,8 @@ import { getPage } from "@/lib/content";
 import { metadataFromSeo } from "@/lib/seo";
 import { PublicationListing, type ListingSearchParams } from "@/components/templates/PublicationListing";
 
-export function generateMetadata(): Metadata {
-  return metadataFromSeo(getPage("berita")?.seo, {
+export async function generateMetadata(): Promise<Metadata> {
+  return metadataFromSeo((await getPage("berita"))?.seo, {
     title: "Berita",
     path: "/berita/",
     description: "Cerita tentang langkah-langkah kecil dari Nusantara yang menjadi kekuatan besar bagi kemanusiaan",

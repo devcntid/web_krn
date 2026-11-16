@@ -12,20 +12,20 @@ import { StoriesSection } from "@/components/sections/StoriesSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 /** Metadata dari SEO Rank Math halaman WordPress pilar. */
-export function pillarMetadata(pillar: Pillar): Metadata {
-  const page = getPage(pillar.path);
+export async function pillarMetadata(pillar: Pillar): Promise<Metadata> {
+  const page = await getPage(pillar.path);
   if (!page) return {};
   return metadataFromSeo(page.seo, { title: page.title, path: `/${pillar.path}/` });
 }
 
 /** Publikasi dari kategori terpetakan; dilengkapi publikasi terbaru bila terlalu sedikit. */
-function pillarStories(pillar: Pillar): PostSummary[] {
-  const stories = getAllPosts()
+async function pillarStories(pillar: Pillar): Promise<PostSummary[]> {
+  const stories = (await getAllPosts())
     .filter((p) => p.categories.some((c) => pillar.storyCategories.includes(c.slug)))
     .slice(0, PILLAR_STORY_COUNT);
   if (stories.length >= PILLAR_STORY_MIN) return stories;
   const seen = new Set(stories.map((s) => s.slug));
-  const filler = getLatestPosts(PILLAR_STORY_COUNT).filter((p) => !seen.has(p.slug));
+  const filler = (await getLatestPosts(PILLAR_STORY_COUNT)).filter((p) => !seen.has(p.slug));
   return [...stories, ...filler].slice(0, PILLAR_STORY_COUNT);
 }
 
@@ -33,9 +33,9 @@ function pillarStories(pillar: Pillar): PostSummary[] {
  * Template artboard "04 · Pilar Program" — dipakai empat halaman pilar (src/content/pillars.ts)
  * serta Kerelawanan & Kebencanaan (src/content/programs.ts).
  */
-export function PillarPage({ pillar }: { pillar: Pillar }) {
-  if (!getPage(pillar.path)) notFound();
-  const stories = pillarStories(pillar);
+export async function PillarPage({ pillar }: { pillar: Pillar }) {
+  if (!(await getPage(pillar.path))) notFound();
+  const stories = await pillarStories(pillar);
 
   return (
     <>

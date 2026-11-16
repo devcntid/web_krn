@@ -18,15 +18,15 @@ const ctaButton =
   "inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-8 py-3 text-[15px] font-semibold text-ink transition-opacity hover:opacity-90";
 
 /** Metadata dari SEO Rank Math halaman WordPress. */
-export function generateMetadata(): Metadata {
-  const page = getPage(PATH);
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPage(PATH);
   if (!page) return {};
   return metadataFromSeo(page.seo, { title: page.title, path: `/${PATH}/` });
 }
 
 /** /pr0gram-kami/ — struktur mengikuti halaman asli. Data: src/content/programs.ts. */
-export default function ProgramKamiPage() {
-  const page = getPage(PATH);
+export default async function ProgramKamiPage() {
+  const page = await getPage(PATH);
   if (!page) notFound();
   const { approach, pillars, stories, cta } = programKami;
 
@@ -96,7 +96,7 @@ export default function ProgramKamiPage() {
         </div>
       </section>
 
-      <StoriesSection posts={getLatestPosts(stories.count)} label="Cerita berdampak" href={stories.href} />
+      <StoriesSection posts={(await getLatestPosts(stories.count))} label="Cerita berdampak" href={stories.href} />
 
       {/* CTA: mitra & donasi */}
       <section className="pb-14 md:pb-20">

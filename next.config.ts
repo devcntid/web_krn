@@ -37,9 +37,10 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
 
-  // Konten hasil ekspor dibaca via fs pada route dinamis (search, grid, tag).
+  // Konten kini dibaca dari database (src/lib/content.ts); yang masih dibaca via fs
+  // hanya ikon situs di content/site.json (src/lib/site-icons.ts).
   outputFileTracingIncludes: {
-    "/**": ["./content/**/*"],
+    "/**": ["./content/site.json"],
   },
 
   async redirects() {

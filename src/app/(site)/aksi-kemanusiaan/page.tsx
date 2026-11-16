@@ -5,8 +5,8 @@ import { PillarPage, pillarMetadata } from "@/components/templates/PillarPage";
 
 const pillar = pillars["aksi-kemanusiaan"];
 
-export function generateMetadata(): Metadata {
-  return pillarMetadata(pillar);
+export async function generateMetadata(): Promise<Metadata> {
+  return await pillarMetadata(pillar);
 }
 
 export default function Page() {

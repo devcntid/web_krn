@@ -7,20 +7,20 @@ import { absoluteUrl } from "@/lib/seo";
 import { mediaUrl } from "@/lib/media";
 
 /** Pengganti sitemap Rank Math: halaman, post, dan kategori (tag tidak disertakan, sama seperti WP). */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const redirected = new Set(legacyRedirects.map((r) => r.source));
 
-  const pages = getAllPages()
+  const pages = (await getAllPages())
     .filter((p) => p.path !== "new-beranda" && !redirected.has(`/${p.path}/`))
     .map((p) => ({ url: `${SITE_URL}/${p.path}/`, lastModified: p.modified }));
 
-  const posts = getAllPosts().map((p) => ({
+  const posts = (await getAllPosts()).map((p) => ({
     url: `${SITE_URL}/${p.slug}/`,
     lastModified: p.modified,
     images: p.featuredImage ? [absoluteUrl(mediaUrl(p.featuredImage.src))] : undefined,
   }));
 
-  const categories = getCategories()
+  const categories = (await getCategories())
     .filter((c) => c.count > 0)
     .map((c) => ({ url: `${SITE_URL}/category/${c.path}/` }));
 

@@ -11,15 +11,15 @@ import { JsonLd } from "@/components/seo/JsonLd";
 const PATH = "asas-legalitas";
 
 /** Metadata dari SEO Rank Math halaman WordPress. */
-export function generateMetadata(): Metadata {
-  const page = getPage(PATH);
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPage(PATH);
   if (!page) return {};
   return metadataFromSeo(page.seo, { title: page.title, path: `/${PATH}/` });
 }
 
 /** Rekonstruksi artboard "07 · Asas Legalitas". Data: src/content/legal.ts. */
-export default function LegalPage() {
-  const page = getPage(PATH);
+export default async function LegalPage() {
+  const page = await getPage(PATH);
   if (!page) notFound();
 
   return (

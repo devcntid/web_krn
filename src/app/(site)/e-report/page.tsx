@@ -16,8 +16,8 @@ const PATH = "e-report";
 type Props = { searchParams: Promise<{ tema?: string | string[] }> };
 
 /** Metadata Rank Math + meta description (kosong di halaman asli). Canonical tanpa ?tema=. */
-export function generateMetadata(): Metadata {
-  const page = getPage(PATH);
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPage(PATH);
   if (!page) return {};
   return metadataFromSeo(page.seo, { title: page.title, path: `/${PATH}/`, description: reportsPage.description });
 }
@@ -26,7 +26,7 @@ const isTheme = (value: string | undefined): value is ReportTheme => reportTheme
 
 /** Rekonstruksi artboard "09 · e-Report": filter tema via ?tema= dan grid kartu laporan per tahun. */
 export default async function EReportPage({ searchParams }: Props) {
-  const page = getPage(PATH);
+  const page = await getPage(PATH);
   if (!page) notFound();
 
   const { tema } = await searchParams;

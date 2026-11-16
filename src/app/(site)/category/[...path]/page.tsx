@@ -25,11 +25,12 @@ function parse(segments: string[]) {
 export const dynamicParams = true;
 export const revalidate = false;
 
-export function generateStaticParams() {
-  return getCategories()
+export async function generateStaticParams() {
+  // `count` = jumlah post terbit dalam kategori (dihitung di query), sama dengan panjang getPostsByCategory.
+  return (await getCategories())
     .filter((c) => c.count > 0)
     .flatMap((c) => {
-      const pages = Math.ceil(getPostsByCategory(c.slug).length / PER_PAGE);
+      const pages = Math.ceil(c.count / PER_PAGE);
       const base = c.path.split("/");
       return [
         { path: base },
@@ -40,7 +41,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { termPath, page } = parse((await params).path);
-  const term = getCategoryByPath(termPath);
+  const term = await getCategoryByPath(termPath);
   if (!term) return {};
   const suffix = page > 1 ? ` - Halaman ${page}` : "";
   return {
@@ -52,16 +53,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryPage({ params }: Props) {
   const { termPath, page } = parse((await params).path);
-  const term = getCategoryByPath(termPath);
+  const term = await getCategoryByPath(termPath);
   if (!term) notFound();
 
-  const all = getPostsByCategory(term.slug);
+  const all = await getPostsByCategory(term.slug);
   const result = paginate(all, page, PER_PAGE);
   if (page > result.totalPages) notFound();
 
   // Kategori anak (mis. hewan-lingkungan/air-bersih) menampilkan induknya di breadcrumb.
   const parentPath = term.path.split("/").slice(0, -1).join("/");
-  const parent = parentPath ? getCategoryByPath(parentPath) : undefined;
+  const parent = parentPath ? (await getCategoryByPath(parentPath)) : undefined;
   const crumbs = [
     { name: "Beranda", href: "/" },
     ...(parent ? [{ name: parent.name, href: `/category/${parent.path}/` }] : []),
@@ -75,7 +76,7 @@ export default async function CategoryPage({ params }: Props) {
         title={term.name}
         description={term.description || `${result.total} publikasi dalam kategori ini.`}
         breadcrumb={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))}
-        relatedCategories={getRelatedCategories(all, [term.slug])}
+        relatedCategories={(await getRelatedCategories(all, [term.slug]))}
         posts={result.items}
         page={result.page}
         totalPages={result.totalPages}

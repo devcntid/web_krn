@@ -20,8 +20,8 @@ function FooterHeading({ children }: { children: React.ReactNode }) {
 /** Lencana WTP di footer WordPress (blurb kiri teks predikat opini). */
 const WTP_BADGE = "/wp-content/uploads/2026/09/2021-2025-scaled.png";
 
-export function Footer() {
-  const latest = getLatestPosts(2);
+export async function Footer() {
+  const latest = await getLatestPosts(2);
 
   return (
     <footer className="font-manrope">

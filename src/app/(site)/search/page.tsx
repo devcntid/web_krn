@@ -17,7 +17,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 export default async function SearchPage({ searchParams }: Props) {
   const { s = "", hal = "1" } = await searchParams;
   const query = s.trim();
-  const matches = searchPosts(query);
+  const matches = await searchPosts(query);
   const result = paginate(matches, Number(hal) || 1, 9);
 
   return (
@@ -27,7 +27,7 @@ export default async function SearchPage({ searchParams }: Props) {
       description={query ? `${result.total} publikasi ditemukan.` : "Masukkan kata kunci untuk mencari publikasi."}
       breadcrumb={[{ name: "Beranda", href: "/" }, { name: "Pencarian" }]}
       query={query}
-      relatedCategories={getRelatedCategories(matches)}
+      relatedCategories={(await getRelatedCategories(matches))}
       emptyMessage={query ? "Tidak ada publikasi yang cocok. Coba kata kunci lain." : ""}
       posts={result.items}
       page={result.page}

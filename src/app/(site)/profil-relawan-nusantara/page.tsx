@@ -12,15 +12,15 @@ import { JsonLd } from "@/components/seo/JsonLd";
 const PATH = "profil-relawan-nusantara";
 
 /** Metadata dari SEO Rank Math halaman WordPress. */
-export function generateMetadata(): Metadata {
-  const page = getPage(PATH);
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPage(PATH);
   if (!page) return {};
   return metadataFromSeo(page.seo, { title: page.title, path: `/${PATH}/` });
 }
 
 /** Rekonstruksi artboard "05 · Profil". Teks: src/content/profile.ts (verbatim dari WordPress). */
-export default function ProfilePage() {
-  const page = getPage(PATH);
+export default async function ProfilePage() {
+  const page = await getPage(PATH);
   if (!page) notFound();
 
   return (

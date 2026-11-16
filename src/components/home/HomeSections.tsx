@@ -131,9 +131,9 @@ export function PillarsSection() {
 
 /* ---------- Publikasi ---------- */
 
-export function PublicationsSection() {
-  const berita = getPostsByCategory("berita");
-  const posts = (berita.length ? berita : getLatestPosts(publications.count)).slice(0, publications.count);
+export async function PublicationsSection() {
+  const berita = await getPostsByCategory("berita");
+  const posts = (berita.length ? berita : (await getLatestPosts(publications.count))).slice(0, publications.count);
   if (!posts.length) return null;
 
   return (

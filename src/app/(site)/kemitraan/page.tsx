@@ -25,8 +25,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 const PATH = "kemitraan";
 
 /** Metadata dari SEO Rank Math halaman WordPress. */
-export function generateMetadata(): Metadata {
-  const page = getPage(PATH);
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPage(PATH);
   if (!page) return {};
   return metadataFromSeo(page.seo, { title: page.title, path: `/${PATH}/` });
 }
@@ -44,10 +44,10 @@ function PartnerLogo({ logo, hidden = false }: { logo: (typeof partnerLogos)[num
  * Halaman asli punya dua H1 ("Jaringan Kebaikan" dan "Mengapa Berkolaborasi dengan Kami?");
  * di sini hanya judul hero yang H1.
  */
-export default function PartnershipPage() {
-  const page = getPage(PATH);
+export default async function PartnershipPage() {
+  const page = await getPage(PATH);
   if (!page) notFound();
-  const stories = getPostsByCategory(partnershipStories.category).slice(0, partnershipStories.count);
+  const stories = (await getPostsByCategory(partnershipStories.category)).slice(0, partnershipStories.count);
 
   return (
     <div className="bg-surface-alt">

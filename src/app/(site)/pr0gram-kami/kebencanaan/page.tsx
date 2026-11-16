@@ -5,8 +5,8 @@ import { PillarPage, pillarMetadata } from "@/components/templates/PillarPage";
 
 const program = subPrograms.kebencanaan;
 
-export function generateMetadata(): Metadata {
-  return pillarMetadata(program);
+export async function generateMetadata(): Promise<Metadata> {
+  return await pillarMetadata(program);
 }
 
 export default function Page() {

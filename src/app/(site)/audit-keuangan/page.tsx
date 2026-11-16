@@ -11,15 +11,15 @@ import { JsonLd } from "@/components/seo/JsonLd";
 const PATH = "audit-keuangan";
 
 /** Metadata dari SEO Rank Math halaman WordPress. */
-export function generateMetadata(): Metadata {
-  const page = getPage(PATH);
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPage(PATH);
   if (!page) return {};
   return metadataFromSeo(page.seo, { title: page.title, path: `/${PATH}/` });
 }
 
 /** Rekonstruksi artboard "06 · Audit Keuangan". Data: src/content/audit.ts. */
-export default function AuditPage() {
-  const page = getPage(PATH);
+export default async function AuditPage() {
+  const page = await getPage(PATH);
   if (!page) notFound();
 
   return (

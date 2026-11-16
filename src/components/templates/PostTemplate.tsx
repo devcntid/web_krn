@@ -7,15 +7,15 @@ import { DonationCta } from "@/components/sections/DonationCta";
 import { PostStickyBar } from "@/components/sections/PostStickyBar";
 
 /** Sidebar "Kisah Lainnya": 3 post terbaru selain post ini. */
-function relatedPosts(slug: string) {
-  return getAllPosts()
+async function relatedPosts(slug: string) {
+  return (await getAllPosts())
     .filter((p) => p.slug !== slug)
     .slice(0, 3);
 }
 
 /** Replikasi Divi Theme Builder body template untuk single post. */
-export function PostTemplate({ post }: { post: Post }) {
-  const related = relatedPosts(post.slug);
+export async function PostTemplate({ post }: { post: Post }) {
+  const related = await relatedPosts(post.slug);
   return (
     <article data-template="post">
       <PageHero title={post.title} image={post.featuredImage} size="post" width="narrow" />

@@ -11,8 +11,8 @@ type Props = { params: Promise<{ slug: string; child: string }> };
 /** Halaman anak yang belum punya route khusus (lihat STATIC_ROUTES). */
 export const dynamicParams = false;
 
-export function generateStaticParams() {
-  return getAllPages()
+export async function generateStaticParams() {
+  return (await getAllPages())
     .filter((p) => p.path.split("/").length === 2 && !STATIC_ROUTES.has(p.path))
     .map((p) => {
       const [slug, child] = p.path.split("/");
@@ -22,13 +22,13 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, child } = await params;
-  const page = getPage(`${slug}/${child}`);
+  const page = await getPage(`${slug}/${child}`);
   return page ? metadataFromSeo(page.seo, { title: page.title, path: `/${slug}/${child}/` }) : {};
 }
 
 export default async function ChildPage({ params }: Props) {
   const { slug, child } = await params;
-  const page = getPage(`${slug}/${child}`);
+  const page = await getPage(`${slug}/${child}`);
   if (!page) notFound();
   return <GenericPageTemplate page={page} />;
 }

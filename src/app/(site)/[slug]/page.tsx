@@ -30,9 +30,9 @@ const decodeSlug = (slug: string) => {
 };
 const storedSlug = (param: string) => (/[^\x00-\x7f]/.test(param) ? encodeURIComponent(param).toLowerCase() : param);
 
-export function generateStaticParams() {
-  const posts = getAllPosts().map((p) => ({ slug: decodeSlug(p.slug) }));
-  const pages = getAllPages()
+export async function generateStaticParams() {
+  const posts = (await getAllPosts()).map((p) => ({ slug: decodeSlug(p.slug) }));
+  const pages = (await getAllPages())
     .filter((p) => !p.path.includes("/") && !STATIC_ROUTES.has(p.path))
     .map((p) => ({ slug: p.path }));
   return [...posts, ...pages];
@@ -40,9 +40,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = storedSlug(decodeSlug((await params).slug));
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (post) return metadataFromSeo(post.seo, { title: post.title, path: `/${slug}/`, description: post.excerpt });
-  const page = getPage(slug);
+  const page = await getPage(slug);
   if (page) return metadataFromSeo(page.seo, { title: page.title, path: `/${slug}/` });
   return {};
 }
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SlugPage({ params }: Props) {
   const slug = storedSlug(decodeSlug((await params).slug));
 
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (post) {
     return (
       <>
@@ -60,7 +60,7 @@ export default async function SlugPage({ params }: Props) {
     );
   }
 
-  const page = getPage(slug);
+  const page = await getPage(slug);
   if (page) {
     return (
       <>
