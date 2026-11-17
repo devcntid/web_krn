@@ -142,15 +142,18 @@
     text-align: justify;
   }
   .wp-content h2 {
-    font-size: 30px;
+    font-size: 18px;
+    line-height: 1.35;
     margin-top: 1.4em;
   }
   .wp-content h3 {
-    font-size: 24px;
+    font-size: 16px;
+    line-height: 1.4;
     margin-top: 1.3em;
   }
   .wp-content h4 {
-    font-size: 20px;
+    font-size: 15px;
+    line-height: 1.4;
     margin-top: 1.2em;
   }
   .wp-content a {
@@ -349,21 +352,6 @@
   }
 }
 
-/* Judul di dalam konten artikel lebih kecil di mobile (artboard "M3 · Detail Post"). */
-@media (max-width: 767.98px) {
-  .wp-content h2 {
-    font-size: 22px;
-    line-height: 1.2;
-  }
-  .wp-content h3 {
-    font-size: 19px;
-    line-height: 1.25;
-  }
-  .wp-content h4 {
-    font-size: 17px;
-  }
-}
-
 /* Halaman post di mobile: bar bawah lengket menggantikan tombol melayang "Tanya Saffa". */
 @media (max-width: 767.98px) {
   body:has([data-template="post"]) .floating-contact {
@@ -400,16 +388,3 @@
   }
 }
 
-/* Detail publikasi: ukuran standar judul di dalam isi (desktop & mobile). h4 diperkecil agar tidak lebih besar dari h2/h3. */
-[data-template="post"] .wp-content h2 {
-  font-size: 18px;
-  line-height: 1.35;
-}
-[data-template="post"] .wp-content h3 {
-  font-size: 16px;
-  line-height: 1.4;
-}
-[data-template="post"] .wp-content h4 {
-  font-size: 15px;
-  line-height: 1.4;
-}
