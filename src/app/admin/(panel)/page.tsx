@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Card } from "@/components/admin/Card";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { StatusBadge } from "@/components/admin/StatusBadge";
+import { VisitorsCard } from "@/components/admin/dashboard/VisitorsCard";
+import { getGa4Summary } from "@/server/ga4";
 import { type Ability, can, requireUser } from "@/server/permissions";
 import {
   getDashboardSummary,
@@ -44,10 +46,11 @@ type Todo = {
 /** Dasbor admin (artboard "A1 · Dashboard"). */
 export default async function AdminDashboard() {
   const user = await requireUser();
-  const [summary, todo, recent] = await Promise.all([
+  const [summary, todo, recent, visitors] = await Promise.all([
     getDashboardSummary(),
     getDashboardTodos(),
     listRecentPosts(5),
+    getGa4Summary(),
   ]);
 
   const kpis = [
@@ -152,29 +155,7 @@ export default async function AdminDashboard() {
       </section>
 
       <div className="grid gap-5 lg:grid-cols-[1.6fr_1fr]">
-        <Card
-          title="Pengunjung 30 hari"
-          actions={
-            <span className="text-xs text-admin-text">
-              Sumber: Google Analytics 4
-            </span>
-          }
-        >
-          <p className="flex h-[220px] items-center justify-center rounded-admin border border-dashed border-admin-field bg-admin-canvas px-4 text-center text-[13px] font-semibold text-admin-text">
-            Grafik sesi harian tampil setelah Google Analytics 4 dihubungkan.
-          </p>
-          <dl className="mt-4 grid grid-cols-3 gap-3">
-            {["Sesi", "Klik Donasi", "Klik WhatsApp"].map((label) => (
-              <div key={label}>
-                <dt className="text-xs text-admin-text">{label}</dt>
-                <dd className="mt-0.5 text-lg font-extrabold text-admin-ink">
-                  <span aria-hidden="true">—</span>
-                  <span className="sr-only">Belum ada data</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </Card>
+        <VisitorsCard data={visitors} />
 
         <Card title="Menunggu tindakan">
           <ul className="flex flex-col gap-2.5">

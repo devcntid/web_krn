@@ -19,6 +19,10 @@ export function Analytics({ gaId: ga, pixelId: pixel }: { gaId: string; pixelId:
           <Script id="ga4" strategy="afterInteractive">
             {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
           </Script>
+          {/* Event klik untuk kartu dashboard (src/server/ga4.ts): satu listener terdelegasi untuk semua tombol Donasi & WhatsApp. */}
+          <Script id="ga4-click-events" strategy="afterInteractive">
+            {`document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a||typeof gtag!=='function')return;var h=a.getAttribute('href')||'';var p=h.replace(/^https?:\\/\\/[^/]+/,'');if(/^\\/(campaign|donasi|prog)/.test(p)){gtag('event','donate_click',{link_url:h,transport_type:'beacon'});}else if(/api\\.whatsapp\\.com|wa\\.me\\//.test(h)){gtag('event','whatsapp_click',{link_url:h,transport_type:'beacon'});}},true);`}
+          </Script>
         </>
       )}
       {pixelId && (
