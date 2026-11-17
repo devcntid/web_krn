@@ -1,13 +1,15 @@
 import { getDictionary } from "@/i18n/dictionaries";
 import { getLocale } from "@/i18n/request";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { getCategories, getCategoryByPath, getPostsByCategory, getRelatedCategories, paginate } from "@/lib/content";
 import { breadcrumbJsonLd, pageTitle } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ArchiveTemplate } from "@/components/templates/ArchiveTemplate";
 import { initLocale } from "@/i18n/request";
+import { localePath } from "@/i18n/config";
+import { findArchiveRedirect } from "@/server/repos/archive-redirects";
 
 type Props = { params: Promise<{ path: string[] }> };
 
@@ -61,7 +63,12 @@ export default async function CategoryPage({ params }: Props) {
   await initLocale(params);
   const { termPath, page } = parse((await params).path);
   const term = await getCategoryByPath(termPath);
-  if (!term) notFound();
+  if (!term) {
+    // Kategori yang digabungkan/dihapus di admin: arahkan (301) ke arsip tujuannya.
+    const target = await findArchiveRedirect(`/category/${termPath}/`);
+    if (target) permanentRedirect(localePath(target, getLocale()));
+    notFound();
+  }
 
   const dict = getDictionary(getLocale());
   const all = await getPostsByCategory(term.slug);

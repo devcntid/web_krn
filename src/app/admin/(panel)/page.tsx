@@ -216,7 +216,7 @@ export default async function AdminDashboard() {
             Belum ada publikasi.
           </p>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="relative overflow-x-auto">
             <table className="w-full min-w-[680px] border-collapse text-sm">
               <caption className="sr-only">Lima publikasi terbaru</caption>
               <thead>

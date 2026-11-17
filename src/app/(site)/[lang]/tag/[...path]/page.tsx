@@ -1,12 +1,14 @@
 import { getDictionary } from "@/i18n/dictionaries";
 import { getLocale } from "@/i18n/request";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { getPostsByTag, getRelatedCategories, getTag, paginate } from "@/lib/content";
 import { pageTitle } from "@/lib/seo";
 import { ArchiveTemplate } from "@/components/templates/ArchiveTemplate";
 import { initLocale } from "@/i18n/request";
+import { localePath } from "@/i18n/config";
+import { findArchiveRedirect } from "@/server/repos/archive-redirects";
 
 type Props = { params: Promise<{ path: string[] }> };
 
@@ -47,7 +49,13 @@ export default async function TagPage({ params }: Props) {
   await initLocale(params);
   const parsed = parse((await params).path);
   const tag = parsed && (await getTag(parsed.slug));
-  if (!parsed || !tag) notFound();
+  if (!parsed) notFound();
+  if (!tag) {
+    // Tag yang digabungkan/dihapus di admin: arahkan (301) ke arsip tujuannya.
+    const target = await findArchiveRedirect(`/tag/${parsed.slug}/`);
+    if (target) permanentRedirect(localePath(target, getLocale()));
+    notFound();
+  }
 
   const dict = getDictionary(getLocale());
   const all = await getPostsByTag(tag.slug);
