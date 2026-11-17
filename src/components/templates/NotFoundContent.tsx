@@ -1,3 +1,4 @@
+import { NotFoundLogger } from "@/components/content/NotFoundLogger";
 import { Link } from "@/i18n/Link";
 
 import { getDictionary } from "@/i18n/dictionaries";
@@ -9,6 +10,7 @@ export function NotFoundContent() {
   const t = getDictionary(getLocale()).notFound;
   return (
     <section className="flex min-h-[600px] items-center justify-center px-6 pt-32 pb-16 text-center lg:min-h-[740px] lg:pt-40 lg:pb-20">
+      <NotFoundLogger />
       <div className="flex w-full max-w-[560px] flex-col items-center gap-4">
         <p className="text-[88px] leading-none font-extrabold text-primary italic lg:text-[120px]">404</p>
         <h1 className="text-[30px] leading-[1.2] font-bold lg:text-[40px]">{t.title}</h1>

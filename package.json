@@ -37,6 +37,7 @@
     "@tiptap/react": "^3.34.0",
     "@tiptap/starter-kit": "^3.34.0",
     "@vercel/blob": "^2.9.0",
+    "@vercel/edge-config": "^1.5.1",
     "drizzle-orm": "^0.45.4",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
