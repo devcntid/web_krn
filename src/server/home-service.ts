@@ -158,6 +158,7 @@ export async function saveHomeDraft(user: AuthUser, data: HomeEditorData): Promi
   const next = await build(data);
   if ("ok" in next) return next;
   await upsert(HOME_DRAFT_KEY, next, user.id);
+  await logActivity({ userId: user.id, action: "draft", entity: "settings", entityId: HOME_DRAFT_KEY, summary: "Menyimpan draf beranda untuk pratinjau" });
   return { ok: true };
 }
 
@@ -175,6 +176,7 @@ export async function publishHome(user: AuthUser, data: HomeEditorData): Promise
 }
 
 /** Buang salinan kerja; editor kembali ke versi yang sedang terbit. */
-export async function discardHomeDraft(): Promise<void> {
-  await getDb().delete(settings).where(eq(settings.key, HOME_DRAFT_KEY));
+export async function discardHomeDraft(user: AuthUser): Promise<void> {
+  const removed = await getDb().delete(settings).where(eq(settings.key, HOME_DRAFT_KEY)).returning({ key: settings.key });
+  if (removed.length) await logActivity({ userId: user.id, action: "discard", entity: "settings", entityId: HOME_DRAFT_KEY, summary: "Membuang draf beranda" });
 }

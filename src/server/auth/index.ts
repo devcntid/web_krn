@@ -5,6 +5,7 @@ import NextAuth, { type NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
+import { logActivity } from "../activity";
 import { getDb, schema } from "../db";
 import { TOTP_REQUIRED_ROLES as TOTP_REQUIRED, type Role } from "../roles";
 import { burnPasswordCheck, verifyPassword } from "./password";
@@ -112,6 +113,7 @@ const config: NextAuthConfig = {
         const row = account.provider === "credentials" && user.id ? { id: user.id } : user.email ? await findUserByEmail(user.email) : null;
         if (!row) return null;
         token = { sub: row.id, uid: row.id, authAt: now, mfa: false };
+        await logActivity({ userId: row.id, action: "login", entity: "user", entityId: row.id, summary: `Masuk dengan ${account.provider === "google" ? "Google" : "email & password"}` });
       }
 
       if (!token.uid || !token.authAt || now - token.authAt > SESSION_MAX_AGE_S * 1000) return null;
@@ -144,6 +146,7 @@ const config: NextAuthConfig = {
               .returning({ id: schema.users.id });
             if (claimed.length) {
               mfa = true;
+              if (!row.totpEnabledAt) await logActivity({ userId: row.id, action: "setup_2fa", entity: "user", entityId: row.id, summary: "Mengaktifkan verifikasi dua langkah (2FA)" });
               row.totpEnabledAt ??= new Date();
               await clearFailures("totp", row.id);
             }

@@ -27,7 +27,7 @@ export async function publishHomeAction(data: HomeEditorData): Promise<HomeSaveR
 }
 
 export async function discardHomeDraftAction(): Promise<void> {
-  await requireAbility("pages.manage");
-  await discardHomeDraft();
+  const user = await requireAbility("pages.manage");
+  await discardHomeDraft(user);
   revalidatePath("/admin/beranda");
 }

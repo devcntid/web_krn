@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { logActivity } from "@/server/activity";
 import { requireAbility } from "@/server/permissions";
 import { syncRedirectsToEdgeConfig } from "@/server/redirects-sync";
 import { clearNotFound, deleteRedirect, saveRedirect } from "@/server/seo-service";
@@ -26,8 +27,9 @@ export async function deleteRedirectAction(id: number): Promise<SeoResult> {
 }
 
 export async function syncRedirectsAction(): Promise<SeoResult> {
-  await requireAbility("seo.manage");
+  const user = await requireAbility("seo.manage");
   const sync = await syncRedirectsToEdgeConfig();
+  if (sync.ok) await logActivity({ userId: user.id, action: "sync", entity: "redirect", summary: `Menyinkronkan ${sync.count} redirect dinamis ke Edge Config` });
   return sync.ok ? { ok: true, message: `${sync.count} redirect dinamis disinkronkan ke Edge Config.` } : { ok: false, error: sync.error };
 }
 
