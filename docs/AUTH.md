@@ -43,3 +43,10 @@ benar (`totp_enabled_at` terisi saat kode pertama valid). Reset 2FA pengguna: ko
 ## Super Admin pertama
 `npm run admin:create -- --email nama@domain.org --name "Nama"` (password diminta tanpa ditampilkan, min. 12
 karakter, atau via env `ADMIN_PASSWORD`). Menulis ke database di `DATABASE_URL`.
+
+## Pengguna & undangan (B13)
+`/admin/pengguna` (hanya Super Admin): undang via email → baris `invitations` (token acak 32 byte, disimpan sebagai
+hash SHA-256, berlaku 72 jam, sekali pakai). Tautan `/admin/login/undangan/<token>/` membuat akun (nama + password)
+dengan peran dari undangan; 2FA didaftarkan saat login pertama untuk peran wajib 2FA. Email dikirim lewat Resend bila
+`RESEND_API_KEY` + `EMAIL_FROM` di-set; tanpa itu Super Admin menyalin tautan. Super Admin aktif terakhir tidak bisa
+diturunkan, dinonaktifkan, atau dihapus; tidak ada yang bisa menonaktifkan/menghapus akunnya sendiri.

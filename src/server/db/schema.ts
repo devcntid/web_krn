@@ -117,6 +117,26 @@ export const sessions = pgTable(
   (t) => [index("sessions_user_id_idx").on(t.userId), index("sessions_expires_idx").on(t.expires)],
 );
 
+/**
+ * Undangan pengguna (B13). Token hanya disimpan sebagai hash SHA-256; tautan berlaku 72 jam dan
+ * sekali pakai. Akun `users` baru dibuat saat undangan diterima.
+ */
+export const invitations = pgTable(
+  "invitations",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    email: text("email").notNull(),
+    role: userRole("role").notNull(),
+    tokenHash: text("token_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    invitedBy: uuid("invited_by").references(() => users.id, { onDelete: "set null" }),
+    acceptedAt: timestamp("accepted_at", { withTimezone: true }),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("invitations_token_hash_key").on(t.tokenHash), index("invitations_email_idx").on(sql`lower(${t.email})`)],
+);
+
 /* ---------- Media ---------- */
 
 export const media = pgTable(
