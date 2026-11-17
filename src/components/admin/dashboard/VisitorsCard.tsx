@@ -103,7 +103,9 @@ function SessionsChart({ daily }: { daily: { date: string; sessions: number }[] 
           <span>{label(daily[n - 1]!.date)}</span>
         </div>
       </div>
-      <table className="sr-only">
+      {/* sr-only pada pembungkus, bukan <table>: tabel mengabaikan height/overflow sehingga memanjangkan halaman. */}
+      <div className="sr-only">
+      <table>
         <caption>Sesi harian 30 hari terakhir</caption>
         <thead>
           <tr>
@@ -120,6 +122,7 @@ function SessionsChart({ daily }: { daily: { date: string; sessions: number }[] 
           ))}
         </tbody>
       </table>
+      </div>
     </figure>
   );
 }

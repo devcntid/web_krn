@@ -10,7 +10,7 @@ export default function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="min-h-screen bg-admin-canvas font-manrope text-admin-ink">
+    <div data-admin-root className="min-h-screen bg-admin-canvas font-manrope text-admin-ink">
       {children}
     </div>
   );

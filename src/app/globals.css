@@ -388,3 +388,11 @@
   }
 }
 
+
+/* Admin: latar dokumen = kanvas admin & tanpa efek pantul overscroll (trackpad macOS/iOS),
+   agar saat menggulir melewati batas tidak tampak latar body putih di bawah layout. */
+html:has(body [data-admin-root]),
+body:has([data-admin-root]) {
+  background-color: var(--color-admin-canvas);
+  overscroll-behavior-y: none;
+}
