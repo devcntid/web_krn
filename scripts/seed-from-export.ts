@@ -19,7 +19,7 @@ import { inArray, sql } from "drizzle-orm";
 
 import { legacyRedirects } from "../src/config/redirects";
 import { isDonationAppPath } from "../src/config/routes";
-import { contact, floatingContact, footerNav, mainNav, site, socials } from "../src/config/site";
+import { siteDefaults } from "../src/config/site";
 import { buildHomeSettings } from "./seed-home";
 import type { Page, PageSummary, Post, PostSummary, Term } from "../src/types/content";
 
@@ -201,11 +201,12 @@ async function main() {
 
   /* ---------- 6. Pengaturan ---------- */
   const settingRows = [
-    { key: "identity", value: site },
-    { key: "contact", value: contact },
-    { key: "socials", value: socials },
-    { key: "menu", value: { main: mainNav, footer: footerNav } },
-    { key: "integrations", value: { donateUrl: site.donateUrl, floatingContact } },
+    // Bentuk src/lib/site-settings-schema.ts (dikelola di /admin/pengaturan).
+    { key: "identity", value: siteDefaults.identity },
+    { key: "contact", value: siteDefaults.contact },
+    { key: "socials", value: siteDefaults.socials },
+    { key: "menu", value: siteDefaults.menu },
+    { key: "integrations", value: siteDefaults.integrations },
     // Bentuk { id, en } yang dibaca beranda publik & /admin/beranda (lihat src/server/home.ts).
     { key: "home", value: buildHomeSettings() },
   ];

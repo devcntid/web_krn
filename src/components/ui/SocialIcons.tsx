@@ -1,6 +1,6 @@
 import { siFacebook, siInstagram, siThreads, siTiktok, siYoutube } from "simple-icons";
 
-import { socials } from "@/config/site";
+import type { SiteSettings } from "@/lib/site-settings-schema";
 
 const paths: Record<string, string> = {
   Instagram: siInstagram.path,
@@ -14,18 +14,18 @@ const paths: Record<string, string> = {
 };
 
 /** Ikon sosial bulat hitam seperti footer existing. */
-export function SocialIcons({ className = "" }: { className?: string }) {
+export function SocialIcons({ socials, className = "" }: { socials: SiteSettings["socials"]; className?: string }) {
   return (
     <ul className={`flex flex-wrap items-center gap-2 ${className}`}>
       {socials.map((s) => {
-        const d = paths[s.name];
+        const d = paths[s.platform];
         return (
-          <li key={s.name}>
+          <li key={s.platform}>
             <a
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={s.name}
+              aria-label={s.platform}
               className="flex size-[30px] items-center justify-center rounded-full bg-ink text-white transition-opacity hover:opacity-80"
             >
               <svg viewBox="0 0 24 24" aria-hidden className="size-4 fill-current">

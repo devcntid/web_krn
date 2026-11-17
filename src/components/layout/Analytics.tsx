@@ -1,12 +1,15 @@
 import Script from "next/script";
 
 /**
- * GA4 + Meta Pixel — hanya aktif bila ID di-set lewat environment variable
- * (lihat .env.example). ID diambil dari Site Kit / pixel di WordPress.
+ * GA4 + Meta Pixel — hanya aktif bila ID diisi di /admin/pengaturan (fallback: environment
+ * variable NEXT_PUBLIC_GA_ID / NEXT_PUBLIC_META_PIXEL_ID). ID sudah divalidasi Zod
+ * (G-XXXX / angka) sehingga aman disisipkan ke skrip.
  */
-export function Analytics() {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+export function Analytics({ gaId: ga, pixelId: pixel }: { gaId: string; pixelId: string }) {
+  // Hanya produksi: dev lokal & preview Vercel tidak mengirim data ke GA4/Pixel.
+  const live = process.env.NODE_ENV === "production" && (!process.env.VERCEL_ENV || process.env.VERCEL_ENV === "production");
+  const gaId = live ? ga : "";
+  const pixelId = live ? pixel : "";
 
   return (
     <>

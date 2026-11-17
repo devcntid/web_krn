@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Minus, Plus, Search } from "lucide-react";
 
-import { floatingContact, mainNav } from "@/config/site";
+import { menuLabel, type PublicShellSettings } from "@/lib/site-settings-schema";
 import { localePath } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { Link, useLocale } from "@/i18n/Link";
@@ -11,6 +11,7 @@ import { LanguageToggle } from "@/components/layout/LanguageToggle";
 
 type MobileMenuProps = {
   id: string;
+  shell: PublicShellSettings;
   onClose: () => void;
   /** Elemen <header> pembungkus: batas kunci fokus (bar atas + panel menu). */
   headerRef: React.RefObject<HTMLElement | null>;
@@ -24,7 +25,7 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), [tabi
  * header dibuat inert, gulir halaman dikunci, Tab berputar di dalam header, dan
  * Esc menutup. Komponen ini hanya dirender saat menu terbuka.
  */
-export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
+export function MobileMenu({ id, shell, onClose, headerRef }: MobileMenuProps) {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const uid = useId();
@@ -106,12 +107,12 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
 
       <nav aria-label={t.mobileMenu.label} className="min-h-0 flex-1 overflow-y-auto">
         <ul>
-          {mainNav.map((item, i) => {
+          {shell.menu.map((item, i) => {
             const expanded = openGroup === item.label;
             const groupId = `${uid}-grup-${i}`;
             return (
-              <li key={item.label} className="border-b border-border/60">
-                {item.children ? (
+              <li key={`${i}-${item.label}`} className="border-b border-border/60">
+                {item.children.length ? (
                   <>
                     <button
                       type="button"
@@ -120,7 +121,7 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
                       onClick={() => setOpenGroup(expanded ? null : item.label)}
                       className="flex min-h-[52px] w-full items-center justify-between px-5 text-left text-base font-semibold text-ink"
                     >
-                      {t.nav[item.label] ?? item.label}
+                      {menuLabel(item, locale, t.nav)}
                       {expanded ? (
                         <Minus aria-hidden className="size-5 text-primary" />
                       ) : (
@@ -135,7 +136,7 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
                             onClick={onClose}
                             className="flex min-h-11 items-center px-9 py-2.5 text-[15px] font-medium text-ink"
                           >
-                            {t.nav[child.label] ?? child.label}
+                            {menuLabel(child, locale, t.nav)}
                           </Link>
                         </li>
                       ))}
@@ -143,11 +144,11 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
                   </>
                 ) : (
                   <Link
-                    href={item.href ?? "/"}
+                    href={item.href || "/"}
                     onClick={onClose}
                     className="flex min-h-[52px] items-center px-5 text-base font-semibold text-ink"
                   >
-                    {t.nav[item.label] ?? item.label}
+                    {menuLabel(item, locale, t.nav)}
                   </Link>
                 )}
               </li>
@@ -160,12 +161,12 @@ export function MobileMenu({ id, onClose, headerRef }: MobileMenuProps) {
       <p className="text-[13px] text-body">
         {t.mobileMenu.needHelp}{" "}
         <a
-          href={floatingContact.href}
+          href={shell.saffa.href}
           target="_blank"
           rel="noopener noreferrer"
           className="ml-1 inline-flex min-h-11 items-center font-semibold text-primary underline-offset-4 hover:underline"
         >
-          {floatingContact.label} {t.mobileMenu.askVia}
+          {t.common.askSaffa} {t.mobileMenu.askVia}
         </a>
       </p>
       <LanguageToggle />

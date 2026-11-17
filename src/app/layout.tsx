@@ -4,8 +4,17 @@ import "./globals.css";
 import { manrope, poppins, poppinsExtra } from "./fonts";
 import { SITE_URL, site } from "@/config/site";
 import { siteIcons } from "@/lib/site-icons";
+import { mediaUrl } from "@/lib/media";
+import { getSiteSettings } from "@/server/site-settings";
 
-export const metadata: Metadata = {
+/** Favicon dari /admin/pengaturan (kosong = ikon hasil ekspor WordPress). */
+export async function generateMetadata(): Promise<Metadata> {
+  const { identity } = await getSiteSettings();
+  const favicon = identity.favicon ? mediaUrl(identity.favicon) : "";
+  return { ...baseMetadata, icons: favicon ? { icon: [{ url: favicon }], apple: [{ url: favicon }] } : siteIcons() };
+}
+
+const baseMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: `${site.name} - Jembatan Kebaikan untuk Kemanusiaan`,
@@ -13,7 +22,6 @@ export const metadata: Metadata = {
   },
   description: site.description,
   applicationName: site.name,
-  icons: siteIcons(),
   openGraph: {
     siteName: site.name,
     locale: site.locale,

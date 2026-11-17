@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { Link } from "@/i18n/Link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, Search, X } from "lucide-react";
 
-import { mainNav, site } from "@/config/site";
+import { menuLabel, type PublicShellSettings } from "@/lib/site-settings-schema";
 import { DonateButton } from "@/components/ui/DonateButton";
 import { getDictionary } from "@/i18n/dictionaries";
 import { useLocale } from "@/i18n/Link";
@@ -16,6 +16,8 @@ import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { mediaUrl } from "@/lib/media";
 
 type HeaderProps = {
+  /** Identitas, menu, dan tombol dari /admin/pengaturan (dibaca SiteShell di server). */
+  shell: PublicShellSettings;
   /** Template post WordPress memakai tombol Donasi hijau. */
   donateVariant?: "accent" | "primary";
 };
@@ -25,9 +27,10 @@ type HeaderProps = {
  * lebar container 1080px, radius 10px). Dropdown desktop murni CSS (hover +
  * focus-within) agar tetap bisa diakses keyboard. Menu mobile: MobileMenu.
  */
-export function Header({ donateVariant = "accent" }: HeaderProps) {
+export function Header({ shell, donateVariant = "accent" }: HeaderProps) {
   const pathname = usePathname();
-  const t = getDictionary(useLocale());
+  const locale = useLocale();
+  const t = getDictionary(locale);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -36,10 +39,11 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   /** Tutup menu mobile dan kembalikan fokus ke tombol menu. */
-  const closeMobile = useCallback(() => {
+  // Tanpa useCallback: React Compiler sudah memoisasi fungsi ini.
+  const closeMobile = () => {
     setMobileOpen(false);
     toggleRef.current?.focus();
-  }, []);
+  };
 
   // Tutup menu mobile saat pindah halaman (pola "adjust state during render").
   if (pathname !== lastPath) {
@@ -61,12 +65,12 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
           scrolled ? "border-border" : "border-transparent"
         }`}
       >
-        <Link href="/" aria-label={`${site.name} — ${t.shell.homeAria}`} className="shrink-0">
+        <Link href="/" aria-label={`${shell.name} — ${t.shell.homeAria}`} className="shrink-0">
           <Image
-            src={mediaUrl(site.logo.src)}
-            alt={site.name}
-            width={site.logo.width}
-            height={site.logo.height}
+            src={mediaUrl(shell.logo.src)}
+            alt={shell.name}
+            width={shell.logo.width}
+            height={shell.logo.height}
             preload
             className="h-[26px] w-auto lg:h-[34px]"
           />
@@ -75,16 +79,16 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
         {/* Navigasi desktop */}
         <nav aria-label={t.header.mainMenu} className="hidden h-full lg:block">
           <ul className="flex h-full items-center gap-[22px]">
-            {mainNav.map((item) => (
+            {shell.menu.map((item) => (
               <li key={item.label} className="group relative flex h-full items-center">
-                {item.children ? (
+                {item.children.length ? (
                   <>
                     <button
                       type="button"
                       aria-haspopup="true"
                       className="flex items-center gap-1 text-base font-semibold text-ink transition-opacity group-focus-within:opacity-70 group-hover:opacity-70"
                     >
-                      {t.nav[item.label] ?? item.label}
+                      {menuLabel(item, locale, t.nav)}
                       <ChevronDown aria-hidden className="size-4" strokeWidth={2.5} />
                     </button>
                     <ul className="invisible absolute top-full left-0 w-60 border-t-[3px] border-primary bg-white py-5 opacity-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] transition-[opacity,visibility] duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
@@ -94,7 +98,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
                             href={child.href}
                             className="block px-5 py-1.5 text-sm leading-7 font-semibold text-ink transition-opacity hover:opacity-70"
                           >
-                            {t.nav[child.label] ?? child.label}
+                            {menuLabel(child, locale, t.nav)}
                           </Link>
                         </li>
                       ))}
@@ -102,10 +106,10 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
                   </>
                 ) : (
                   <Link
-                    href={item.href ?? "/"}
+                    href={item.href || "/"}
                     className="text-base font-semibold text-ink transition-opacity hover:opacity-70"
                   >
-                    {t.nav[item.label] ?? item.label}
+                    {menuLabel(item, locale, t.nav)}
                   </Link>
                 )}
               </li>
@@ -125,7 +129,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
 
         <div className="flex items-center gap-1.5 lg:gap-3">
           <LanguageToggle className="max-lg:hidden" />
-          <DonateButton variant={donateVariant} label={t.header.donate} />
+          <DonateButton href={shell.donateUrl} variant={donateVariant} label={t.header.donate} />
           <button
             ref={toggleRef}
             type="button"
@@ -140,7 +144,7 @@ export function Header({ donateVariant = "accent" }: HeaderProps) {
         </div>
       </div>
 
-      {mobileOpen && <MobileMenu id="mobile-menu" onClose={closeMobile} headerRef={headerRef} />}
+      {mobileOpen && <MobileMenu id="mobile-menu" shell={shell} onClose={closeMobile} headerRef={headerRef} />}
 
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>

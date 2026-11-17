@@ -6,14 +6,18 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingContact } from "@/components/layout/FloatingContact";
 import { Analytics } from "@/components/layout/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { whatsappHref } from "@/lib/site-settings-schema";
+import { getSiteSettings } from "@/server/site-settings";
 
 /**
  * Kerangka situs publik: tautan lewati, Header, <main>, Footer, "Tanya Saffa",
  * JSON-LD organisasi, dan analytics. Dipakai layout route group (site) dan 404
  * tingkat root — tidak dipakai /admin.
  */
-export function SiteShell({ children, locale = "id" }: Readonly<{ children: React.ReactNode; locale?: Locale }>) {
+export async function SiteShell({ children, locale = "id" }: Readonly<{ children: React.ReactNode; locale?: Locale }>) {
   const t = getDictionary(locale);
+  const { identity, contact, menu, integrations } = await getSiteSettings();
+  const saffaHref = whatsappHref(contact.whatsapp);
   return (
     // <html lang> di root layout tetap "id"; versi Inggris ditandai di pembungkus ini.
     <div lang={locale}>
@@ -23,12 +27,12 @@ export function SiteShell({ children, locale = "id" }: Readonly<{ children: Reac
       >
         {t.shell.skipToContent}
       </a>
-      <Header />
+      <Header shell={{ name: identity.name, logo: identity.logo, menu, donateUrl: integrations.donateUrl, saffa: { href: saffaHref, show: integrations.showSaffa } }} />
       <main id="konten">{children}</main>
       <Footer />
-      <FloatingContact />
-      <JsonLd data={organizationJsonLd()} />
-      <Analytics />
+      {integrations.showSaffa && <FloatingContact href={saffaHref} />}
+      <JsonLd data={organizationJsonLd({ name: identity.name, logo: identity.logo.src })} />
+      <Analytics gaId={integrations.ga4Id} pixelId={integrations.metaPixelId} />
     </div>
   );
 }

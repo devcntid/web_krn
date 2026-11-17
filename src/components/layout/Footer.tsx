@@ -5,7 +5,9 @@ import Image from "next/image";
 import { Link } from "@/i18n/Link";
 import { Leaf, Mail, MapPin, Phone } from "lucide-react";
 
-import { contact, footerNav, site, whatsappUrl } from "@/config/site";
+import { footerNav } from "@/config/site";
+import { whatsappHref } from "@/lib/site-settings-schema";
+import { getSiteSettings } from "@/server/site-settings";
 import { getLatestPosts } from "@/lib/content";
 import { formatDateShort } from "@/lib/format";
 import { SocialIcons } from "@/components/ui/SocialIcons";
@@ -24,7 +26,7 @@ function FooterHeading({ children }: { children: React.ReactNode }) {
 const WTP_BADGE = "/wp-content/uploads/2026/09/2021-2025-scaled.png";
 
 export async function Footer() {
-  const latest = await getLatestPosts(2);
+  const [latest, { identity, contact, socials }] = await Promise.all([getLatestPosts(2), getSiteSettings()]);
   const locale = getLocale();
   const t = getDictionary(locale);
 
@@ -34,8 +36,8 @@ export async function Footer() {
         <div className="mx-auto grid w-[90%] max-w-[1080px] gap-10 md:grid-cols-2 lg:w-[90%] lg:max-w-none xl:grid-cols-[376fr_161fr_215fr_215fr] xl:gap-8">
           {/* Kolom brand */}
           <div>
-            <Link href="/" aria-label={site.name}>
-              <Image src={mediaUrl(site.logo.src)} alt={site.name} width={160} height={36} className="h-9 w-auto" />
+            <Link href="/" aria-label={identity.name}>
+              <Image src={mediaUrl(identity.logo.src)} alt={identity.name} width={identity.logo.width} height={identity.logo.height} className="h-9 w-auto" />
             </Link>
             <p className="mt-6 rounded-[10px] border border-dotted border-[#f05e22] p-[30px] text-[15px] leading-[1.5] font-medium text-muted-strong">
               {t.footer.disclaimer}
@@ -105,7 +107,7 @@ export async function Footer() {
             <ul className="space-y-4 text-[15px] leading-[25.5px] font-medium text-muted-strong">
               <li className="flex gap-3">
                 <Phone aria-hidden className="mt-1 size-4 shrink-0 fill-accent text-accent" />
-                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+                <a href={whatsappHref(contact.whatsapp)} target="_blank" rel="noopener noreferrer" className="hover:text-primary">
                   {contact.phoneDisplay}
                 </a>
               </li>
@@ -120,7 +122,7 @@ export async function Footer() {
                 <address className="not-italic">{contact.address}</address>
               </li>
             </ul>
-            <SocialIcons className="mt-8" />
+            <SocialIcons socials={socials} className="mt-8" />
           </div>
         </div>
       </div>

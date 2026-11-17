@@ -1,7 +1,7 @@
 import { getLocale } from "@/i18n/request";
 import type { Metadata } from "next";
 
-import { SITE_URL, site } from "@/config/site";
+import { SITE_URL, site, siteDefaults } from "@/config/site";
 import type { Post, SeoMeta } from "@/types/content";
 import { mediaUrl } from "@/lib/media";
 
@@ -72,14 +72,15 @@ export function pageTitle(title: string): string {
 
 /* ---------- JSON-LD ---------- */
 
-export function organizationJsonLd() {
+/** Organisasi (NGO). Nama & logo dari /admin/pengaturan; tanpa argumen memakai fallback. */
+export function organizationJsonLd(identity: { name: string; logo: string } = { name: site.name, logo: siteDefaults.identity.logo.src }) {
   return {
     "@context": "https://schema.org",
     "@type": "NGO",
     "@id": `${SITE_URL}/#organization`,
-    name: site.name,
+    name: identity.name,
     url: SITE_URL,
-    logo: absoluteUrl(mediaUrl(site.logo.src)),
+    logo: absoluteUrl(mediaUrl(identity.logo)),
     description: site.description,
   };
 }
