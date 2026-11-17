@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { parseInput, savePostSchema } from "@/server/action-input";
 import { requireAbility, requireUser } from "@/server/permissions";
 import { type BulkAction, bulkUpdatePosts, restoreRevision, savePost } from "@/server/posts-service";
 import { listMediaImages, listRevisions, searchTags } from "@/server/repos/admin-posts";
@@ -11,8 +12,11 @@ import type { BulkResult, MediaPage, RevisionSummary, SavePostInput, SaveResult,
 const LIST_PATH = "/admin/publikasi";
 
 /** Simpan publikasi dari editor (buat baru, simpan otomatis, kirim review, terbit, jadwal, tarik ke draf). */
-export async function savePostAction(input: SavePostInput): Promise<SaveResult> {
+export async function savePostAction(raw: SavePostInput): Promise<SaveResult> {
   const user = await requireUser();
+  const parsed = parseInput(savePostSchema, raw);
+  if (!parsed.ok) return { ok: false, error: parsed.error };
+  const input = parsed.data;
   const { result, revalidateSlugs } = await savePost(user, input);
   if (result.ok) {
     refreshPostCaches(revalidateSlugs);
@@ -53,7 +57,7 @@ export async function trashPostAction(id: number): Promise<BulkResult> {
 
 export async function listRevisionsAction(postId: number): Promise<RevisionSummary[]> {
   await requireAbility("draft.write");
-  return listRevisions(postId);
+  return Number.isInteger(postId) ? listRevisions(postId) : [];
 }
 
 export async function restoreRevisionAction(postId: number, revisionId: number): Promise<{ ok: boolean; error?: string }> {
@@ -68,10 +72,10 @@ export async function restoreRevisionAction(postId: number, revisionId: number):
 
 export async function searchTagsAction(q: string): Promise<TagRef[]> {
   await requireAbility("draft.write");
-  return searchTags(q.slice(0, 80));
+  return searchTags(String(q).slice(0, 80));
 }
 
 export async function searchMediaAction(q: string, page: number): Promise<MediaPage> {
   await requireAbility("draft.write");
-  return listMediaImages(q.slice(0, 120), Number.isInteger(page) && page > 0 ? page : 1);
+  return listMediaImages(String(q).slice(0, 120), Number.isInteger(page) && page > 0 ? page : 1);
 }

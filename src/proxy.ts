@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 import { normalizeRedirectPath } from "@/lib/redirect-rules";
 import { auth } from "@/server/auth";
 import { getDb, schema } from "@/server/db";
+import { buildRedirectMap } from "@/server/redirects-sync";
 
 /**
  * 1) /admin/** (kecuali /admin/login): wajib masuk penuh (termasuk 2FA). `auth()` menjalankan
@@ -13,8 +14,8 @@ import { getDb, schema } from "@/server/db";
  *    wajib memanggil requireUser()/requireAbility() — proxy hanya lapisan pertama.
  * 2) Mode perawatan (/admin/pengaturan): pengunjung mendapat 503; admin yang punya cookie sesi
  *    tetap melihat situs (cukup cek keberadaan cookie — yang dilindungi hanyalah tampilan publik).
- * 3) Halaman situs: redirect dinamis dari Vercel Edge Config (dikelola di /admin/seo, disinkronkan
- *    oleh src/server/redirects-sync.ts). Redirect statis tetap di next.config (src/config/redirects.ts).
+ * 3) Halaman situs: redirect dinamis (dikelola di /admin/seo) dari Vercel Edge Config, atau langsung
+ *    dari tabel `redirects` bila Edge Config belum dikonfigurasi. Redirect statis tetap di next.config (src/config/redirects.ts).
  */
 const adminProxy = auth((req) => {
   const { pathname, search } = req.nextUrl;
@@ -28,12 +29,17 @@ const adminProxy = auth((req) => {
 type RedirectMap = Record<string, [string, number]>;
 let cached: { at: number; map: RedirectMap } | null = null;
 
-/** Peta redirect dari Edge Config, disimpan 30 detik di memori instance. Kosong bila belum dikonfigurasi. */
+/** Lama cache peta redirect di memori instance (ms). Bisa diperkecil lewat env untuk e2e. */
+const REDIRECT_TTL = Number(process.env.REDIRECTS_CACHE_MS ?? 30_000);
+
+/**
+ * Peta redirect dinamis, disimpan REDIRECT_TTL di memori instance. Sumber: Vercel Edge Config bila
+ * dikonfigurasi; bila tidak, langsung dari tabel `redirects` (satu query per instance per TTL).
+ */
 async function redirectMap(): Promise<RedirectMap> {
-  if (!process.env.EDGE_CONFIG) return {};
-  if (cached && Date.now() - cached.at < 30_000) return cached.map;
+  if (cached && Date.now() - cached.at < REDIRECT_TTL) return cached.map;
   try {
-    const map = ((await get<RedirectMap>("redirects")) ?? {}) as RedirectMap;
+    const map = process.env.EDGE_CONFIG ? (((await get<RedirectMap>("redirects")) ?? {}) as RedirectMap) : await buildRedirectMap();
     cached = { at: Date.now(), map };
     return map;
   } catch {

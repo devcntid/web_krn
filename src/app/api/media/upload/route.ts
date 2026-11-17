@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { UPLOAD_MAX_BYTES, UPLOAD_TYPES, isValidUploadPath, uploadFolder } from "@/lib/media-upload";
 import { registerUpload } from "@/server/media-service";
+import { isRateLimited, recordFailure } from "@/server/auth/rate-limit";
 import { can, getCurrentUser } from "@/server/permissions";
 
 /**
@@ -27,6 +28,10 @@ export async function POST(request: Request): Promise<NextResponse> {
     const user = await getCurrentUser();
     if (!user) return NextResponse.json({ error: "Sesi berakhir. Masuk lagi untuk mengunggah." }, { status: 401 });
     if (!can(user, "media.manage")) return NextResponse.json({ error: "Peran Anda tidak dapat mengunggah media." }, { status: 403 });
+    // Rate limit: maksimal LIMITS.upload token unggah per pengguna dalam 15 menit.
+    const keys = [{ kind: "upload" as const, value: user.id }];
+    if (await isRateLimited(keys)) return NextResponse.json({ error: "Terlalu banyak unggahan. Coba lagi beberapa menit lagi." }, { status: 429 });
+    await recordFailure(keys);
     if (!process.env.BLOB_READ_WRITE_TOKEN && !(process.env.VERCEL_OIDC_TOKEN && process.env.BLOB_STORE_ID)) {
       return NextResponse.json({ error: "Vercel Blob belum dikonfigurasi di lingkungan ini (BLOB_READ_WRITE_TOKEN)." }, { status: 503 });
     }

@@ -9,7 +9,8 @@ import { getDb, schema } from "../db";
  * Hanya percobaan GAGAL yang dicatat; dihitung dalam jendela geser.
  */
 export const WINDOW_MS = 15 * 60 * 1000;
-export const LIMITS = { email: 5, ip: 20, totp: 5 } as const;
+/** email/ip/totp: percobaan login GAGAL. upload: token unggah media per pengguna (semua permintaan dihitung). */
+export const LIMITS = { email: 5, ip: 20, totp: 5, upload: 60 } as const;
 
 type Kind = keyof typeof LIMITS;
 type Db = Pick<ReturnType<typeof getDb>, "select" | "insert" | "delete">;

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { logActivity } from "@/server/activity";
+import { parseInput, redirectSchema } from "@/server/action-input";
 import { requireAbility } from "@/server/permissions";
 import { syncRedirectsToEdgeConfig } from "@/server/redirects-sync";
 import { clearNotFound, deleteRedirect, saveRedirect } from "@/server/seo-service";
@@ -18,7 +19,9 @@ async function withSync(result: SeoResult): Promise<SeoResult> {
 
 export async function saveRedirectAction(id: number | null, input: RedirectInput): Promise<SeoResult> {
   const user = await requireAbility("seo.manage");
-  return withSync(await saveRedirect(user, id === null ? null : Number(id), input));
+  const parsed = parseInput(redirectSchema, input);
+  if (!parsed.ok) return parsed;
+  return withSync(await saveRedirect(user, id === null ? null : Number(id), parsed.data));
 }
 
 export async function deleteRedirectAction(id: number): Promise<SeoResult> {

@@ -5,6 +5,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { CACHE_TAGS } from "@/lib/content";
 
 import { deleteMedia, registerUpload, updateMediaMeta } from "@/server/media-service";
+import { mediaMetaSchema, parseInput } from "@/server/action-input";
 import { requireAbility, requireUser } from "@/server/permissions";
 import { getMediaDetail } from "@/server/repos/admin-media";
 import type { MediaActionResult, MediaDetail } from "@/types/admin-media";
@@ -27,8 +28,11 @@ export async function getMediaDetailAction(id: number): Promise<MediaDetail | nu
   return Number.isInteger(id) ? getMediaDetail(id) : null;
 }
 
-export async function updateMediaAction(id: number, input: { alt: string; caption: string }): Promise<MediaActionResult> {
+export async function updateMediaAction(id: number, raw: { alt: string; caption: string }): Promise<MediaActionResult> {
   const user = await requireAbility("media.manage");
+  const parsed = parseInput(mediaMetaSchema, raw);
+  if (!parsed.ok || !Number.isInteger(id)) return { ok: false, error: parsed.ok ? "Permintaan tidak sah." : parsed.error };
+  const input = parsed.data;
   const { affectsPosts, ...result } = await updateMediaMeta(user, id, input);
   if (result.ok) {
     revalidatePath(PATH);
@@ -40,6 +44,7 @@ export async function updateMediaAction(id: number, input: { alt: string; captio
 
 export async function deleteMediaAction(id: number): Promise<MediaActionResult> {
   const user = await requireAbility("media.manage");
+  if (!Number.isInteger(id)) return { ok: false, error: "Permintaan tidak sah." };
   const result = await deleteMedia(user, id);
   if (result.ok) revalidatePath(PATH);
   return result;

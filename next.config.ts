@@ -6,6 +6,40 @@ import { legacyRedirects } from "./src/config/redirects";
 const MEDIA_BASE_URL = (process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? "").replace(/\/$/, "");
 const mediaHost = MEDIA_BASE_URL ? new URL(MEDIA_BASE_URL) : null;
 
+const isDev = process.env.NODE_ENV === "development";
+const csp = (directives: string[]) => directives.join("; ");
+
+/**
+ * CSP /admin (B16): ketat pada asal skrip/gambar/koneksi. 'unsafe-inline' tetap diperlukan
+ * karena skrip inline Next tanpa nonce (nonce memaksa semua halaman dinamis — lihat
+ * node_modules/next/dist/docs/01-app/02-guides/content-security-policy.md).
+ */
+const ADMIN_CSP = csp([
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://i.ytimg.com https://*.googleusercontent.com",
+  "font-src 'self' data:",
+  // Unggah klien Vercel Blob: vercel.com/api/blob + *.blob.vercel-storage.com.
+  `connect-src 'self' https://vercel.com https://*.blob.vercel-storage.com${isDev ? " ws: http://localhost:*" : ""}`,
+  "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://heyzine.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  // Login Google: aksi form mengalihkan ke accounts.google.com.
+  "form-action 'self' https://accounts.google.com",
+  "frame-ancestors 'none'",
+]);
+
+/** CSP situs publik: konten lama WordPress memuat embed & skrip pihak ketiga, jadi hanya direktif aman. */
+const SITE_CSP = csp(["object-src 'none'", "base-uri 'self'", "frame-ancestors 'self'", "upgrade-insecure-requests"]);
+
+const COMMON_HEADERS = [
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()" },
+  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+];
+
 const nextConfig: NextConfig = {
   // Permalink WordPress memakai trailing slash.
   trailingSlash: true,
@@ -41,6 +75,23 @@ const nextConfig: NextConfig = {
   // hanya ikon situs di content/site.json (src/lib/site-icons.ts).
   outputFileTracingIncludes: {
     "/**": ["./content/site.json"],
+  },
+
+  async headers() {
+    return [
+      // Situs publik (semua path kecuali /admin & /api).
+      { source: "/((?!admin|api).*)", headers: [...COMMON_HEADERS, { key: "X-Frame-Options", value: "SAMEORIGIN" }, { key: "Content-Security-Policy", value: SITE_CSP }] },
+      {
+        source: "/admin/:path*",
+        headers: [
+          ...COMMON_HEADERS,
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Content-Security-Policy", value: ADMIN_CSP },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      { source: "/api/:path*", headers: [...COMMON_HEADERS, { key: "X-Frame-Options", value: "DENY" }] },
+    ];
   },
 
   async redirects() {

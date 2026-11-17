@@ -51,3 +51,8 @@ next-env.d.ts
 
 # Screenshot visual QA (npm run visual:compare) — besar, dibuat ulang kapan saja
 /qa/screenshots/
+
+# Playwright
+/test-results/
+/playwright-report/
+/tests/e2e/.state.json
