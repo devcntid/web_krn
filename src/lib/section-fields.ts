@@ -373,6 +373,44 @@ export const SECTION_DEFS: readonly SectionDef[] = [
     ],
   },
   {
+    type: "reports-db",
+    family: "Transparansi",
+    label: "Daftar e-Report (otomatis)",
+    description: "Kartu laporan dari menu e-Report & Audit, dengan filter tema.",
+    fields: [
+      {
+        kind: "list",
+        name: "themes",
+        label: "Tema filter",
+        itemLabel: "tema",
+        titleField: "label",
+        help: "Slug tema dipakai saat memberi tema pada laporan di menu e-Report & Audit.",
+        fields: [
+          { kind: "text", name: "slug", label: "Slug (huruf kecil-dengan-tanda-hubung)" },
+          { kind: "text", name: "label", label: "Label" },
+        ],
+      },
+    ],
+  },
+  {
+    type: "audits-db",
+    family: "Transparansi",
+    label: "Audit keuangan (otomatis)",
+    description: "Teks pengantar dan accordion audit per tahun dari menu e-Report & Audit.",
+    fields: [
+      { kind: "strings", name: "headingLines", label: "Judul (per baris)", itemLabel: "baris" },
+      { kind: "strings", name: "paragraphs", label: "Paragraf", itemLabel: "paragraf", multiline: true },
+      { kind: "text", name: "badge", label: "Lencana", optional: true },
+    ],
+  },
+  {
+    type: "legal-db",
+    family: "Transparansi",
+    label: "Dokumen legalitas (otomatis)",
+    description: "Paragraf pengantar dan daftar dokumen dari menu e-Report & Audit.",
+    fields: [{ kind: "textarea", name: "intro", label: "Pengantar", optional: true }],
+  },
+  {
     type: "richtext",
     family: "Richtext",
     label: "Teks bebas (HTML)",

@@ -4,7 +4,7 @@ import { upload } from "@vercel/blob/client";
 import { useId, useRef, useState } from "react";
 
 import { registerUploadAction } from "@/app/admin/(panel)/media/actions";
-import { UPLOAD_ACCEPT, UPLOAD_HINT, uploadFileName, uploadFolder, uploadProblem } from "@/lib/media-upload";
+import { type MediaKind, UPLOAD_ACCEPT, UPLOAD_HINT, UPLOAD_MAX_BYTES, UPLOAD_TYPES, mediaKindOf, uploadFileName, uploadFolder, uploadProblem } from "@/lib/media-upload";
 import type { MediaItem } from "@/types/admin-media";
 
 type Job = { key: string; name: string; state: "uploading" | "saving" | "done" | "error"; percent: number; message?: string };
@@ -19,11 +19,14 @@ export function MediaDropzone({
   onUploaded,
   inputRef,
   compact = false,
+  only,
 }: {
   onUploaded: (item: MediaItem) => void;
   /** Ref ke <input type="file"> agar tombol di luar (mis. "Unggah File") bisa membukanya. */
   inputRef?: React.RefObject<HTMLInputElement | null>;
   compact?: boolean;
+  /** Batasi ke satu jenis (mis. "pdf" untuk dokumen audit). */
+  only?: MediaKind;
 }) {
   const ownRef = useRef<HTMLInputElement | null>(null);
   const ref = inputRef ?? ownRef;
@@ -36,7 +39,7 @@ export function MediaDropzone({
 
   const send = async (file: File) => {
     const key = `u${counter.current++}`;
-    const problem = uploadProblem(file);
+    const problem = only && mediaKindOf(file.type) !== only ? `Hanya file ${only.toUpperCase()} yang bisa diunggah di sini.` : uploadProblem(file);
     setJobs((list) => [...list.slice(-7), { key, name: file.name, state: problem ? "error" : "uploading", percent: 0, message: problem ?? undefined }]);
     if (problem) return;
     try {
@@ -93,7 +96,7 @@ export function MediaDropzone({
             id={id}
             type="file"
             multiple
-            accept={UPLOAD_ACCEPT}
+            accept={only ? Object.keys(UPLOAD_TYPES).filter((t) => UPLOAD_TYPES[t]?.kind === only).join(",") : UPLOAD_ACCEPT}
             className="sr-only"
             aria-describedby={`${id}-hint`}
             onChange={(e) => {
@@ -103,7 +106,7 @@ export function MediaDropzone({
           />
         </label>
         <p id={`${id}-hint`} className="text-xs text-admin-text">
-          {UPLOAD_HINT}
+          {only ? `${only.toUpperCase()} ≤ ${Math.round(UPLOAD_MAX_BYTES[only] / 1048576)} MB` : UPLOAD_HINT}
         </p>
       </div>
       {jobs.length ? (

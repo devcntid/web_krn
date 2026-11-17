@@ -17,6 +17,7 @@
     "db:seed": "NODE_OPTIONS=--conditions=react-server tsx scripts/seed-from-export.ts",
     "db:seed:translations": "NODE_OPTIONS=--conditions=react-server tsx scripts/seed-translations.ts",
     "db:seed:home": "NODE_OPTIONS=--conditions=react-server tsx scripts/seed-home.ts",
+    "db:seed:transparency": "NODE_OPTIONS=--conditions=react-server tsx scripts/seed-transparency.ts",
     "db:seed:sections": "NODE_OPTIONS=--conditions=react-server tsx scripts/seed-page-sections.ts",
     "visual:compare": "tsx scripts/visual-compare.ts",
     "format": "prettier --write .",

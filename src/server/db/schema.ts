@@ -367,6 +367,9 @@ export const legalDocs = pgTable(
     /** Jenis dokumen, mis. "Akta Pendirian". */
     kind: text("kind").notNull(),
     text: text("text").notNull(),
+    /** Versi Inggris (/en/); null = memakai teks Indonesia. */
+    kindEn: text("kind_en"),
+    textEn: text("text_en"),
     sort: integer("sort").notNull().default(0),
     createdAt: createdAt(),
     updatedAt: updatedAt(),

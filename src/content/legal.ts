@@ -1,6 +1,7 @@
 /**
  * Konten /asas-legalitas/ — VERBATIM dari halaman WordPress
- * (content/pages/asas-legalitas.json). Nanti pindah ke database (prompt B11).
+ * (content/pages/asas-legalitas.json). Sejak B11 datanya di tabel database (dikelola di /admin/laporan); file ini hanya
+ * sumber awal `npm run db:seed:transparency` dan tidak lagi dibaca halaman publik.
  *
  * Koreksi salah ketik yang jelas (teks asli → di sini):
  *  1. Dokumen 1: "22 Mel 2014" → "22 Mei 2014" (dokumen 2 menulis "22 Mei 2014").

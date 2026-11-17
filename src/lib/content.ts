@@ -28,6 +28,8 @@ export const CACHE_TAGS = {
   page: (path: string) => `page:${path}`,
   taxonomy: "taxonomy",
   settings: "settings",
+  /** Laporan penyaluran, audit, dan dokumen legalitas (tabel reports, audits, legal_docs). */
+  transparency: "transparency",
 } as const;
 
 /* ---------- Posts ---------- */

@@ -9,6 +9,7 @@ import { PostsSection } from "./PostsSection";
 import { ReportsSection } from "./ReportsSection";
 import { RichtextSection } from "./RichtextSection";
 import { TestimonialsSection } from "./TestimonialsSection";
+import { AuditsDbSection, LegalDbSection, ReportsDbSection } from "./TransparencySections";
 import { TextAlternating, TextEmbed, TextListImage, TextTagline, TextVision } from "./TextSections";
 import type { SectionContext } from "./types";
 
@@ -57,6 +58,12 @@ export function SectionRenderer({ section, ctx }: { section: Section; ctx: Secti
       return <CtaContact data={localizedData(section, ctx.locale)} />;
     case "reports":
       return <ReportsSection data={localizedData(section, ctx.locale)} ctx={ctx} />;
+    case "reports-db":
+      return <ReportsDbSection data={localizedData(section, ctx.locale)} ctx={ctx} />;
+    case "audits-db":
+      return <AuditsDbSection data={localizedData(section, ctx.locale)} ctx={ctx} />;
+    case "legal-db":
+      return <LegalDbSection data={localizedData(section, ctx.locale)} ctx={ctx} />;
     case "richtext":
       return <RichtextSection data={localizedData(section, ctx.locale)} ctx={ctx} />;
   }

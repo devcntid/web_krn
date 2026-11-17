@@ -2,7 +2,8 @@
  * Konten /audit-keuangan/ — VERBATIM dari halaman WordPress
  * (content/pages/audit-keuangan.json, ID halaman "Audit Keuangan").
  * Tautan dokumen diambil dari iframe Google Drive di tiap toggle halaman asli
- * (ekspor HTML membuang atribut src iframe). Nanti pindah ke database (prompt B11).
+ * (ekspor HTML membuang atribut src iframe). Sejak B11 datanya di tabel database (dikelola di /admin/laporan); file ini hanya
+ * sumber awal `npm run db:seed:transparency` dan tidak lagi dibaca halaman publik.
  */
 
 const U = "/wp-content/uploads";

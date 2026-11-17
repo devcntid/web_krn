@@ -169,6 +169,16 @@ const dataSchemas = {
       .min(1),
   }),
 
+  /* ---------- Daftar dari tabel (dikelola di /admin/laporan) ---------- */
+  /** Grid laporan e-Report: butir dari tabel `reports`; section hanya menyimpan label tema. */
+  "reports-db": z.object({
+    themes: z.array(z.object({ slug: required.regex(/^[a-z0-9-]+$/, "Hanya huruf kecil, angka, dan tanda hubung"), label: required })).default([]),
+  }),
+  /** Pengantar + accordion audit: butir dari tabel `audits`. */
+  "audits-db": z.object({ headingLines: z.array(required).min(1).max(3), paragraphs: z.array(required).default([]), badge: text.default("") }),
+  /** Pengantar + daftar dokumen legalitas: butir dari tabel `legal_docs`. */
+  "legal-db": z.object({ intro: text.default("") }),
+
   /* ---------- Richtext ---------- */
   richtext: z.object({ html: z.string() }),
 } as const;

@@ -1,8 +1,8 @@
 /**
  * Data /e-report/ — tautan flipbook dan sampul diambil dari halaman WordPress yang
  * masih online (HTML ekspor di content/pages/e-report.json kehilangan kartu laporannya).
- * Urutan dan pengelompokan per tahun sama dengan halaman asli. Nanti pindah ke
- * database (prompt B11).
+ * Urutan dan pengelompokan per tahun sama dengan halaman asli. Sejak B11 datanya di tabel database (dikelola di /admin/laporan); file ini hanya
+ * sumber awal `npm run db:seed:transparency` dan tidak lagi dibaca halaman publik.
  *
  * JUDUL: halaman asli hanya menampilkan gambar sampul tanpa teks judul maupun alt.
  * Judul di sini dibaca dari tulisan pada sampul; bila sampul tidak memuat periode,
