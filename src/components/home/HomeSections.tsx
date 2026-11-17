@@ -19,19 +19,7 @@ const outlineBtn =
 export async function IntroSection() {
   const c = await getHomeContent(getLocale());
   return (
-    <section className="relative pt-7 pb-10 md:py-16 lg:pt-[100px]">
-      {/* Label vertikal "Scroll Untuk Eksplorasi" */}
-      <div className="absolute top-10 left-6 hidden flex-col items-center gap-2 xl:flex" aria-hidden>
-        <Image src={mediaUrl(c.intro.scrollIcon)} alt="" width={40} height={40} unoptimized />
-        <p className="text-xs leading-[1.3] font-extralight text-ink">
-          {(getLocale() === "en" ? ["Scroll", "to", "Explore"] : ["Scroll", "Untuk", "Eksplorasi"]).map((word) => (
-            <span key={word} className="block">
-              {word}
-            </span>
-          ))}
-        </p>
-      </div>
-
+    <section id="jelajah" className="relative scroll-mt-24 pt-7 pb-10 md:py-16 lg:scroll-mt-28 lg:pt-[100px]">
       <div className="container-site">
         <div className="grid gap-[18px] md:grid-cols-2 md:gap-[5.5%] lg:gap-[60px]">
           <h2 className="max-md:text-center">

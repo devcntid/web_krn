@@ -213,12 +213,6 @@
   }
 }
 
-/* Template post WordPress: tombol Donasi di header berwarna hijau */
-body:has([data-template="post"]) .donate-btn[data-donate="accent"] {
-  background-color: var(--color-primary);
-  color: #fff;
-}
-
 @layer components {
   /* Tombol Divi (et_pb_button) di dalam konten */
   .wp-content a[data-button] {
@@ -234,6 +228,16 @@ body:has([data-template="post"]) .donate-btn[data-donate="accent"] {
   .wp-content a[data-button]:hover {
     background: var(--color-primary);
     color: #fff;
+  }
+  /* Tombol konten menuju aplikasi donasi: kuning seperti tombol Donasi di header. */
+  .wp-content a[data-button]:is([href^="/campaign"], [href^="/donasi"], [href^="/prog"]) {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+  .wp-content a[data-button]:is([href^="/campaign"], [href^="/donasi"], [href^="/prog"]):hover {
+    opacity: 0.9;
   }
   /* Accordion/toggle Divi → <details> */
   .wp-content details {
@@ -368,5 +372,30 @@ body:has([data-template="post"]) .donate-btn[data-donate="accent"] {
   /* Ruang agar ujung footer tidak tertutup bar (tinggi bar ±71px + safe area). */
   body:has([data-template="post"]) {
     padding-bottom: calc(71px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Penanda "Scroll Untuk Eksplorasi" di slider beranda: panah di dalam ikon mouse bergerak turun. */
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-3px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(9px);
+    opacity: 0;
+  }
+}
+@layer components {
+  .scroll-cue-arrow {
+    animation: scroll-cue 1.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue-arrow {
+      animation: none;
+    }
   }
 }

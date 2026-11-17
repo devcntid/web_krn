@@ -18,8 +18,6 @@ import { mediaUrl } from "@/lib/media";
 type HeaderProps = {
   /** Identitas, menu, dan tombol dari /admin/pengaturan (dibaca SiteShell di server). */
   shell: PublicShellSettings;
-  /** Template post WordPress memakai tombol Donasi hijau. */
-  donateVariant?: "accent" | "primary";
 };
 
 /**
@@ -27,7 +25,7 @@ type HeaderProps = {
  * lebar container 1080px, radius 10px). Dropdown desktop murni CSS (hover +
  * focus-within) agar tetap bisa diakses keyboard. Menu mobile: MobileMenu.
  */
-export function Header({ shell, donateVariant = "accent" }: HeaderProps) {
+export function Header({ shell }: HeaderProps) {
   const pathname = usePathname();
   const locale = useLocale();
   const t = getDictionary(locale);
@@ -129,7 +127,7 @@ export function Header({ shell, donateVariant = "accent" }: HeaderProps) {
 
         <div className="flex items-center gap-1.5 lg:gap-3">
           <LanguageToggle className="max-lg:hidden" />
-          <DonateButton href={shell.donateUrl} variant={donateVariant} label={t.header.donate} />
+          <DonateButton href={shell.donateUrl} label={t.header.donate} />
           <button
             ref={toggleRef}
             type="button"

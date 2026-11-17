@@ -18,7 +18,7 @@ export function DonationCta() {
         </p>
         <a
           href="/donasi/programs"
-          className="mt-8 inline-block rounded-[6px] bg-accent-soft px-5 py-3 text-[13px] font-semibold text-ink transition-opacity hover:opacity-90"
+          className="mt-8 inline-block rounded-[6px] bg-accent px-5 py-3 text-[13px] font-semibold text-ink transition-opacity hover:opacity-90"
         >
           {t.ctaButton}
         </a>

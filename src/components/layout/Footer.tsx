@@ -100,9 +100,9 @@ export async function Footer() {
           {/* Kontak */}
           <div>
             <FooterHeading>
-              {t.footer.contact[0]}
-              <br />
-              {t.footer.contact[1]}
+              <span className="whitespace-nowrap">
+                {t.footer.contact[0]} {t.footer.contact[1]}
+              </span>
             </FooterHeading>
             <ul className="space-y-4 text-[15px] leading-[25.5px] font-medium text-muted-strong">
               <li className="flex gap-3">

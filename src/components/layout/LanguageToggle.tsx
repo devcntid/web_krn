@@ -21,7 +21,7 @@ export function LanguageToggle({ className = "" }: { className?: string }) {
 
   return (
     <nav aria-label={t.shell.languageLabel} className={className}>
-      <ul className="flex items-center overflow-hidden rounded-md border border-border text-[13px] font-semibold">
+      <ul className="flex items-center overflow-hidden rounded-[5px] border border-primary text-[13px] font-semibold">
         {LOCALES.map((locale) => {
           const active = locale === current;
           return (
@@ -32,7 +32,7 @@ export function LanguageToggle({ className = "" }: { className?: string }) {
                 lang={locale}
                 aria-label={NAMES[locale]}
                 aria-current={active ? "true" : undefined}
-                className={`flex min-h-11 min-w-11 items-center justify-center px-2 uppercase transition-colors lg:min-h-9 lg:min-w-9 ${
+                className={`flex min-h-11 min-w-11 items-center justify-center px-2 uppercase transition-colors lg:min-h-[34px] lg:min-w-[34px] ${
                   active ? "bg-primary text-white" : "bg-white text-ink hover:bg-primary/10"
                 }`}
               >
