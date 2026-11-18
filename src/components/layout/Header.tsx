@@ -22,8 +22,8 @@ type HeaderProps = {
 
 /**
  * Replikasi header Divi Theme Builder: kartu putih melayang (fixed, top 20px,
- * lebar container 1080px, radius 10px). Dropdown desktop murni CSS (hover +
- * focus-within) agar tetap bisa diakses keyboard. Menu mobile: MobileMenu.
+ * lebar container 1080px, radius 10px). Dropdown desktop murni CSS (hover + focus-within untuk keyboard;
+ * klik mouse tidak memindahkan fokus, dan saat kursor di menu lain dropdown yang tidak di-hover langsung disembunyikan). Menu mobile: MobileMenu.
  */
 export function Header({ shell }: HeaderProps) {
   const pathname = usePathname();
@@ -76,7 +76,7 @@ export function Header({ shell }: HeaderProps) {
 
         {/* Navigasi desktop */}
         <nav aria-label={t.header.mainMenu} className="hidden h-full lg:block">
-          <ul className="flex h-full items-center gap-[22px]">
+          <ul className="group/nav flex h-full items-center gap-[22px]">
             {shell.menu.map((item) => (
               <li key={item.label} className="group relative flex h-full items-center">
                 {item.children.length ? (
@@ -84,16 +84,19 @@ export function Header({ shell }: HeaderProps) {
                     <button
                       type="button"
                       aria-haspopup="true"
+                      // Klik mouse tidak memindahkan fokus, sehingga dropdown tidak tertahan terbuka oleh focus-within.
+                      onMouseDown={(e) => e.preventDefault()}
                       className="flex items-center gap-1 text-base font-semibold text-ink transition-opacity group-focus-within:opacity-70 group-hover:opacity-70"
                     >
                       {menuLabel(item, locale, t.nav)}
                       <ChevronDown aria-hidden className="size-4" strokeWidth={2.5} />
                     </button>
-                    <ul className="invisible absolute top-full left-0 w-60 border-t-[3px] border-primary bg-white py-5 opacity-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] transition-[opacity,visibility] duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                    <ul className="invisible absolute top-full left-0 w-max min-w-60 border-t-[3px] border-primary bg-white py-5 opacity-0 shadow-[0_2px_5px_rgba(0,0,0,0.1)] group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 group-hover:transition-opacity group-hover:duration-150 group-hover/nav:[:not(:hover)>&]:invisible group-hover/nav:[:not(:hover)>&]:opacity-0">
                       {item.children.map((child) => (
                         <li key={child.href}>
                           <Link
                             href={child.href}
+                            onMouseDown={(e) => e.preventDefault()}
                             className="block px-5 py-1.5 text-sm leading-7 font-semibold text-ink transition-opacity hover:opacity-70"
                           >
                             {menuLabel(child, locale, t.nav)}
