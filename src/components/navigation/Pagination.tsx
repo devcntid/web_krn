@@ -10,6 +10,12 @@ type PaginationProps = {
   hrefFor: (page: number) => string;
 };
 
+/** Halaman yang dirender harus bilangan bulat. Pecahan membuat `page - 1` jadi 1.2000000000000002. */
+function wholePage(page: number, total: number): number {
+  if (!Number.isInteger(page) || page < 1) return 1;
+  return Math.min(page, total);
+}
+
 /** Daftar halaman dengan ellipsis: 1 2 3 … 14 15 (seperti `pkp-pagination`). */
 function pageList(page: number, total: number): (number | "…")[] {
   const set = new Set([1, 2, total - 1, total, page - 1, page, page + 1]);
@@ -23,14 +29,16 @@ function pageList(page: number, total: number): (number | "…")[] {
 }
 
 export function Pagination({ page, totalPages, hrefFor }: PaginationProps) {
-  if (totalPages <= 1) return null;
+  const total = Number.isInteger(totalPages) && totalPages > 0 ? totalPages : 1;
+  const current = wholePage(page, total);
+  if (total <= 1) return null;
   const t = getDictionary(getLocale()).common;
   const base =
     "flex size-11 items-center justify-center rounded-[6px] border border-primary text-sm font-semibold transition-colors";
   return (
     <nav aria-label={t.pagination} className="mt-12 flex flex-wrap items-center justify-center gap-2">
-      {page > 1 ? (
-        <Link href={hrefFor(page - 1)} className={`${base} text-primary hover:bg-primary hover:text-white`} aria-label={t.previous}>
+      {current > 1 ? (
+        <Link href={hrefFor(current - 1)} className={`${base} text-primary hover:bg-primary hover:text-white`} aria-label={t.previous}>
           <ChevronLeft className="size-4" />
         </Link>
       ) : (
@@ -38,7 +46,7 @@ export function Pagination({ page, totalPages, hrefFor }: PaginationProps) {
           <ChevronLeft className="size-4" />
         </span>
       )}
-      {pageList(page, totalPages).map((n, i) =>
+      {pageList(current, total).map((n, i) =>
         n === "…" ? (
           <span key={`dots-${i}`} className="px-1 text-body-soft">
             …
@@ -47,15 +55,15 @@ export function Pagination({ page, totalPages, hrefFor }: PaginationProps) {
           <Link
             key={n}
             href={hrefFor(n)}
-            aria-current={n === page ? "page" : undefined}
-            className={`${base} ${n === page ? "bg-primary text-white" : "text-primary hover:bg-primary hover:text-white"}`}
+            aria-current={n === current ? "page" : undefined}
+            className={`${base} ${n === current ? "bg-primary text-white" : "text-primary hover:bg-primary hover:text-white"}`}
           >
             {n}
           </Link>
         ),
       )}
-      {page < totalPages ? (
-        <Link href={hrefFor(page + 1)} className={`${base} text-primary hover:bg-primary hover:text-white`} aria-label={t.next}>
+      {current < total ? (
+        <Link href={hrefFor(current + 1)} className={`${base} text-primary hover:bg-primary hover:text-white`} aria-label={t.next}>
           <ChevronRight className="size-4" />
         </Link>
       ) : (

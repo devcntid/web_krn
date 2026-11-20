@@ -3,6 +3,7 @@ import { getLocale } from "@/i18n/request";
 import { PageHero } from "@/components/sections/PageHero";
 import { GRID_TABS, PostGrid, type GridTab } from "@/components/sections/PostGrid";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { parsePageParam } from "@/lib/page-param";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 const HERO_IMAGE = {
@@ -44,9 +45,9 @@ export async function PublicationListing({
               basePath={basePath}
               category={category}
               defaultCategory={defaultCategory}
-              page={Number(sp.hal) || 1}
+              page={parsePageParam(sp.hal)}
               query={sp.q ?? ""}
-              loaded={Number(sp.muat) || 1}
+              loaded={parsePageParam(sp.muat, 1, 5)}
             />
           </div>
         </div>

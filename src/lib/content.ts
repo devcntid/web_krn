@@ -141,10 +141,13 @@ export async function getRelatedCategories(posts: PostSummary[], exclude: string
 /* ---------- Pagination ---------- */
 
 export function paginate<T>(items: T[], page: number, perPage: number) {
-  const totalPages = Math.max(1, Math.ceil(items.length / perPage));
-  const current = Math.min(Math.max(1, page), totalPages);
+  const size = Number.isInteger(perPage) && perPage > 0 ? perPage : 1;
+  const totalPages = Math.max(1, Math.ceil(items.length / size));
+  // Pecahan (mis. ?hal=2.2) bukan halaman: jatuhkan ke 1, jangan potong array di offset pecahan.
+  const current = Number.isInteger(page) && page >= 1 ? Math.min(page, totalPages) : 1;
+  const start = (current - 1) * size;
   return {
-    items: items.slice((current - 1) * perPage, current * perPage),
+    items: items.slice(start, start + size),
     page: current,
     totalPages,
     total: items.length,

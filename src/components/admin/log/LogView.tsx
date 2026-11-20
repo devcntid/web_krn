@@ -4,6 +4,7 @@ import { EmptyState } from "@/components/admin/EmptyState";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { DiffButton } from "@/components/admin/log/DiffButton";
 import { ACTIVITY_KINDS, ACTIVITY_RANGES, KIND_CLASS, KIND_LABEL } from "@/lib/activity-kinds";
+import { parsePageParam } from "@/lib/page-param";
 import { ACTIVITY_PAGE_SIZE, type ActivityFilters, activityUsers, listActivity, parseActivityFilters } from "@/server/activity-log";
 
 export type SearchParams = Record<string, string | string[] | undefined>;
@@ -38,7 +39,7 @@ function query(f: ActivityFilters, extra: Record<string, string> = {}): string {
 /** Isi halaman (tanpa cek akses — pemanggil wajib sudah memanggil requireAbility). */
 export async function LogView({ sp }: { sp: SearchParams }) {
   const filters = parseActivityFilters(sp);
-  const page = Math.max(1, Math.floor(Number(Array.isArray(sp.halaman) ? sp.halaman[0] : sp.halaman) || 1));
+  const page = parsePageParam(sp.halaman);
   const [{ rows, total }, people] = await Promise.all([listActivity(filters, page), activityUsers()]);
   const pages = Math.max(1, Math.ceil(total / ACTIVITY_PAGE_SIZE));
   const now = new Date();

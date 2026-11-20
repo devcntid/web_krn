@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+import { parsePageParam } from "@/lib/page-param";
+
 import {
   DataTableBody,
   type BulkAction,
@@ -68,13 +70,12 @@ export function parseTableParams(
     Array.isArray(v) ? v[0] : v;
   const key = one(sp.sort);
   const dir = one(sp.dir);
-  const page = Number.parseInt(one(sp.page) ?? "1", 10);
   return {
     sort:
       key && sortable.includes(key)
         ? { key, dir: dir === "asc" ? "asc" : "desc" }
         : fallback,
-    page: Number.isFinite(page) && page > 0 ? page : 1,
+    page: parsePageParam(one(sp.page)),
   };
 }
 

@@ -3,6 +3,7 @@ import { getLocale } from "@/i18n/request";
 import type { Metadata } from "next";
 
 import { getRelatedCategories, paginate, searchPosts } from "@/lib/content";
+import { parsePageParam } from "@/lib/page-param";
 import { ArchiveTemplate } from "@/components/templates/ArchiveTemplate";
 import { initLocale } from "@/i18n/request";
 
@@ -27,7 +28,7 @@ export default async function SearchPage({ params, searchParams }: Props & LangP
   const dict = getDictionary(getLocale());
   const t = dict.archive;
   const matches = await searchPosts(query);
-  const result = paginate(matches, Number(hal) || 1, 9);
+  const result = paginate(matches, parsePageParam(hal), 9);
 
   return (
     <ArchiveTemplate

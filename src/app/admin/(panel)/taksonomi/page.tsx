@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { TaxonomyManager } from "@/components/admin/taksonomi/TaxonomyManager";
 import { can, requireUser } from "@/server/permissions";
+import { parsePageParam } from "@/lib/page-param";
 import { PROTECTED_CATEGORY_SLUGS, TAG_PAGE_SIZE, listCategoryRows, listTagRows, taxonomyTotals } from "@/server/taxonomy-service";
 
 export const metadata: Metadata = { title: "Kategori & Tag" };
@@ -18,8 +19,7 @@ export default async function TaksonomiPage({ searchParams }: { searchParams: Pr
   const kind = one(sp.jenis) === "tag" ? "tag" : "category";
   const q = one(sp.q).slice(0, 80);
   const sort = one(sp.urut) === "name" ? "name" : "count";
-  const pageParam = Number.parseInt(one(sp.page) || "1", 10);
-  const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
+  const page = parsePageParam(one(sp.page));
 
   const [categories, totals, tagList] = await Promise.all([listCategoryRows(), taxonomyTotals(), kind === "tag" ? listTagRows(q, page, sort) : null]);
 
