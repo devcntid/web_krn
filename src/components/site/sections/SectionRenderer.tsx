@@ -11,6 +11,7 @@ import { RichtextSection } from "./RichtextSection";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { AuditsDbSection, LegalDbSection, ReportsDbSection } from "./TransparencySections";
 import { TextAlternating, TextEmbed, TextListImage, TextTagline, TextVision } from "./TextSections";
+import { VisualSection } from "./VisualSection";
 import type { SectionContext } from "./types";
 
 /** Render satu section sesuai tipenya, dengan isi untuk bahasa halaman saat ini. */
@@ -66,5 +67,7 @@ export function SectionRenderer({ section, ctx }: { section: Section; ctx: Secti
       return <LegalDbSection data={localizedData(section, ctx.locale)} ctx={ctx} />;
     case "richtext":
       return <RichtextSection data={localizedData(section, ctx.locale)} ctx={ctx} />;
+    case "visual":
+      return <VisualSection nodes={localizedData(section, ctx.locale).nodes} />;
   }
 }

@@ -413,9 +413,9 @@ export const SECTION_DEFS: readonly SectionDef[] = [
   {
     type: "richtext",
     family: "Richtext",
-    label: "Teks bebas (HTML)",
-    description: "HTML tersanitasi dengan gaya halaman generik.",
-    fields: [{ kind: "html", name: "html", label: "Isi (HTML)", help: "Tag yang diizinkan sama dengan isi publikasi; skrip dan gaya dibuang saat disimpan." }],
+    label: "Teks bebas",
+    description: "Ditulis di editor visual; disimpan sebagai HTML tersanitasi.",
+    fields: [{ kind: "html", name: "html", label: "Isi", help: "Tebal, tautan, daftar, gambar, dan video. Skrip dibuang saat disimpan." }],
   },
 ];
 

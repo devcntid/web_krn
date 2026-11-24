@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 
 import { createPageAction } from "@/app/admin/(panel)/halaman/actions";
 import { useToast } from "@/components/admin/Toast";
@@ -24,17 +24,20 @@ export function NewPageForm({ parents, siteHost }: { parents: readonly { path: s
   const [slugAuto, setSlugAuto] = useState(true);
   const [parent, setParent] = useState("");
   const [busy, setBusy] = useState(false);
+  const editorRef = useRef<"classic" | "visual">("classic");
   const [error, setError] = useState<{ message: string; field?: "title" | "slug" } | null>(null);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
     setError(null);
+    const submitter = (e.nativeEvent as SubmitEvent).submitter;
+    const editor = editorRef.current === "visual" || (submitter instanceof HTMLButtonElement && submitter.value === "visual") ? "visual" : "classic";
     try {
-      const result = await createPageAction({ title, slug, parentPath: parent });
+      const result = await createPageAction({ title, slug, parentPath: parent, editor });
       if (result.ok) {
         toast.show("Halaman dibuat sebagai draf.", "success");
-        router.push(`/admin/halaman/${result.id}/`);
+        router.push(editor === "visual" ? `/admin/halaman/${result.id}/visual/` : `/admin/halaman/${result.id}/`);
         return;
       }
       setError({ message: result.error, field: result.field });
@@ -49,7 +52,7 @@ export function NewPageForm({ parents, siteHost }: { parents: readonly { path: s
       <h2 id={`${titleId}-h`} className="text-xl font-extrabold text-admin-ink">
         Halaman baru
       </h2>
-      <p className="mt-0.5 text-[13px] text-admin-text">Halaman dibuat sebagai draf dengan satu section Hero. Alamat tidak bisa diubah setelah dibuat.</p>
+      <p className="mt-0.5 text-[13px] text-admin-text">Halaman dibuat sebagai draf. Editor klasik mulai dengan satu Hero. Visual Builder membuka layar penuh. Alamat tidak bisa diubah setelah dibuat.</p>
       <form onSubmit={submit} className="mt-5 flex max-w-xl flex-col gap-4">
         <div>
           <label htmlFor={titleId} className={labelClass}>
@@ -111,10 +114,25 @@ export function NewPageForm({ parents, siteHost }: { parents: readonly { path: s
         <div className="flex flex-wrap gap-2">
           <button
             type="submit"
+            value="classic"
+            onClick={() => {
+              editorRef.current = "classic";
+            }}
             disabled={busy}
             className="min-h-11 rounded-admin bg-primary px-4.5 text-sm font-extrabold text-white hover:bg-admin-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-60"
           >
-            {busy ? "Membuat…" : "Buat halaman"}
+            {busy ? "Membuat…" : "Editor klasik"}
+          </button>
+          <button
+            type="submit"
+            value="visual"
+            onClick={() => {
+              editorRef.current = "visual";
+            }}
+            disabled={busy}
+            className="min-h-11 rounded-admin border border-primary bg-white px-4.5 text-sm font-extrabold text-primary hover:bg-admin-ok-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-60"
+          >
+            Visual Builder
           </button>
           <Link
             href="/admin/halaman/"

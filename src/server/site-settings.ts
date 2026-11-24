@@ -1,12 +1,14 @@
 import "server-only";
 
-import { inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
 
+import { legacyRedirects } from "@/config/redirects";
 import { siteDefaults } from "@/config/site";
-import { CACHE_TAGS } from "@/lib/content";
-import { SITE_SETTINGS_KEYS, type SiteSettings, type SiteSettingsKey, siteSettingsSchema } from "@/lib/site-settings-schema";
+import { isDonationAppPath } from "@/config/routes";
+import { CACHE_TAGS, getPage } from "@/lib/content";
+import { BUILTIN_FRONT_PAGE, SITE_SETTINGS_KEYS, type SiteSettings, type SiteSettingsKey, siteSettingsSchema } from "@/lib/site-settings-schema";
 import { logActivity } from "./activity";
 import { getDb, schema } from "./db";
 import type { AuthUser } from "./permissions";
@@ -19,6 +21,8 @@ const LABELS: Record<SiteSettingsKey, string> = {
   socials: "tautan sosial",
   menu: "menu navigasi",
   integrations: "integrasi & tombol",
+  reading: "halaman depan",
+  codes: "kode kustom",
 };
 
 /**
@@ -42,7 +46,8 @@ const cached = unstable_cache(readSiteSettings, ["site-settings"], { tags: [CACH
 /** Pengaturan untuk situs publik (cache bertag `settings`, disegarkan saat admin menyimpan). */
 export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   try {
-    return await cached();
+    // Cache lama (sebelum ada kunci baru) tetap dilengkapi fallback agar beranda tidak rusak.
+    return { ...siteDefaults, ...(await cached()) };
   } catch (error) {
     // Database tak terjangkau (mis. build tanpa DATABASE_URL) → fallback, jangan gagalkan halaman.
     console.error("Gagal membaca pengaturan situs:", error);
@@ -61,6 +66,8 @@ export async function saveSiteSettings(user: AuthUser, input: unknown): Promise<
     return { ok: false, error: `${where}${issue?.message ?? "Data tidak sah"}` };
   }
   const next = parsed.data;
+  const frontError = await validateFrontPage(next.reading.frontPage);
+  if (frontError) return { ok: false, error: frontError };
   const before = await readSiteSettings();
   const changed = SITE_SETTINGS_KEYS.filter((k) => JSON.stringify(before[k]) !== JSON.stringify(next[k]));
   if (!changed.length) return { ok: true, changed };
@@ -86,4 +93,19 @@ export async function saveSiteSettings(user: AuthUser, input: unknown): Promise<
     );
   });
   return { ok: true, changed };
+}
+
+/** Path yang sedang menjadi halaman depan. Halaman yang tidak terbit dikembalikan ke beranda otomatis. */
+export async function getFrontPagePath(): Promise<string> {
+  const path = (await getSiteSettings()).reading?.frontPage || BUILTIN_FRONT_PAGE;
+  if (path === BUILTIN_FRONT_PAGE) return path;
+  return (await getPage(path)) ? path : BUILTIN_FRONT_PAGE;
+}
+
+async function validateFrontPage(path: string): Promise<string | null> {
+  if (path === BUILTIN_FRONT_PAGE) return null;
+  if (isDonationAppPath(path)) return "Halaman depan: path aplikasi donasi tidak bisa dipilih.";
+  if (legacyRedirects.some((r) => r.source === `/${path}/` || r.source === `/${path}`)) return "Halaman depan: halaman ini sudah dialihkan.";
+  const [page] = await getDb().select({ id: schema.pages.id }).from(schema.pages).where(and(eq(schema.pages.path, path), eq(schema.pages.status, "published"))).limit(1);
+  return page ? null : "Halaman depan harus halaman yang sudah terbit.";
 }

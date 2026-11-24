@@ -27,6 +27,7 @@ export async function createPageAction(raw: CreatePageInput): Promise<CreatePage
   const parsed = parseInput(createPageSchema, raw);
   if (!parsed.ok) return { ok: false, error: parsed.error };
   const input = parsed.data;
+  if (raw.editor === "visual" && input.editor !== "visual") return { ok: false, error: "Pilihan Visual Builder tidak sampai ke server." };
   const result = await createPage(user, input);
   if (result.ok) revalidatePath("/admin/halaman", "layout");
   return result;

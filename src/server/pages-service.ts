@@ -10,6 +10,7 @@ import { sanitizeContentHtml } from "./content/sanitize";
 import { getDb, schema } from "./db";
 import type { AuthUser } from "./permissions";
 import { SYSTEM_PAGE_PATHS } from "./repos/admin-pages";
+import type { VisualNode } from "@/lib/visual-page";
 import { PAGE_TEMPLATES, type Section, type SectionIssue, parseSections } from "./sections";
 
 const { pages, posts, redirects } = schema;
@@ -58,6 +59,15 @@ function sanitizeSections(sections: Section[], stored: unknown): Section[] {
         data: { html: cleanHtml(section.data.html, same ? prev?.data?.html : undefined) },
         ...(section.en ? { en: { html: cleanHtml(section.en.html, same ? prev?.en?.html : undefined) } } : {}),
       };
+    }
+    if (section.type === "visual") {
+      const cleanNodes = (list: VisualNode[]): VisualNode[] =>
+        list.map((node) => {
+          const content =
+            node.type === "text" || node.type === "html" ? { ...node.content, html: sanitizeContentHtml(node.content.html) } : node.content;
+          return { ...node, content, ...(node.children ? { children: cleanNodes(node.children) } : {}) } as VisualNode;
+        });
+      return { ...section, data: { nodes: cleanNodes(section.data.nodes) } };
     }
     if (section.type === "accordion") {
       const clean = (d: typeof section.data) => ({ ...d, items: d.items.map((it) => ({ ...it, body: sanitizeContentHtml(it.body) })) });
@@ -168,7 +178,10 @@ export async function createPage(user: AuthUser, input: CreatePageInput): Promis
       .limit(1);
     if (dupPage || dupPost || dupRedirect) return { ok: false as const, error: "Alamat sudah dipakai halaman, publikasi, atau redirect lain.", field: "slug" as const };
 
-    const sections = [{ id: crypto.randomUUID(), type: "hero", visible: true, data: { title: "", eyebrow: "", subtitle: "", image: null, size: "small", overlay: 0.4 } }];
+    const visual = input.editor === "visual";
+    const sections = visual
+      ? [{ id: crypto.randomUUID(), type: "visual", visible: true, data: { nodes: [] } }]
+      : [{ id: crypto.randomUUID(), type: "hero", visible: true, data: { title: "", eyebrow: "", subtitle: "", image: null, size: "small", overlay: 0.4 } }];
     const [created] = await tx.insert(pages).values({ path, title, template: "sections", sections, status: "draft" }).returning({ id: pages.id });
     if (!created) return { ok: false as const, error: "Gagal membuat halaman." };
     await logActivity({ userId: user.id, action: "create", entity: "page", entityId: created.id, summary: `Membuat halaman “${title}” (/${path}/)` }, tx);

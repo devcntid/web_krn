@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { SITE_URL } from "@/config/site";
 import { getAllPages, getAllPosts, getCategories } from "@/lib/content";
+import { getFrontPagePath } from "@/server/site-settings";
 import { legacyRedirects } from "@/config/redirects";
 import { TRANSLATED_PATHS } from "@/i18n/translated";
 import { absoluteUrl, languageAlternates } from "@/lib/seo";
@@ -11,8 +12,9 @@ import { mediaUrl } from "@/lib/media";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const redirected = new Set(legacyRedirects.map((r) => r.source));
 
+  const front = await getFrontPagePath();
   const pages = (await getAllPages())
-    .filter((p) => p.path !== "new-beranda" && !redirected.has(`/${p.path}/`))
+    .filter((p) => p.path !== "new-beranda" && p.path !== front && !redirected.has(`/${p.path}/`))
     .map((p) => ({ url: `${SITE_URL}/${p.path}/`, lastModified: p.modified }));
 
   const posts = (await getAllPosts()).map((p) => ({

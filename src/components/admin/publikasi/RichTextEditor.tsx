@@ -1,10 +1,12 @@
 "use client";
 
 import type { JSONContent } from "@tiptap/core";
+import { Fragment, Slice } from "@tiptap/pm/model";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { memo, useId, useState } from "react";
 
+import { escapeHtml, htmlClipboardToText, plainLines, shouldStripHtmlPaste } from "@/lib/rich-text";
 import type { MediaChoice } from "@/types/admin-posts";
 
 import { MediaPicker } from "./MediaPicker";
@@ -34,16 +36,23 @@ const input =
  * alt wajib), tombol, video YouTube, accordion. `onChange` hanya dipanggil saat pengguna
  * mengubah isi — bukan saat konten awal dimuat.
  */
+const TEXT_TOOLS = new Set(["Paragraf", "Tebal", "Miring", "Tautan", "Daftar berbutir", "Daftar bernomor", "Hapus format", "Urungkan", "Ulangi"]);
+
 export const RichTextEditor = memo(function RichTextEditor({
   initialJson,
   initialHtml,
   editable,
   onChange,
+  preset = "full",
+  ariaLabel = "Isi publikasi",
 }: {
   initialJson: unknown;
   initialHtml: string;
   editable: boolean;
   onChange: (value: EditorContentValue) => void;
+  /** `text` = paragraf, tebal, miring, tautan, daftar. `full` = editor publikasi. */
+  preset?: "full" | "text";
+  ariaLabel?: string;
 }) {
   const [panel, setPanel] = useState<Panel | null>(null);
   const [picking, setPicking] = useState(false);
@@ -66,11 +75,31 @@ export const RichTextEditor = memo(function RichTextEditor({
     content: isDoc(initialJson) ? initialJson : initialHtml,
     editorProps: {
       attributes: {
-        "aria-label": "Isi publikasi",
+        "aria-label": ariaLabel,
         role: "textbox",
         "aria-multiline": "true",
-        class:
-          "wp-content min-h-80 font-sans text-[15px] leading-[1.75] text-ink outline-none [&_.ProseMirror-selectednode]:outline-2 [&_.ProseMirror-selectednode]:outline-offset-2 [&_.ProseMirror-selectednode]:outline-primary [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-md [&_summary]:cursor-text",
+        class: `wp-content font-sans text-[15px] leading-[1.75] text-ink outline-none [&_.ProseMirror-selectednode]:outline-2 [&_.ProseMirror-selectednode]:outline-offset-2 [&_.ProseMirror-selectednode]:outline-primary [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-md [&_summary]:cursor-text ${preset === "full" ? "min-h-80" : "min-h-36"}`,
+      },
+      // Word/Docs menempelkan HTML ber-style. Masukkan teks polos; salin dari editor ini tetap membawa format.
+      handlePaste(view, event) {
+        const data = event.clipboardData;
+        if (!data) return false;
+        const html = data.getData("text/html");
+        if (!shouldStripHtmlPaste(html)) return false;
+        const lines = plainLines(data.getData("text/plain") || htmlClipboardToText(html));
+        if (!lines.length) return true;
+        if (lines.length === 1) {
+          view.dispatch(view.state.tr.insertText(lines[0]).scrollIntoView());
+          return true;
+        }
+        const nodes = lines.map((line) => view.state.schema.nodes.paragraph.create(null, view.state.schema.text(line)));
+        view.dispatch(view.state.tr.replaceSelection(new Slice(Fragment.from(nodes), 0, 0)).scrollIntoView());
+        return true;
+      },
+      transformPastedHTML(html) {
+        if (!shouldStripHtmlPaste(html)) return html;
+        const lines = plainLines(htmlClipboardToText(html));
+        return lines.map((line) => `<p>${escapeHtml(line)}</p>`).join("");
       },
     },
     onUpdate: ({ editor: e }) => onChange({ json: e.getJSON(), html: e.getHTML() }),
@@ -163,17 +192,18 @@ export const RichTextEditor = memo(function RichTextEditor({
     { label: "Tombol", glyph: "Btn", run: () => openPanel("button") },
     { label: "Video YouTube", glyph: "Video", run: () => openPanel("video") },
     { label: "Accordion", glyph: "Acc", active: editor.isActive("details"), run: insertAccordion },
+    { label: "Hapus format", glyph: "Tx", run: () => editor.chain().focus().unsetAllMarks().clearNodes().run() },
     { label: "Urungkan", glyph: "↶", disabled: !editor.can().undo(), run: () => editor.chain().focus().undo().run() },
     { label: "Ulangi", glyph: "↷", disabled: !editor.can().redo(), run: () => editor.chain().focus().redo().run() },
-  ];
+  ].filter((t) => preset === "full" || TEXT_TOOLS.has(t.label));
 
   const imageSelected = editor.isActive("image");
   const copy = panel ? PANEL_COPY[panel.kind] : null;
 
   return (
-    <div className="mt-5">
+    <div className={preset === "full" ? "mt-5" : "mt-1"}>
       {editable ? (
-        <div className="sticky top-16 z-20 rounded-admin border border-admin-line bg-admin-row-hover">
+        <div className={`z-20 rounded-admin border border-admin-line bg-admin-row-hover ${preset === "full" ? "sticky top-16" : ""}`}>
           <div role="toolbar" aria-label="Format teks" className="flex flex-wrap gap-1 p-1.5">
             {tools.map((t) => (
               <button

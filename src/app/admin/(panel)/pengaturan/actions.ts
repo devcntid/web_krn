@@ -14,6 +14,11 @@ export async function saveSiteSettingsAction(data: SiteSettings): Promise<SaveSe
   if (result.ok && result.changed.length) {
     updateTag(CACHE_TAGS.settings);
     revalidatePath("/admin/pengaturan");
+    if (result.changed.includes("reading")) {
+      revalidatePath("/");
+      revalidatePath("/id");
+      revalidatePath("/en");
+    }
   }
   return result;
 }

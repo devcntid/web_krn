@@ -2,9 +2,10 @@
 
 import { ArrowDown, ArrowUp, Trash2, X } from "lucide-react";
 import Image from "next/image";
-import { createContext, useContext, useId, useState } from "react";
+import { createContext, useContext, useId, useState, type ReactNode } from "react";
 
 import { MediaPicker } from "@/components/admin/publikasi/MediaPicker";
+import { RichTextEditor } from "@/components/admin/publikasi/RichTextEditor";
 import { mediaUrl } from "@/lib/media";
 import { type Field, type Json, type JsonObject, initialData } from "@/lib/section-fields";
 import type { MediaChoice } from "@/types/admin-posts";
@@ -67,6 +68,40 @@ export function SectionForm({
   );
 }
 
+function HtmlField({
+  label,
+  optional,
+  help,
+  value,
+  onChange,
+  preset,
+}: {
+  label: string;
+  optional?: boolean;
+  help: ReactNode;
+  value: string;
+  onChange: (value: string) => void;
+  preset: "full" | "text";
+}) {
+  return (
+    <div>
+      <p className={labelClass}>
+        {label}
+        {optional ? " (opsional)" : ""}
+      </p>
+      {help}
+      <RichTextEditor
+        initialJson={null}
+        initialHtml={value.trim() ? value : "<p></p>"}
+        editable
+        preset={preset}
+        ariaLabel={label}
+        onChange={({ html }) => onChange(html)}
+      />
+    </div>
+  );
+}
+
 function FieldGroup({ fields, value, onChange }: { fields: readonly Field[]; value: JsonObject; onChange: (value: JsonObject) => void }) {
   return (
     <div className="flex flex-col gap-4">
@@ -107,8 +142,18 @@ function FieldInput({ field, value, onChange }: { field: Field; value: Json | un
           {help}
         </div>
       );
-    case "textarea":
     case "html":
+      return (
+        <HtmlField
+          label={field.label}
+          optional={field.optional}
+          help={help}
+          value={asString(value)}
+          onChange={onChange}
+          preset={field.name === "html" ? "full" : "text"}
+        />
+      );
+    case "textarea":
       return (
         <div>
           <label htmlFor={id} className={labelClass}>
@@ -120,10 +165,9 @@ function FieldInput({ field, value, onChange }: { field: Field; value: Json | un
             value={asString(value)}
             onChange={(e) => onChange(e.target.value)}
             required={!field.optional}
-            rows={field.kind === "html" ? 10 : 3}
-            spellCheck={field.kind !== "html"}
+            rows={3}
             aria-describedby={describedBy}
-            className={`${input} mt-1 py-2 leading-normal ${field.kind === "html" ? "font-mono text-[13px]" : ""}`}
+            className={`${input} mt-1 py-2 leading-normal`}
           />
           {help}
         </div>

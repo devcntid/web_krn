@@ -56,6 +56,8 @@ function compare(where: string, schema: AnySchema, fields: readonly Field[]) {
 }
 
 for (const type of SECTION_TYPES) {
+  // Pohon visual tidak diedit lewat form field section klasik.
+  if (type === "visual") continue;
   const def = sectionDef(type);
   if (!def) {
     errors.push(`${type}: tidak ada definisi form`);

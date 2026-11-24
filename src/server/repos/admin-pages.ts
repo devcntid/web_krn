@@ -3,6 +3,8 @@ import "server-only";
 import { eq, ne } from "drizzle-orm";
 
 import { legacyRedirects } from "@/config/redirects";
+import { isDonationAppPath } from "@/config/routes";
+import { BUILTIN_FRONT_PAGE } from "@/lib/site-settings-schema";
 import type { JsonObject } from "@/lib/section-fields";
 import type { AdminPageItem, EditorPage, EditorSection } from "@/types/admin-pages";
 import { getDb, schema } from "../db";
@@ -25,6 +27,14 @@ export async function listAdminPages(): Promise<AdminPageItem[]> {
       if (a.redirected !== b.redirected) return a.redirected ? 1 : -1;
       return a.path.localeCompare(b.path);
     });
+}
+
+/** Halaman terbit yang boleh dijadikan halaman depan. Beranda otomatis selalu ada. */
+export async function listFrontPageChoices(): Promise<{ path: string; title: string }[]> {
+  const rows = (await listAdminPages()).filter((p) => p.status === "published" && !p.redirected && !isDonationAppPath(p.path));
+  const choices = rows.map((p) => ({ path: p.path, title: p.path === BUILTIN_FRONT_PAGE ? "Beranda" : p.title || p.path }));
+  if (!choices.some((p) => p.path === BUILTIN_FRONT_PAGE)) choices.unshift({ path: BUILTIN_FRONT_PAGE, title: "Beranda" });
+  return choices.sort((a, b) => (a.path === BUILTIN_FRONT_PAGE ? -1 : b.path === BUILTIN_FRONT_PAGE ? 1 : a.title.localeCompare(b.title, "id")));
 }
 
 export async function getEditorPage(id: number): Promise<EditorPage | null> {

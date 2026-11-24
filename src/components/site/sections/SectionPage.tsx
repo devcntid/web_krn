@@ -32,11 +32,11 @@ function displayTitle(page: Page, sections: Section[], locale: string): string {
  * Metadata halaman berbasis section. `en` = judul & deskripsi Inggris (menandai halaman sudah
  * diterjemahkan → versi /en/ diindeks dan diberi hreflang).
  */
-export async function sectionPageMetadata(path: string, en?: { title: string; description?: string }, description?: string): Promise<Metadata> {
+export async function sectionPageMetadata(path: string, en?: { title: string; description?: string }, description?: string, publicPath?: string): Promise<Metadata> {
   const { page, preview } = await loadPage(path);
   if (!page) return {};
   if (preview) return { title: `Pratinjau: ${page.title}`, robots: { index: false, follow: false } };
-  return metadataFromSeo(page.seo, { title: page.title, path: `/${path}/`, en, description });
+  return metadataFromSeo(page.seo, { title: page.title, path: publicPath ?? `/${path}/`, en, description });
 }
 
 /**
@@ -44,7 +44,7 @@ export async function sectionPageMetadata(path: string, en?: { title: string; de
  * Dipakai route khusus (Profil, Audit, Legalitas, Pilar, Program, Kemitraan, e-Report) dan
  * route generik [slug] untuk halaman baru dari admin.
  */
-export async function SectionPage({ path, query = {} }: { path: string; query?: SectionContext["query"] }) {
+export async function SectionPage({ path, query = {}, asHome = false }: { path: string; query?: SectionContext["query"]; asHome?: boolean }) {
   const locale = getLocale();
   const { page, preview } = await loadPage(path);
   if (!page) notFound();
@@ -55,11 +55,13 @@ export async function SectionPage({ path, query = {} }: { path: string; query?: 
   // Halaman anak: induknya ikut di breadcrumb.
   const parentPath = page.path.includes("/") ? page.path.split("/").slice(0, -1).join("/") : null;
   const parent = parentPath ? await getPage(parentPath) : null;
-  const crumbs = [
-    { name: "Beranda", path: "/" },
-    ...(parent && parentPath ? [{ name: displayTitle(parent, parseSections(parent.sections).sections, locale), path: `/${parentPath}/` }] : []),
-    { name: displayTitle(page, sections, locale), path: `/${page.path}/` },
-  ];
+  const crumbs = asHome
+    ? [{ name: "Beranda", path: "/" }]
+    : [
+        { name: "Beranda", path: "/" },
+        ...(parent && parentPath ? [{ name: displayTitle(parent, parseSections(parent.sections).sections, locale), path: `/${parentPath}/` }] : []),
+        { name: displayTitle(page, sections, locale), path: `/${page.path}/` },
+      ];
 
   const body = (
     <>

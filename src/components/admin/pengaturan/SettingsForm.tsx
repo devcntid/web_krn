@@ -9,13 +9,14 @@ import { useRouter } from "next/navigation";
 import { useId, useState, useTransition } from "react";
 
 import { saveSiteSettingsAction } from "@/app/admin/(panel)/pengaturan/actions";
+import { LangText } from "@/components/admin/LangFlag";
 import { Card } from "@/components/admin/Card";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SORT_INSTRUCTIONS, arrowStep, moveById } from "@/components/admin/sortable";
 import { useToast } from "@/components/admin/Toast";
 import { MediaPicker } from "@/components/admin/publikasi/MediaPicker";
 import { mediaUrl } from "@/lib/media";
-import { type MenuItem, SOCIAL_PLATFORMS, type SiteSettings, siteSettingsSchema } from "@/lib/site-settings-schema";
+import { BUILTIN_FRONT_PAGE, type MenuItem, SOCIAL_PLATFORMS, type SiteSettings, siteSettingsSchema } from "@/lib/site-settings-schema";
 
 const labelClass = "text-xs font-bold text-admin-text";
 const field =
@@ -84,7 +85,7 @@ function moveItem(flat: FlatItem[], id: string, target: { step: -1 | 1 } | { ove
   return arrayMove(blocks, from, to).flat();
 }
 
-export function SettingsForm({ initial }: { initial: SiteSettings }) {
+export function SettingsForm({ initial, pages }: { initial: SiteSettings; pages: { path: string; title: string }[] }) {
   const router = useRouter();
   const toast = useToast();
   const [pending, startTransition] = useTransition();
@@ -93,6 +94,8 @@ export function SettingsForm({ initial }: { initial: SiteSettings }) {
   const [socials, setSocials] = useState<Record<string, string>>(() => Object.fromEntries(initial.socials.map((s) => [s.platform, s.href])));
   const [menu, setMenu] = useState<FlatItem[]>(() => flatten(initial.menu));
   const [integrations, setIntegrations] = useState(initial.integrations);
+  const [reading, setReading] = useState(initial.reading);
+  const [codes, setCodes] = useState(initial.codes);
   const [error, setError] = useState("");
   const [dirty, setDirty] = useState(false);
 
@@ -108,6 +111,8 @@ export function SettingsForm({ initial }: { initial: SiteSettings }) {
     socials: SOCIAL_PLATFORMS.filter((p) => socials[p]?.trim()).map((p) => ({ platform: p, href: socials[p]!.trim() })),
     menu: toTree(menu),
     integrations,
+    reading,
+    codes: { snippets: codes.snippets.filter((item) => item.code.trim()) },
   });
 
   const save = () => {
@@ -137,7 +142,7 @@ export function SettingsForm({ initial }: { initial: SiteSettings }) {
     <div className="space-y-5">
       <PageHeader
         title="Pengaturan Situs"
-        description="Identitas, kontak, menu, integrasi, dan tombol melayang."
+        description="Identitas, halaman depan, kontak, menu, integrasi, kode kustom, dan tombol melayang."
         actions={
           <button type="button" className={primaryBtn} onClick={save} disabled={pending}>
             {pending ? "Menyimpan…" : "Simpan"}
@@ -152,13 +157,37 @@ export function SettingsForm({ initial }: { initial: SiteSettings }) {
         <p className="text-sm font-semibold text-admin-text">Ada perubahan yang belum disimpan.</p>
       ) : null}
 
+      <FrontPageCard value={reading} pages={pages} onChange={touch(setReading)} />
+
       <div className="grid gap-5 xl:grid-cols-2">
         <IdentityCard value={identity} onChange={touch(setIdentity)} />
         <ContactCard value={contact} onChange={touch(setContact)} socials={socials} onSocials={touch(setSocials)} />
         <MenuCard items={menu} onChange={touch(setMenu)} />
-        <IntegrationsCard value={integrations} onChange={touch(setIntegrations)} />
+        <IntegrationsCard value={integrations} onChange={touch(setIntegrations)} codes={codes} onCodes={touch(setCodes)} />
       </div>
     </div>
+  );
+}
+
+
+function FrontPageCard({ value, pages, onChange }: { value: SiteSettings["reading"]; pages: { path: string; title: string }[]; onChange: (v: SiteSettings["reading"]) => void }) {
+  const id = useId();
+  return (
+    <Card title="Halaman depan" className="min-w-0">
+      <label htmlFor={id} className={labelClass}>
+        Halaman yang tampil di beranda
+      </label>
+      <select id={id} className={field} value={value.frontPage} onChange={(e) => onChange({ frontPage: e.target.value })}>
+        {pages.map((page) => (
+          <option key={page.path} value={page.path}>
+            {page.path === BUILTIN_FRONT_PAGE ? "Beranda (slider, pilar, dan bagian otomatis)" : `${page.title} (/${page.path}/)`}
+          </option>
+        ))}
+      </select>
+      <p className="mt-2 text-[13px] leading-relaxed text-admin-text">
+        Pengunjung yang membuka / melihat halaman ini. Alamat asli halaman yang dipilih diarahkan ke beranda. Pilihan Beranda memakai isi dari Kelola Beranda.
+      </p>
+    </Card>
   );
 }
 
@@ -491,7 +520,7 @@ function MenuRow({
           </div>
           <div>
             <label htmlFor={`${id}-le`} className={labelClass}>
-              Label Inggris (opsional)
+              <LangText text="Label Inggris (opsional)" />
             </label>
             <input id={`${id}-le`} className={field} value={item.labelEn} maxLength={60} onChange={(e) => onChange({ labelEn: e.target.value })} />
           </div>
@@ -509,9 +538,89 @@ function MenuRow({
   );
 }
 
+/* ---------- Kode kustom ---------- */
+
+const CODE_LABEL = { css: "CSS", javascript: "JavaScript", html: "Google Tag Manager" } as const;
+const PLACE_LABEL = { header: "Header", body: "Body", footer: "Footer" } as const;
+
+function CustomCodeFields({ value, onChange }: { value: SiteSettings["codes"]; onChange: (v: SiteSettings["codes"]) => void }) {
+  const add = () => {
+    onChange({
+      snippets: [...value.snippets, { id: crypto.randomUUID(), kind: "javascript", code: "", header: false, body: false, footer: false }],
+    });
+  };
+  return (
+    <div className="border-t border-admin-line pt-4">
+      <h3 className="text-sm font-extrabold text-admin-ink">Kode kustom</h3>
+      <p className="mt-1 text-sm text-admin-text">CSS, JavaScript, atau cuplikan Google Tag Manager. Centang tempat kode dipasang di situs publik. Kode tidak dijalankan di halaman admin.</p>
+      <ul className="mt-4 space-y-4">
+        {value.snippets.map((item, index) => (
+          <li key={item.id} className="rounded-xl border border-admin-line p-3">
+            <div className="flex flex-wrap items-end gap-3">
+              <div className="min-w-40 flex-1">
+                <label htmlFor={`${item.id}-kind`} className={labelClass}>
+                  Jenis
+                </label>
+                <select
+                  id={`${item.id}-kind`}
+                  className={field}
+                  value={item.kind}
+                  onChange={(event) => {
+                    const kind = event.target.value as SiteSettings["codes"]["snippets"][number]["kind"];
+                    onChange({ snippets: value.snippets.map((row, i) => (i === index ? { ...row, kind } : row)) });
+                  }}
+                >
+                  {(Object.keys(CODE_LABEL) as (keyof typeof CODE_LABEL)[]).map((kind) => (
+                    <option key={kind} value={kind}>
+                      {CODE_LABEL[kind]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <fieldset className="flex flex-wrap gap-3 pb-2">
+                <legend className="sr-only">Penempatan</legend>
+                {(Object.keys(PLACE_LABEL) as (keyof typeof PLACE_LABEL)[]).map((place) => (
+                  <label key={place} className="flex min-h-11 items-center gap-2 text-sm font-bold text-admin-ink">
+                    <input
+                      type="checkbox"
+                      checked={item[place]}
+                      onChange={(event) => onChange({ snippets: value.snippets.map((row, i) => (i === index ? { ...row, [place]: event.target.checked } : row)) })}
+                    />
+                    {PLACE_LABEL[place]}
+                  </label>
+                ))}
+              </fieldset>
+              <button type="button" className={`${iconBtn} hover:text-admin-danger`} aria-label="Hapus kode" onClick={() => onChange({ snippets: value.snippets.filter((_, i) => i !== index) })}>
+                <Trash2 aria-hidden size={18} />
+              </button>
+            </div>
+            <label htmlFor={`${item.id}-code`} className={`${labelClass} mt-3 block`}>
+              Kode
+            </label>
+            <textarea id={`${item.id}-code`} className={`${field} min-h-36 font-mono`} spellCheck={false} maxLength={20_000} value={item.code} onChange={(event) => onChange({ snippets: value.snippets.map((row, i) => (i === index ? { ...row, code: event.target.value } : row)) })} />
+          </li>
+        ))}
+      </ul>
+      <button type="button" className={`${smallBtn} mt-4`} onClick={add} disabled={value.snippets.length >= 12}>
+        <Plus aria-hidden size={16} /> Tambah kode
+      </button>
+    </div>
+  );
+}
+
 /* ---------- Integrasi & tombol ---------- */
 
-function IntegrationsCard({ value, onChange }: { value: SiteSettings["integrations"]; onChange: (v: SiteSettings["integrations"]) => void }) {
+function IntegrationsCard({
+  value,
+  onChange,
+  codes,
+  onCodes,
+}: {
+  value: SiteSettings["integrations"];
+  onChange: (v: SiteSettings["integrations"]) => void;
+  codes: SiteSettings["codes"];
+  onCodes: (v: SiteSettings["codes"]) => void;
+}) {
   const id = useId();
   return (
     <Card title="Integrasi & tombol" className="min-w-0">
@@ -562,6 +671,7 @@ function IntegrationsCard({ value, onChange }: { value: SiteSettings["integratio
           danger
           onChange={(v) => onChange({ ...value, maintenance: v })}
         />
+        <CustomCodeFields value={codes} onChange={onCodes} />
       </div>
     </Card>
   );

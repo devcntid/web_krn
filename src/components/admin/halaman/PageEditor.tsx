@@ -10,10 +10,10 @@ import { useEffect, useId, useState } from "react";
 
 import { savePageAction } from "@/app/admin/(panel)/halaman/actions";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
-import { Dialog } from "@/components/admin/Dialog";
+import { LangFlag, LangText } from "@/components/admin/LangFlag";
 import { SORT_INSTRUCTIONS, arrowStep, moveById } from "@/components/admin/sortable";
 import { useToast } from "@/components/admin/Toast";
-import { type JsonObject, SECTION_DEFS, initialData, sectionDef, sectionSummary } from "@/lib/section-fields";
+import { type JsonObject, SECTION_DEFS, initialData, sectionDef } from "@/lib/section-fields";
 import type { PageTemplate, SectionIssue } from "@/server/sections";
 import type { EditorPage, EditorSection, PageStatus } from "@/types/admin-pages";
 
@@ -60,7 +60,6 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
   const [saving, setSaving] = useState(false);
   const [issues, setIssues] = useState<SectionIssue[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [editing, setEditing] = useState<string | null>(null);
   const [removing, setRemoving] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
 
@@ -98,7 +97,7 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
     const section: EditorSection = { id: crypto.randomUUID(), type, visible: true, data: initialData(def.fields) };
     updateSections([...sections, section]);
     setAdding(false);
-    setEditing(section.id);
+    requestAnimationFrame(() => document.getElementById(`section-${section.id}`)?.scrollIntoView({ block: "start" }));
   };
 
   const save = async () => {
@@ -128,7 +127,6 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
     window.open(`/api/preview/?page=${page.id}`, "_blank");
   };
 
-  const editingSection = sections.find((s) => s.id === editing);
   const removingSection = sections.find((s) => s.id === removing);
   const families = [...new Set(SECTION_DEFS.map((d) => d.family))];
   const available = template === "generic" ? SECTION_DEFS.filter((d) => d.type === "richtext") : SECTION_DEFS;
@@ -289,18 +287,19 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
         <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
           <ol className="mt-4.5 flex flex-col gap-2.5" aria-label="Section halaman, berurutan">
             {sections.map((s, i) => (
-              <SectionRow
+              <SectionCard
                 key={s.id}
                 section={s}
                 index={i}
+                options={options}
                 issues={issues.filter((x) => x.index === i)}
+                onChange={(next) => updateSections(sections.map((x) => (x.id === next.id ? next : x)))}
                 onMove={(step) => {
                   const moved = moveById(sections, s.id, step);
                   if (!moved) return;
                   updateSections(moved.list);
                   setAnnounce(`Section ${typeLabel(s.type)} dipindah ke posisi ${moved.position} dari ${sections.length}.`);
                 }}
-                onEdit={() => setEditing(s.id)}
                 onToggle={() => updateSections(sections.map((x) => (x.id === s.id ? { ...x, visible: !x.visible } : x)))}
                 onRemove={() => setRemoving(s.id)}
               />
@@ -346,20 +345,6 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
         </div>
       ) : null}
 
-      <Dialog open={editingSection !== undefined} title={editingSection ? `Edit section: ${typeLabel(editingSection.type)}` : "Edit section"} onClose={() => setEditing(null)} size="xl">
-        {editingSection ? (
-          <SectionDialogBody
-            key={editingSection.id}
-            section={editingSection}
-            options={options}
-            onCancel={() => setEditing(null)}
-            onApply={(next) => {
-              updateSections(sections.map((x) => (x.id === next.id ? next : x)));
-              setEditing(null);
-            }}
-          />
-        ) : null}
-      </Dialog>
       <ConfirmDialog
         open={removingSection !== undefined}
         title="Hapus section ini?"
@@ -376,36 +361,65 @@ export function PageEditor({ page, options, isStaticRoute }: { page: EditorPage;
   );
 }
 
-function SectionRow({
+function SectionCard({
   section,
   index,
+  options,
   issues,
+  onChange,
   onMove,
-  onEdit,
   onToggle,
   onRemove,
 }: {
   section: EditorSection;
   index: number;
+  options: FieldOptions;
   issues: SectionIssue[];
+  onChange: (section: EditorSection) => void;
   onMove: (step: -1 | 1) => void;
-  onEdit: () => void;
   onToggle: () => void;
   onRemove: () => void;
 }) {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({ id: section.id });
   const def = sectionDef(section.type);
   const label = typeLabel(section.type);
+  const [lang, setLang] = useState<"id" | "en">("id");
+  const headingId = useId();
   const iconBtn =
     "flex size-11 shrink-0 items-center justify-center rounded-lg border border-admin-field bg-white text-admin-ink hover:bg-admin-canvas focus-visible:outline-2 focus-visible:outline-primary";
 
+  const setEn = (en: JsonObject | undefined) => {
+    if (en) onChange({ ...section, en });
+    else {
+      const { en: _removed, ...rest } = section;
+      onChange(rest);
+    }
+  };
+
+  const tab = (value: "id" | "en", text: string) => (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={lang === value}
+      onClick={() => setLang(value)}
+      className={`min-h-11 border-b-[3px] px-3.5 text-sm font-bold focus-visible:outline-2 focus-visible:outline-primary ${
+        lang === value ? "border-primary text-primary" : "border-transparent text-admin-neutral-text hover:text-primary"
+      }`}
+    >
+      <span className="inline-flex items-center gap-1.5">
+        <LangText text={text} />
+      </span>
+    </button>
+  );
+
   return (
     <li
+      id={`section-${section.id}`}
       ref={setNodeRef}
       style={{ transform: CSS.Translate.toString(transform), transition }}
-      className={`rounded-xl border bg-admin-row-hover ${issues.length ? "border-admin-danger" : "border-admin-line"} ${isDragging ? "relative z-10 shadow-admin-card" : ""} ${section.visible ? "" : "opacity-70"}`}
+      className={`scroll-mt-24 rounded-xl border bg-white ${issues.length ? "border-admin-danger" : "border-admin-line"} ${isDragging ? "relative z-10 shadow-admin-card" : ""} ${section.visible ? "" : "opacity-70"}`}
     >
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2.5 sm:px-4">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-admin-line px-3 py-2.5 sm:px-4">
         <button
           ref={setActivatorNodeRef}
           type="button"
@@ -426,21 +440,18 @@ function SectionRow({
           {index + 1}
         </span>
         <span className="min-w-40 flex-1">
-          <span className="block text-[15px] font-extrabold text-admin-ink">
+          <span id={headingId} className="block text-[15px] font-extrabold text-admin-ink">
             {label}
             {section.visible ? null : <span className="ml-2 rounded-full bg-admin-neutral-bg px-2 py-0.5 text-[11px] font-bold text-admin-neutral-text">Tersembunyi</span>}
-            {section.en ? <span className="ml-2 rounded-full bg-admin-info-bg px-2 py-0.5 text-[11px] font-bold text-admin-info-text">EN</span> : null}
+            {section.en ? <span className="ml-2 inline-flex align-middle"><LangFlag lang="en" /></span> : null}
           </span>
-          <span className="block text-[13px] text-admin-text">{def ? sectionSummary(def, section.data) : "Tipe section tidak dikenal"}</span>
+          <span className="block text-[13px] text-admin-text">{def ? def.description : "Tipe section tidak dikenal"}</span>
         </span>
         <span className="flex gap-2">
-          <button type="button" onClick={onEdit} className="min-h-11 rounded-lg border border-admin-field bg-white px-3.5 text-[13px] font-bold text-admin-ink hover:bg-admin-canvas focus-visible:outline-2 focus-visible:outline-primary">
-            Edit<span className="sr-only"> section {index + 1}: {label}</span>
-          </button>
           <button type="button" onClick={onToggle} aria-pressed={!section.visible} className={iconBtn}>
             {section.visible ? <Eye aria-hidden="true" size={18} /> : <EyeOff aria-hidden="true" size={18} />}
             <span className="sr-only">
-              Sembunyikan section {index + 1}: {label}
+              {section.visible ? "Sembunyikan" : "Tampilkan"} section {index + 1}: {label}
             </span>
           </button>
           <button type="button" onClick={onRemove} className={`${iconBtn} text-admin-danger`}>
@@ -452,10 +463,10 @@ function SectionRow({
         </span>
       </div>
       {issues.length ? (
-        <ul className="border-t border-admin-danger px-4 py-2 text-[13px] font-semibold text-admin-danger">
+        <ul className="border-b border-admin-danger px-4 py-2 text-[13px] font-semibold text-admin-danger">
           {issues.slice(0, 6).map((issue, i) => (
             <li key={`${issue.locale}:${issue.path}:${i}`}>
-              {issue.locale === "en" ? "[English] " : ""}
+              {issue.locale === "en" ? <><LangFlag lang="en" /> </> : null}
               {issue.path ? `${issue.path}: ` : ""}
               {issue.message}
             </li>
@@ -463,85 +474,36 @@ function SectionRow({
           {issues.length > 6 ? <li>… dan {issues.length - 6} lainnya</li> : null}
         </ul>
       ) : null}
-    </li>
-  );
-}
-
-/** Isi dialog edit: form generik untuk isi Indonesia dan (opsional) versi Inggris. */
-function SectionDialogBody({
-  section,
-  options,
-  onApply,
-  onCancel,
-}: {
-  section: EditorSection;
-  options: FieldOptions;
-  onApply: (section: EditorSection) => void;
-  onCancel: () => void;
-}) {
-  const def = sectionDef(section.type);
-  const [data, setData] = useState<JsonObject>(section.data);
-  const [en, setEn] = useState<JsonObject | undefined>(section.en);
-  const [lang, setLang] = useState<"id" | "en">("id");
-
-  if (!def) return <p className="text-sm text-admin-text">Tipe section ini tidak dikenal dan tidak bisa diedit.</p>;
-
-  const tab = (value: "id" | "en", label: string) => (
-    <button
-      type="button"
-      role="tab"
-      aria-selected={lang === value}
-      onClick={() => setLang(value)}
-      className={`min-h-11 border-b-[3px] px-3.5 text-sm font-bold focus-visible:outline-2 focus-visible:outline-primary ${
-        lang === value ? "border-primary text-primary" : "border-transparent text-admin-neutral-text hover:text-primary"
-      }`}
-    >
-      {label}
-    </button>
-  );
-
-  return (
-    // Bukan <form>: MediaPicker di dalamnya punya form sendiri (form bersarang tidak sah).
-    <div className="flex flex-col gap-4">
-      <p className="text-[13px] text-admin-text">{def.description}</p>
-      <div role="tablist" aria-label="Bahasa isi section" className="flex gap-1.5 border-b border-admin-line">
-        {tab("id", "Indonesia")}
-        {tab("en", en ? "English" : "English (belum ada)")}
-      </div>
-
-      {lang === "id" ? (
-        <SectionForm fields={def.fields} value={data} onChange={setData} options={options} />
-      ) : en ? (
-        <>
-          <p className="rounded-admin bg-admin-info-bg p-3 text-[13px] font-semibold text-admin-info-text">
-            Versi Inggris tampil di /en/. Struktur dan gambarnya terpisah dari versi Indonesia — perubahan di satu bahasa tidak otomatis mengubah bahasa lain.
-          </p>
-          <SectionForm fields={def.fields} value={en} onChange={setEn} options={options} />
-          <button type="button" onClick={() => setEn(undefined)} className={`${ghostBtn} self-start border-admin-danger text-admin-danger`}>
-            Hapus versi Inggris (kembali memakai isi Indonesia)
-          </button>
-        </>
-      ) : (
-        <div className="rounded-admin bg-admin-canvas p-4 text-sm text-admin-text">
-          <p>Section ini belum punya versi Inggris; halaman /en/ menampilkan isi Indonesia.</p>
-          <button type="button" onClick={() => setEn(structuredClone(data))} className={`${ghostBtn} mt-3`}>
-            Salin isi Indonesia untuk diterjemahkan
-          </button>
+      {def ? (
+        <div className="flex flex-col gap-4 p-4" aria-labelledby={headingId}>
+          <div role="tablist" aria-label={`Bahasa isi ${label}`} className="flex gap-1.5 border-b border-admin-line">
+            {tab("id", "Indonesia")}
+            {tab("en", section.en ? "English" : "English (belum ada)")}
+          </div>
+          {lang === "id" ? (
+            <SectionForm fields={def.fields} value={section.data} onChange={(data) => onChange({ ...section, data })} options={options} />
+          ) : section.en ? (
+            <>
+              <p className="rounded-admin bg-admin-info-bg p-3 text-[13px] font-semibold text-admin-info-text">
+                Versi Inggris tampil di /en/. Struktur dan gambarnya terpisah dari versi Indonesia.
+              </p>
+              <SectionForm fields={def.fields} value={section.en} onChange={setEn} options={options} />
+              <button type="button" onClick={() => setEn(undefined)} className={`${ghostBtn} self-start border-admin-danger text-admin-danger`}>
+                Hapus versi Inggris (kembali memakai isi Indonesia)
+              </button>
+            </>
+          ) : (
+            <div className="rounded-admin bg-admin-canvas p-4 text-sm text-admin-text">
+              <p>Section ini belum punya versi Inggris; halaman /en/ menampilkan isi Indonesia.</p>
+              <button type="button" onClick={() => setEn(structuredClone(section.data))} className={`${ghostBtn} mt-3`}>
+                Salin isi Indonesia untuk diterjemahkan
+              </button>
+            </div>
+          )}
         </div>
+      ) : (
+        <p className="p-4 text-sm text-admin-text">Tipe section ini tidak dikenal dan tidak bisa diedit.</p>
       )}
-
-      <div className="sticky -bottom-5 -mx-5 -mb-5 flex flex-col-reverse gap-2 border-t border-admin-line bg-white p-5 sm:flex-row sm:justify-end">
-        <button type="button" onClick={onCancel} className={ghostBtn}>
-          Batal
-        </button>
-        <button
-          type="button"
-          className={primaryBtn}
-          onClick={() => onApply({ id: section.id, type: section.type, visible: section.visible, data, ...(en ? { en } : {}) })}
-        >
-          Terapkan
-        </button>
-      </div>
-    </div>
+    </li>
   );
 }

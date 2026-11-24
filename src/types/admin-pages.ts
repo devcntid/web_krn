@@ -44,5 +44,5 @@ export type SavePageInput = {
 
 export type SavePageResult = { ok: true; savedAt: string } | { ok: false; error: string; issues?: SectionIssue[] };
 
-export type CreatePageInput = { title: string; slug: string; parentPath: string };
+export type CreatePageInput = { title: string; slug: string; parentPath: string; editor?: "classic" | "visual" };
 export type CreatePageResult = { ok: true; id: number } | { ok: false; error: string; field?: "title" | "slug" };

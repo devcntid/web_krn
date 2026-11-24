@@ -10,6 +10,7 @@ import { Carousel } from "@/components/ui/Carousel";
 import { YouTubeFacade } from "@/components/home/YouTubeFacade";
 import { TestimonialCarousel } from "@/components/sections/TestimonialCarousel";
 import { mediaUrl } from "@/lib/media";
+import { hasMarkup } from "@/lib/rich-text";
 
 const outlineBtn =
   "inline-flex min-h-11 self-start items-center justify-center rounded-full border-2 border-primary px-4 py-2 text-sm md:text-[15px] font-medium text-primary transition-colors hover:bg-primary hover:text-white";
@@ -27,9 +28,13 @@ export async function IntroSection() {
             <span className="mt-1.5 block text-[32px] leading-[1.05] font-extrabold italic md:mt-2 md:leading-none lg:text-[45px]">{c.intro.heading}</span>
           </h2>
           <div className="space-y-3 text-[15px] leading-[1.5] text-ink max-md:text-center md:space-y-4 md:text-base md:leading-[1.45]">
-            {c.intro.paragraphs.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
+            {c.intro.paragraphs.map((p, i) =>
+              hasMarkup(p) ? (
+                <div key={i} className="[&_a]:underline [&_p]:m-0" dangerouslySetInnerHTML={{ __html: p }} />
+              ) : (
+                <p key={i}>{p}</p>
+              ),
+            )}
           </div>
         </div>
 

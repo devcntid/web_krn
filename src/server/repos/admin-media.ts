@@ -101,7 +101,7 @@ export async function findMediaUsage(item: { id: number; url: string }): Promise
     db.select({ id: audits.id, year: audits.year }).from(audits).where(eq(audits.pdfMediaId, item.id)),
   ]);
 
-  const settingLabel: Record<string, string> = { home: "Beranda", "home.draft": "Beranda (draf)", identity: "Identitas situs", menu: "Menu", integrations: "Integrasi", contact: "Kontak", socials: "Media sosial" };
+  const settingLabel: Record<string, string> = { home: "Beranda", "home.draft": "Beranda (draf)", identity: "Identitas situs", menu: "Menu", integrations: "Integrasi", contact: "Kontak", socials: "Media sosial", codes: "Kode kustom" };
   return [
     ...postRows.map((p): MediaUsage => ({ kind: "post", label: `Publikasi: ${p.title}`, href: `/admin/publikasi/${p.id}/` })),
     ...pageRows.map((p): MediaUsage => ({ kind: "page", label: `Halaman: ${p.title || `/${p.path}/`}`, href: `/admin/halaman/${p.id}/` })),

@@ -87,6 +87,8 @@ export const siteDefaults: SiteSettings = {
     showSaffa: true,
     maintenance: false,
   },
+  reading: { frontPage: "new-beranda" },
+  codes: { snippets: [] },
 };
 
 /** Menu footer "Eksplor" (belum dikelola admin). */

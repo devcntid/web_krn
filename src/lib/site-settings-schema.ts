@@ -76,6 +76,46 @@ export const menuSchema = z
   .min(1, "Menu tidak boleh kosong")
   .max(10, "Maksimal 10 menu utama");
 
+/** Path halaman yang tampil di `/`. `new-beranda` = beranda otomatis (slider, pilar, testimoni). */
+export const BUILTIN_FRONT_PAGE = "new-beranda";
+
+export const CODE_KINDS = ["css", "javascript", "html"] as const;
+
+/** Satu potongan kode. Centang header, body, dan/atau footer menentukan tempat pemasangan. */
+export const customCodeSchema = z.object({
+  snippets: z
+    .array(
+      z
+        .object({
+          id: z
+            .string()
+            .trim()
+            .min(1)
+            .max(40)
+            .regex(/^[a-zA-Z0-9_-]+$/, "ID kode tidak sah"),
+          kind: z.enum(CODE_KINDS),
+          code: z.string().max(20_000, "Kode terlalu panjang (maksimal 20.000 karakter)"),
+          header: z.boolean(),
+          body: z.boolean(),
+          footer: z.boolean(),
+        })
+        .superRefine((item, ctx) => {
+          if (!item.code.trim()) return;
+          if (!item.header && !item.body && !item.footer) ctx.addIssue({ code: "custom", message: "Pilih header, body, atau footer" });
+        }),
+    )
+    .max(12, "Maksimal 12 kode"),
+});
+
+export const readingSchema = z.object({
+  frontPage: z
+    .string()
+    .trim()
+    .min(1, "Halaman depan wajib dipilih")
+    .max(200)
+    .regex(/^[a-z0-9]+(?:[/_-][a-z0-9]+)*$/, "Halaman depan tidak sah"),
+});
+
 export const integrationsSchema = z.object({
   ga4Id: z
     .string()
@@ -96,6 +136,8 @@ export const siteSettingsSchema = z.object({
   socials: socialsSchema,
   menu: menuSchema,
   integrations: integrationsSchema,
+  reading: readingSchema,
+  codes: customCodeSchema,
 });
 
 export type SiteSettings = z.infer<typeof siteSettingsSchema>;

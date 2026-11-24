@@ -10,17 +10,21 @@ import { useEffect, useId, useState } from "react";
 
 import { discardHomeDraftAction, publishHomeAction, saveHomeDraftAction } from "@/app/admin/(panel)/beranda/actions";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
+import { LangFlag, LangText } from "@/components/admin/LangFlag";
 import { Dialog } from "@/components/admin/Dialog";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SORT_INSTRUCTIONS, arrowStep, moveById } from "@/components/admin/sortable";
 import { useToast } from "@/components/admin/Toast";
 import { MediaPicker } from "@/components/admin/publikasi/MediaPicker";
+import { RichTextEditor } from "@/components/admin/publikasi/RichTextEditor";
 import { mediaUrl } from "@/lib/media";
+import { paragraphsToHtml, visibleText } from "@/lib/rich-text";
 import { youtubeId } from "@/lib/youtube";
 import type { MediaChoice } from "@/types/admin-posts";
 import type { EditorSlide, EditorTestimonial, HomeEditorData } from "@/types/admin-home";
 
 type Device = "desktop" | "mobile";
+type BannerLang = "id" | "en";
 
 const card = "rounded-xl border border-admin-line bg-white p-5 sm:p-[22px]";
 const h2 = "text-lg font-extrabold text-admin-ink";
@@ -66,9 +70,10 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
   const [busy, setBusy] = useState<"preview" | "publish" | "discard" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [device, setDevice] = useState<Device>("desktop");
-  const [slideDialog, setSlideDialog] = useState<{ device: Device; slide: EditorSlide; isNew: boolean } | null>(null);
+  const [bannerLang, setBannerLang] = useState<BannerLang>("id");
+  const [slideDialog, setSlideDialog] = useState<{ device: Device; lang: BannerLang; slide: EditorSlide; isNew: boolean } | null>(null);
   const [testiDialog, setTestiDialog] = useState<{ item: EditorTestimonial; isNew: boolean } | null>(null);
-  const [confirm, setConfirm] = useState<{ kind: "slide"; device: Device; id: string } | { kind: "testimonial"; id: string } | { kind: "discard" } | null>(null);
+  const [confirm, setConfirm] = useState<{ kind: "slide"; device: Device; lang: BannerLang; id: string } | { kind: "testimonial"; id: string } | { kind: "discard" } | null>(null);
   const [now] = useState(() => Date.now());
 
   const [announce, setAnnounce] = useState("");
@@ -86,8 +91,9 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
     setDirty(true);
     setError(null);
   };
-  const slideKey = (d: Device) => (d === "desktop" ? "slidesDesktop" : "slidesMobile");
-  const slides = data[slideKey(device)];
+  const slideKey = (d: Device, lang: BannerLang) =>
+    lang === "id" ? (d === "desktop" ? "slidesDesktop" : "slidesMobile") : d === "desktop" ? "slidesDesktopEn" : "slidesMobileEn";
+  const slides = data[slideKey(device, bannerLang)];
 
   const reorder = <T extends { id: string }>(list: T[], { active, over }: DragEndEvent): T[] | null => {
     if (!over || active.id === over.id) return null;
@@ -167,7 +173,10 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
       void discard();
       return;
     }
-    if (confirm.kind === "slide") update({ [slideKey(confirm.device)]: data[slideKey(confirm.device)].filter((s) => s.id !== confirm.id) });
+    if (confirm.kind === "slide") {
+      const key = slideKey(confirm.device, confirm.lang);
+      update({ [key]: data[key].filter((s) => s.id !== confirm.id) });
+    }
     else update({ testimonials: data.testimonials.filter((t) => t.id !== confirm.id) });
     setConfirm(null);
   };
@@ -178,7 +187,7 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
     <>
       <PageHeader
         title="Kelola Beranda"
-        description="Slider kampanye, statistik, video, dan testimoni."
+        description="Banner Indonesia dan English, teks, pilar, publikasi, testimoni, dan laporan."
         actions={
           <>
             {hasDraft ? (
@@ -212,13 +221,73 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
         {announce}
       </p>
 
+      <section className={card} aria-labelledby={`${headingId}-intro`}>
+        <h2 id={`${headingId}-intro`} className={h2}>
+          Teks pembuka
+        </h2>
+        <p className="mt-1 text-[13px] text-admin-text">Judul dan paragraf di bawah slider. Paragraf memakai editor visual.</p>
+        <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
+          <div>
+            <label htmlFor={`${headingId}-eye`} className={labelClass}>
+              Baris kecil
+            </label>
+            <input id={`${headingId}-eye`} value={data.introEyebrow} onChange={(e) => update({ introEyebrow: e.target.value })} className={`${field} mt-1`} />
+          </div>
+          <div>
+            <label htmlFor={`${headingId}-eye-en`} className={labelClass}>
+              <LangText text="Baris kecil (English)" />
+            </label>
+            <input id={`${headingId}-eye-en`} value={data.introEyebrowEn} onChange={(e) => update({ introEyebrowEn: e.target.value })} className={`${field} mt-1`} />
+          </div>
+          <div>
+            <label htmlFor={`${headingId}-lead`} className={labelClass}>
+              Judul
+            </label>
+            <input id={`${headingId}-lead`} value={data.introHeading} onChange={(e) => update({ introHeading: e.target.value })} className={`${field} mt-1 font-semibold`} />
+          </div>
+          <div>
+            <label htmlFor={`${headingId}-lead-en`} className={labelClass}>
+              <LangText text="Judul (English)" />
+            </label>
+            <input id={`${headingId}-lead-en`} value={data.introHeadingEn} onChange={(e) => update({ introHeadingEn: e.target.value })} className={`${field} mt-1`} />
+          </div>
+        </div>
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <div>
+            <p className={labelClass}>Paragraf</p>
+            <RichTextEditor initialJson={null} initialHtml={data.introHtml} editable preset="text" ariaLabel="Paragraf teks pembuka" onChange={({ html }) => update({ introHtml: html })} />
+          </div>
+          <div>
+            <p className={`${labelClass} inline-flex items-center gap-1.5`}><LangText text="Paragraf (English)" /></p>
+            <RichTextEditor initialJson={null} initialHtml={data.introHtmlEn} editable preset="text" ariaLabel="Paragraf teks pembuka bahasa Inggris" onChange={({ html }) => update({ introHtmlEn: html })} />
+          </div>
+        </div>
+      </section>
+
       {/* ---------- Slider kampanye ---------- */}
       <section className={card} aria-labelledby={`${slideDndId}-h`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 id={`${slideDndId}-h`} className={h2}>
             Slider kampanye
           </h2>
-          <div role="tablist" aria-label="Perangkat" className="flex rounded-admin bg-admin-canvas p-1">
+          <div className="flex flex-wrap gap-2">
+            <div role="tablist" aria-label="Bahasa banner" className="flex rounded-admin bg-admin-canvas p-1">
+              {(["id", "en"] as const).map((lang) => (
+                <button
+                  key={lang}
+                  type="button"
+                  role="tab"
+                  aria-selected={bannerLang === lang}
+                  onClick={() => setBannerLang(lang)}
+                  className={`min-h-11 rounded-lg px-3.5 text-[13px] focus-visible:outline-2 focus-visible:outline-primary ${
+                    bannerLang === lang ? "bg-white font-extrabold text-admin-ink shadow-sm" : "font-bold text-admin-text"
+                  }`}
+                >
+                  <LangFlag lang={lang} />
+                </button>
+              ))}
+            </div>
+            <div role="tablist" aria-label="Perangkat" className="flex rounded-admin bg-admin-canvas p-1">
             {(["desktop", "mobile"] as const).map((d) => (
               <button
                 key={d}
@@ -230,22 +299,24 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
                   device === d ? "bg-white font-extrabold text-admin-ink shadow-sm" : "font-bold text-admin-text"
                 }`}
               >
-                {d === "desktop" ? "Desktop" : "Mobile"} ({data[slideKey(d)].length})
+                {d === "desktop" ? "Desktop" : "Mobile"} ({data[slideKey(d, bannerLang)].length})
               </button>
             ))}
+            </div>
           </div>
         </div>
         <p className="mt-1 text-[13px] text-admin-text">
-          {device === "desktop" ? "Banner lanskap (±1193×620) untuk layar ≥768px." : "Banner potret (1080×1350) untuk layar ponsel. Judul dan tautan opsional."}
+          {bannerLang === "id" ? "Banner bahasa Indonesia. " : "Banner bahasa English. Jika dikosongkan saat terbit, situs English memakai banner Indonesia. "}
+          {device === "desktop" ? "Lanskap (±1193×620) untuk layar ≥768px." : "Potret (1080×1350) untuk ponsel. Judul dan tautan opsional."}
         </p>
 
         <DndContext
-          id={slideDndId}
+          id={`${slideDndId}-${bannerLang}-${device}`}
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={(e) => {
             const next = reorder(slides, e);
-            if (next) update({ [slideKey(device)]: next });
+            if (next) update({ [slideKey(device, bannerLang)]: next });
           }}
           accessibility={{ screenReaderInstructions: SORT_INSTRUCTIONS }}
         >
@@ -261,11 +332,11 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
                   onMove={(step) => {
                     const moved = moveById(slides, s.id, step);
                     if (!moved) return;
-                    update({ [slideKey(device)]: moved.list });
+                    update({ [slideKey(device, bannerLang)]: moved.list });
                     setAnnounce(`Slide ${s.title || "tanpa judul"} dipindah ke posisi ${moved.position} dari ${slides.length}.`);
                   }}
-                  onEdit={() => setSlideDialog({ device, slide: s, isNew: false })}
-                  onRemove={() => setConfirm({ kind: "slide", device, id: s.id })}
+                  onEdit={() => setSlideDialog({ device, lang: bannerLang, slide: s, isNew: false })}
+                  onRemove={() => setConfirm({ kind: "slide", device, lang: bannerLang, id: s.id })}
                 />
               ))}
             </ol>
@@ -275,7 +346,7 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
         <button
           type="button"
           onClick={() =>
-            setSlideDialog({ device, isNew: true, slide: { id: crypto.randomUUID(), image: "", href: "", startsAt: "", endsAt: "", title: "", titleEn: "" } })
+            setSlideDialog({ device, lang: bannerLang, isNew: true, slide: { id: crypto.randomUUID(), image: "", href: "", startsAt: "", endsAt: "", title: "" } })
           }
           className="mt-3 min-h-11 rounded-admin border border-dashed border-admin-sidebar-muted bg-white px-3.5 text-[13px] font-bold text-admin-neutral-text hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-primary"
         >
@@ -289,6 +360,34 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
           <h2 id={`${headingId}-h`} className={h2}>
             Jejak Sebaran Kebaikan
           </h2>
+          <p className="mt-1 text-[13px] text-admin-text">Gambar English yang dikosongkan memakai gambar Indonesia.</p>
+          <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
+            <ImagePick
+              label="Gambar peta (Indonesia)"
+              value={data.mapImage}
+              onPick={(m) => update({ mapImage: m.url, mapWidth: m.width || data.mapWidth, mapHeight: m.height || data.mapHeight, mapAlt: data.mapAlt || m.alt })}
+            />
+            <ImagePick
+              label="Gambar peta (English)"
+              value={data.mapImageEn}
+              onPick={(m) => update({ mapImageEn: m.url, mapWidthEn: m.width || data.mapWidthEn || data.mapWidth, mapHeightEn: m.height || data.mapHeightEn || data.mapHeight })}
+              onClear={() => update({ mapImageEn: "" })}
+            />
+          </div>
+          <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
+            <div>
+              <label htmlFor={`${headingId}-alt`} className={labelClass}>
+                Teks alt peta
+              </label>
+              <input id={`${headingId}-alt`} value={data.mapAlt} onChange={(e) => update({ mapAlt: e.target.value })} className={`${field} mt-1`} />
+            </div>
+            <div>
+              <label htmlFor={`${headingId}-alt-en`} className={labelClass}>
+                <LangText text="Teks alt peta (English)" />
+              </label>
+              <input id={`${headingId}-alt-en`} value={data.mapAltEn} onChange={(e) => update({ mapAltEn: e.target.value })} className={`${field} mt-1`} />
+            </div>
+          </div>
           <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
             <div>
               <label htmlFor={headingId} className={labelClass}>
@@ -298,7 +397,7 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
             </div>
             <div>
               <label htmlFor={headingEnId} className={labelClass}>
-                Judul panel (English)
+                <LangText text="Judul panel (English)" />
               </label>
               <input id={headingEnId} value={data.mapHeadingEn} onChange={(e) => update({ mapHeadingEn: e.target.value })} className={`${field} mt-1`} />
             </div>
@@ -308,7 +407,7 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
               const set = (patch: Partial<typeof st>) => update({ stats: data.stats.map((x, j) => (j === i ? { ...x, ...patch } : x)) });
               return (
                 <li key={i} className="rounded-admin border border-admin-line p-3">
-                  <fieldset>
+                  <fieldset className="min-w-0">
                     <legend className="sr-only">Statistik {i + 1}</legend>
                     <label className={labelClass}>
                       Angka
@@ -319,9 +418,13 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
                       <input value={st.label} onChange={(e) => set({ label: e.target.value })} className={`${field} mt-1`} />
                     </label>
                     <label className={`${labelClass} mt-2 block`}>
-                      Label (English)
+                      <LangText text="Label (English)" />
                       <input value={st.labelEn} onChange={(e) => set({ labelEn: e.target.value })} className={`${field} mt-1`} />
                     </label>
+                    <div className="mt-2 grid min-w-0 gap-3 sm:grid-cols-2">
+                      <ImagePick label="Ikon (Indonesia)" value={st.icon} onPick={(m) => set({ icon: m.url })} />
+                      <ImagePick label="Ikon (English)" value={st.iconEn} onPick={(m) => set({ iconEn: m.url })} onClear={() => set({ iconEn: "" })} />
+                    </div>
                   </fieldset>
                 </li>
               );
@@ -353,7 +456,7 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
             </div>
             <div>
               <label htmlFor={videoTitleEnId} className={labelClass}>
-                Judul video (English)
+                <LangText text="Judul video (English)" />
               </label>
               <input id={videoTitleEnId} value={data.videoTitleEn} onChange={(e) => update({ videoTitleEn: e.target.value })} className={`${field} mt-1`} />
             </div>
@@ -369,12 +472,38 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
             <button
               type="button"
               className={smallBtn}
-              onClick={() => setTestiDialog({ isNew: true, item: { id: crypto.randomUUID(), name: "", photo: "", visible: true, quote: "", quoteEn: "", role: "", roleEn: "" } })}
+              onClick={() => setTestiDialog({ isNew: true, item: { id: crypto.randomUUID(), name: "", photo: "", photoEn: "", visible: true, quote: "", quoteEn: "", role: "", roleEn: "" } })}
             >
               + Tambah
             </button>
           </div>
-          <p className="mt-1 text-[13px] text-admin-text">Daftar ini juga dipakai halaman Kemitraan.</p>
+          <p className="mt-1 text-[13px] text-admin-text">Judul bagian dan daftar kutipan. Daftar ini juga dipakai halaman Kemitraan.</p>
+          <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
+            <div>
+              <label htmlFor={`${testiDndId}-h1`} className={labelClass}>
+                Judul bagian
+              </label>
+              <input id={`${testiDndId}-h1`} value={data.testimonialsHeading} onChange={(e) => update({ testimonialsHeading: e.target.value })} className={`${field} mt-1`} />
+            </div>
+            <div>
+              <label htmlFor={`${testiDndId}-h1e`} className={labelClass}>
+                <LangText text="Judul bagian (English)" />
+              </label>
+              <input id={`${testiDndId}-h1e`} value={data.testimonialsHeadingEn} onChange={(e) => update({ testimonialsHeadingEn: e.target.value })} className={`${field} mt-1`} />
+            </div>
+            <div>
+              <label htmlFor={`${testiDndId}-d`} className={labelClass}>
+                Deskripsi
+              </label>
+              <textarea id={`${testiDndId}-d`} value={data.testimonialsDescription} onChange={(e) => update({ testimonialsDescription: e.target.value })} rows={3} className={`${field} mt-1 py-2 leading-normal`} />
+            </div>
+            <div>
+              <label htmlFor={`${testiDndId}-de`} className={labelClass}>
+                <LangText text="Deskripsi (English)" />
+              </label>
+              <textarea id={`${testiDndId}-de`} value={data.testimonialsDescriptionEn} onChange={(e) => update({ testimonialsDescriptionEn: e.target.value })} rows={3} className={`${field} mt-1 py-2 leading-normal`} />
+            </div>
+          </div>
           <DndContext
             id={testiDndId}
             sensors={sensors}
@@ -410,6 +539,90 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
         </section>
       </div>
 
+      <section className={card} aria-labelledby={`${headingId}-pillars`}>
+        <h2 id={`${headingId}-pillars`} className={h2}>
+          Pilar program
+        </h2>
+        <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
+          <Field label="Judul baris 1" value={data.pillarsHeading1} onChange={(pillarsHeading1) => update({ pillarsHeading1 })} />
+          <Field label="Judul baris 1 (English)" value={data.pillarsHeading1En} onChange={(pillarsHeading1En) => update({ pillarsHeading1En })} />
+          <Field label="Judul baris 2" value={data.pillarsHeading2} onChange={(pillarsHeading2) => update({ pillarsHeading2 })} />
+          <Field label="Judul baris 2 (English)" value={data.pillarsHeading2En} onChange={(pillarsHeading2En) => update({ pillarsHeading2En })} />
+          <Field label="Teks tombol" value={data.pillarsCtaLabel} onChange={(pillarsCtaLabel) => update({ pillarsCtaLabel })} />
+          <Field label="Teks tombol (English)" value={data.pillarsCtaLabelEn} onChange={(pillarsCtaLabelEn) => update({ pillarsCtaLabelEn })} />
+          <Field label="Tautan tombol" value={data.pillarsCtaHref} onChange={(pillarsCtaHref) => update({ pillarsCtaHref })} />
+        </div>
+        <ul className="mt-4 grid gap-3 lg:grid-cols-2">
+          {data.pillars.map((item, i) => {
+            const set = (patch: Partial<typeof item>) => update({ pillars: data.pillars.map((x, j) => (j === i ? { ...x, ...patch } : x)) });
+            return (
+              <li key={item.href || i} className="rounded-admin border border-admin-line p-3">
+                <p className="text-sm font-extrabold text-admin-ink">Kartu {i + 1}</p>
+                <div className="mt-2 grid gap-3 sm:grid-cols-2">
+                  <ImagePick label="Gambar (Indonesia)" value={item.image} onPick={(m) => set({ image: m.url })} />
+                  <ImagePick label="Gambar (English)" value={item.imageEn} onPick={(m) => set({ imageEn: m.url })} onClear={() => set({ imageEn: "" })} />
+                </div>
+                <div className="mt-3 grid gap-3">
+                  <Field label="Judul" value={item.title} onChange={(title) => set({ title })} />
+                  <Field label="Judul (English)" value={item.titleEn} onChange={(titleEn) => set({ titleEn })} />
+                  <Field label="Deskripsi" value={item.description} onChange={(description) => set({ description })} multiline />
+                  <Field label="Deskripsi (English)" value={item.descriptionEn} onChange={(descriptionEn) => set({ descriptionEn })} multiline />
+                  <Field label="Tautan" value={item.href} onChange={(href) => set({ href })} />
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section className={card} aria-labelledby={`${headingId}-pubs`}>
+        <h2 id={`${headingId}-pubs`} className={h2}>
+          Publikasi
+        </h2>
+        <p className="mt-1 text-[13px] text-admin-text">Kartu berita diambil otomatis. Yang diatur di sini judul, tombol, dan jumlah kartu.</p>
+        <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
+          <Field label="Judul" value={data.publicationsHeading} onChange={(publicationsHeading) => update({ publicationsHeading })} />
+          <Field label="Judul (English)" value={data.publicationsHeadingEn} onChange={(publicationsHeadingEn) => update({ publicationsHeadingEn })} />
+          <Field label="Teks tombol" value={data.publicationsCtaLabel} onChange={(publicationsCtaLabel) => update({ publicationsCtaLabel })} />
+          <Field label="Teks tombol (English)" value={data.publicationsCtaLabelEn} onChange={(publicationsCtaLabelEn) => update({ publicationsCtaLabelEn })} />
+          <Field label="Tautan tombol" value={data.publicationsCtaHref} onChange={(publicationsCtaHref) => update({ publicationsCtaHref })} />
+          <div>
+            <label htmlFor={`${headingId}-count`} className={labelClass}>
+              Jumlah kartu
+            </label>
+            <input
+              id={`${headingId}-count`}
+              type="number"
+              min={1}
+              max={12}
+              value={data.publicationsCount}
+              onChange={(e) => update({ publicationsCount: Number(e.target.value) })}
+              className={`${field} mt-1`}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className={card} aria-labelledby={`${headingId}-report`}>
+        <h2 id={`${headingId}-report`} className={h2}>
+          Laporan penyaluran
+        </h2>
+        <p className="mt-1 text-[13px] text-admin-text">Gambar English yang dikosongkan memakai gambar Indonesia.</p>
+        <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
+          <ImagePick label="Gambar latar (Indonesia)" value={data.reportBackground} onPick={(m) => update({ reportBackground: m.url })} />
+          <ImagePick label="Gambar latar (English)" value={data.reportBackgroundEn} onPick={(m) => update({ reportBackgroundEn: m.url })} onClear={() => update({ reportBackgroundEn: "" })} />
+        </div>
+        <div className="mt-3.5 grid gap-3 sm:grid-cols-2">
+          <Field label="Judul" value={data.reportHeading} onChange={(reportHeading) => update({ reportHeading })} />
+          <Field label="Judul (English)" value={data.reportHeadingEn} onChange={(reportHeadingEn) => update({ reportHeadingEn })} />
+          <Field label="Deskripsi" value={data.reportDescription} onChange={(reportDescription) => update({ reportDescription })} multiline />
+          <Field label="Deskripsi (English)" value={data.reportDescriptionEn} onChange={(reportDescriptionEn) => update({ reportDescriptionEn })} multiline />
+          <Field label="Teks tombol" value={data.reportCtaLabel} onChange={(reportCtaLabel) => update({ reportCtaLabel })} />
+          <Field label="Teks tombol (English)" value={data.reportCtaLabelEn} onChange={(reportCtaLabelEn) => update({ reportCtaLabelEn })} />
+          <Field label="Tautan tombol" value={data.reportCtaHref} onChange={(reportCtaHref) => update({ reportCtaHref })} />
+        </div>
+      </section>
+
       <Dialog open={slideDialog !== null} title={slideDialog?.isNew ? "Tambah slide" : "Edit slide"} onClose={() => setSlideDialog(null)}>
         {slideDialog ? (
           <SlideForm
@@ -418,14 +631,14 @@ export function HomeEditor({ initial, hasDraft: initialDraft }: { initial: HomeE
             device={slideDialog.device}
             onCancel={() => setSlideDialog(null)}
             onApply={(next) => {
-              const key = slideKey(slideDialog.device);
+              const key = slideKey(slideDialog.device, slideDialog.lang);
               update({ [key]: slideDialog.isNew ? [...data[key], next] : data[key].map((s) => (s.id === next.id ? next : s)) });
               setSlideDialog(null);
             }}
           />
         ) : null}
       </Dialog>
-      <Dialog open={testiDialog !== null} title={testiDialog?.isNew ? "Tambah testimoni" : "Edit testimoni"} onClose={() => setTestiDialog(null)}>
+      <Dialog open={testiDialog !== null} title={testiDialog?.isNew ? "Tambah testimoni" : "Edit testimoni"} onClose={() => setTestiDialog(null)} size="xl">
         {testiDialog ? (
           <TestimonialForm
             key={testiDialog.item.id}
@@ -555,24 +768,31 @@ function TestimonialRow({ item, index, onMove, onEdit, onRemove, onToggle }: { i
 }
 
 /** Tombol pilih gambar + pratinjau; teks alt dari pustaka dipakai sebagai judul bawaan bila judul kosong. */
-function ImagePick({ label, value, round = false, onPick }: { label: string; value: string; round?: boolean; onPick: (media: MediaChoice) => void }) {
+function ImagePick({ label, value, round = false, onPick, onClear }: { label: string; value: string; round?: boolean; onPick: (media: MediaChoice) => void; onClear?: () => void }) {
   const [open, setOpen] = useState(false);
   return (
-    <div>
-      <p className={labelClass}>{label}</p>
-      <div className="mt-1 flex items-center gap-3">
+    <div className="min-w-0">
+      <p className={`${labelClass} inline-flex items-center gap-1.5`}>{typeof label === "string" ? <LangText text={label} /> : label}</p>
+      <div className="mt-1 flex w-full min-w-0 flex-col items-start gap-2">
         {value ? (
-          <span className={`relative block shrink-0 overflow-hidden bg-admin-neutral-bg ${round ? "size-16 rounded-full" : "h-20 w-32 rounded-lg"}`}>
+          <span className={`relative block overflow-hidden bg-admin-neutral-bg ${round ? "size-16 rounded-full" : "h-20 w-full max-w-32 rounded-lg"}`}>
             <Image src={mediaUrl(value)} alt="" fill sizes="128px" className="object-cover" />
           </span>
         ) : (
-          <span className={`flex shrink-0 items-center justify-center border border-dashed border-admin-field bg-admin-canvas text-xs font-semibold text-admin-text ${round ? "size-16 rounded-full" : "h-20 w-32 rounded-lg"}`}>
+          <span className={`flex items-center justify-center border border-dashed border-admin-field bg-admin-canvas text-xs font-semibold text-admin-text ${round ? "size-16 rounded-full" : "h-20 w-full max-w-32 rounded-lg"}`}>
             Belum ada
           </span>
         )}
-        <button type="button" className={smallBtn} onClick={() => setOpen(true)}>
-          {value ? "Ganti gambar" : "Pilih gambar"}
-        </button>
+        <span className="flex w-full min-w-0 flex-col items-stretch gap-2">
+          <button type="button" className={smallBtn} onClick={() => setOpen(true)}>
+            {value ? "Ganti gambar" : "Pilih gambar"}
+          </button>
+          {onClear && value ? (
+            <button type="button" className={`${smallBtn} whitespace-normal text-left`} onClick={onClear}>
+              <LangText text="Pakai gambar Indonesia" />
+            </button>
+          ) : null}
+        </span>
       </div>
       <MediaPicker
         open={open}
@@ -582,6 +802,22 @@ function ImagePick({ label, value, round = false, onPick }: { label: string; val
           onPick(m);
         }}
       />
+    </div>
+  );
+}
+
+function Field({ label, value, onChange, multiline = false }: { label: string; value: string; onChange: (value: string) => void; multiline?: boolean }) {
+  const id = useId();
+  return (
+    <div>
+      <label htmlFor={id} className={`${labelClass} inline-flex items-center gap-1.5`}>
+        {typeof label === "string" ? <LangText text={label} /> : label}
+      </label>
+      {multiline ? (
+        <textarea id={id} value={value} onChange={(e) => onChange(e.target.value)} rows={3} className={`${field} mt-1 py-2 leading-normal`} />
+      ) : (
+        <input id={id} value={value} onChange={(e) => onChange(e.target.value)} className={`${field} mt-1`} />
+      )}
     </div>
   );
 }
@@ -614,12 +850,6 @@ function SlideForm({ slide, device, onApply, onCancel }: { slide: EditorSlide; d
           Judul kampanye / teks alt{need ? "" : " (opsional)"}
         </label>
         <input id={`${id}-t`} value={s.title} onChange={(e) => setS({ ...s, title: e.target.value })} maxLength={200} className={`${field} mt-1`} />
-      </div>
-      <div>
-        <label htmlFor={`${id}-te`} className={labelClass}>
-          Judul (English, opsional)
-        </label>
-        <input id={`${id}-te`} value={s.titleEn} onChange={(e) => setS({ ...s, titleEn: e.target.value })} maxLength={200} className={`${field} mt-1`} />
       </div>
       <div>
         <label htmlFor={`${id}-h`} className={labelClass}>
@@ -665,10 +895,13 @@ function SlideForm({ slide, device, onApply, onCancel }: { slide: EditorSlide; d
 function TestimonialForm({ item, onApply, onCancel }: { item: EditorTestimonial; onApply: (item: EditorTestimonial) => void; onCancel: () => void }) {
   const [t, setT] = useState(item);
   const id = useId();
-  const ready = Boolean(t.photo && t.name.trim() && t.quote.trim());
+  const ready = Boolean(t.photo && t.name.trim() && visibleText(t.quote));
   return (
     <div className="flex flex-col gap-4">
-      <ImagePick label="Foto" value={t.photo} round onPick={(m) => setT((x) => ({ ...x, photo: m.url }))} />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <ImagePick label="Foto (Indonesia)" value={t.photo} round onPick={(m) => setT((x) => ({ ...x, photo: m.url }))} />
+        <ImagePick label="Foto (English)" value={t.photoEn} round onPick={(m) => setT((x) => ({ ...x, photoEn: m.url }))} onClear={() => setT((x) => ({ ...x, photoEn: "" }))} />
+      </div>
       <div>
         <label htmlFor={`${id}-n`} className={labelClass}>
           Nama
@@ -684,22 +917,18 @@ function TestimonialForm({ item, onApply, onCancel }: { item: EditorTestimonial;
         </div>
         <div>
           <label htmlFor={`${id}-re`} className={labelClass}>
-            Peran (English, opsional)
+            <LangText text="Peran (English, opsional)" />
           </label>
           <input id={`${id}-re`} value={t.roleEn} onChange={(e) => setT({ ...t, roleEn: e.target.value })} maxLength={160} className={`${field} mt-1`} />
         </div>
       </div>
       <div>
-        <label htmlFor={`${id}-q`} className={labelClass}>
-          Kutipan
-        </label>
-        <textarea id={`${id}-q`} value={t.quote} onChange={(e) => setT({ ...t, quote: e.target.value })} rows={4} className={`${field} mt-1 py-2 leading-normal`} />
+        <p className={labelClass}>Kutipan</p>
+        <RichTextEditor initialJson={null} initialHtml={paragraphsToHtml(item.quote ? [item.quote] : [])} editable preset="text" ariaLabel="Kutipan testimoni" onChange={({ html }) => setT((x) => ({ ...x, quote: html }))} />
       </div>
       <div>
-        <label htmlFor={`${id}-qe`} className={labelClass}>
-          Kutipan (English, opsional)
-        </label>
-        <textarea id={`${id}-qe`} value={t.quoteEn} onChange={(e) => setT({ ...t, quoteEn: e.target.value })} rows={4} className={`${field} mt-1 py-2 leading-normal`} />
+        <p className={`${labelClass} inline-flex items-center gap-1.5`}><LangText text="Kutipan (English, opsional)" /></p>
+        <RichTextEditor initialJson={null} initialHtml={paragraphsToHtml(item.quoteEn ? [item.quoteEn] : [])} editable preset="text" ariaLabel="Kutipan testimoni bahasa Inggris" onChange={({ html }) => setT((x) => ({ ...x, quoteEn: html }))} />
       </div>
       <label className="flex min-h-11 items-center gap-2.5 text-sm font-semibold text-admin-ink">
         <input type="checkbox" checked={t.visible} onChange={(e) => setT({ ...t, visible: e.target.checked })} className="size-4.5 accent-primary" />

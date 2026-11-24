@@ -1,9 +1,10 @@
 import { get } from "@vercel/edge-config";
 import { type NextFetchEvent, type NextRequest, NextResponse } from "next/server";
 
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { normalizeRedirectPath } from "@/lib/redirect-rules";
+import { BUILTIN_FRONT_PAGE, readingSchema } from "@/lib/site-settings-schema";
 import { auth } from "@/server/auth";
 import { getDb, schema } from "@/server/db";
 import { buildRedirectMap } from "@/server/redirects-sync";
@@ -66,6 +67,30 @@ const MAINTENANCE_HTML = `<!doctype html><html lang="id"><head><meta charset="ut
 
 const hasSessionCookie = (req: NextRequest) => req.cookies.has("authjs.session-token") || req.cookies.has("__Secure-authjs.session-token");
 
+let frontCache: { at: number; path: string } | null = null;
+
+/** Halaman depan dari settings.reading. Hanya path yang lolos skema, dan hanya bila halamannya terbit. */
+async function frontPagePath(): Promise<string> {
+  if (frontCache && Date.now() - frontCache.at < 30_000) return frontCache.path;
+  try {
+    const [row] = await getDb().select({ value: schema.settings.value }).from(schema.settings).where(eq(schema.settings.key, "reading")).limit(1);
+    const parsed = readingSchema.safeParse(row?.value);
+    let path = parsed.success ? parsed.data.frontPage : BUILTIN_FRONT_PAGE;
+    if (path !== BUILTIN_FRONT_PAGE) {
+      const [page] = await getDb()
+        .select({ id: schema.pages.id })
+        .from(schema.pages)
+        .where(and(eq(schema.pages.path, path), eq(schema.pages.status, "published")))
+        .limit(1);
+      if (!page) path = BUILTIN_FRONT_PAGE;
+    }
+    frontCache = { at: Date.now(), path };
+    return path;
+  } catch {
+    return frontCache?.path ?? BUILTIN_FRONT_PAGE;
+  }
+}
+
 export default async function proxy(req: NextRequest, event: NextFetchEvent) {
   const { pathname } = req.nextUrl;
   if (pathname === "/admin" || pathname.startsWith("/admin/")) {
@@ -74,6 +99,17 @@ export default async function proxy(req: NextRequest, event: NextFetchEvent) {
 
   if (!hasSessionCookie(req) && (await maintenanceOn())) {
     return new NextResponse(MAINTENANCE_HTML, { status: 503, headers: { "content-type": "text/html; charset=utf-8", "retry-after": "1800", "cache-control": "no-store" } });
+  }
+
+  const front = await frontPagePath();
+  if (front !== BUILTIN_FRONT_PAGE) {
+    const english = pathname === "/en" || pathname.startsWith("/en/");
+    const path = normalizeRedirectPath(english ? pathname.slice(3) || "/" : pathname);
+    if (path === normalizeRedirectPath(`/${front}`)) {
+      const target = new URL(english ? "/en/" : "/", req.nextUrl.origin);
+      target.search = req.nextUrl.search;
+      return NextResponse.redirect(target, 302);
+    }
   }
 
   const map = await redirectMap();

@@ -18,6 +18,7 @@ import {
   updateReportAction,
 } from "@/app/admin/(panel)/laporan/actions";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
+import { LangText } from "@/components/admin/LangFlag";
 import { Dialog } from "@/components/admin/Dialog";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { useToast } from "@/components/admin/Toast";
@@ -543,13 +544,13 @@ function LegalForm({ doc, onSave, onCancel }: { doc: AdminLegalDoc | null; onSav
       </div>
       <div>
         <label htmlFor={`${id}-ke`} className={labelClass}>
-          Jenis dokumen (English, opsional)
+          <LangText text="Jenis dokumen (English, opsional)" />
         </label>
         <input id={`${id}-ke`} value={v.kindEn} onChange={(e) => setV({ ...v, kindEn: e.target.value })} maxLength={120} className={`${field} mt-1`} />
       </div>
       <div>
         <label htmlFor={`${id}-te`} className={labelClass}>
-          Teks dokumen (English, opsional)
+          <LangText text="Teks dokumen (English, opsional)" />
         </label>
         <textarea id={`${id}-te`} value={v.textEn} onChange={(e) => setV({ ...v, textEn: e.target.value })} rows={4} maxLength={2000} className={`${field} mt-1 py-2 leading-normal`} />
         <p className="mt-1 text-xs text-admin-text">Kosong = halaman /en/ memakai teks Indonesia.</p>

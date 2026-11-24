@@ -12,12 +12,15 @@ import {
 import { PreviewBanner } from "@/components/content/PreviewBanner";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/config/site";
+import { ChosenFront, chosenFrontMetadata } from "@/components/site/ChosenFront";
 import { englishSeo } from "@/content/localized";
 import { initLocale } from "@/i18n/request";
 import { isHomePreview } from "@/lib/home";
 import { languageAlternates } from "@/lib/seo";
+import { BUILTIN_FRONT_PAGE } from "@/lib/site-settings-schema";
+import { getFrontPagePath } from "@/server/site-settings";
 
-type LangProps = { params: Promise<{ lang: string }> };
+type LangProps = { params: Promise<{ lang: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
 
 /**
  * Beranda dirender ulang paling lama tiap 10 menit agar jadwal tayang slide (mulai/selesai,
@@ -38,6 +41,8 @@ const SEO = {
 
 export async function generateMetadata({ params }: LangProps): Promise<Metadata> {
   const locale = await initLocale(params);
+  const front = await getFrontPagePath();
+  if (front !== BUILTIN_FRONT_PAGE) return chosenFrontMetadata(front);
   const { title, description } = SEO[locale];
   const url = locale === "en" ? "/en/" : "/";
   return {
@@ -48,7 +53,10 @@ export async function generateMetadata({ params }: LangProps): Promise<Metadata>
   };
 }
 
-export default async function HomePage({ params }: LangProps) {
+export default async function HomePage({ params, searchParams }: LangProps) {
+  await initLocale(params);
+  const front = await getFrontPagePath();
+  if (front !== BUILTIN_FRONT_PAGE) return <ChosenFront path={front} query={await searchParams} />;
   const { title } = SEO[await initLocale(params)];
   return (
     <>

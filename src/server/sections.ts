@@ -2,6 +2,8 @@ import "server-only";
 
 import { z } from "zod";
 
+import { parseVisualNodes } from "@/lib/visual-page";
+
 /*
  * Tipe section halaman (kolom `pages.sections`) — divalidasi Zod saat disimpan dari admin
  * dan saat dibaca untuk dirender. Renderer publik: src/components/site/sections/*;
@@ -181,6 +183,19 @@ const dataSchemas = {
 
   /* ---------- Richtext ---------- */
   richtext: z.object({ html: z.string() }),
+
+  /**
+   * Pohon Visual Builder. Halaman klasik tidak memakai tipe ini.
+   * `nodes` dinormalisasi di transform; isi yang tidak sah gagal disimpan.
+   */
+  visual: z
+    .object({ nodes: z.array(z.unknown()).max(80) })
+    .superRefine((value, ctx) => {
+      for (const issue of parseVisualNodes(value.nodes).issues) {
+        ctx.addIssue({ code: "custom", message: issue.message, path: ["nodes", ...issue.path] });
+      }
+    })
+    .transform((value) => ({ nodes: parseVisualNodes(value.nodes).nodes })),
 } as const;
 
 export type SectionType = keyof typeof dataSchemas;

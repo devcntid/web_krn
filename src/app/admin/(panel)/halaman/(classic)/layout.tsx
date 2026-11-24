@@ -18,7 +18,7 @@ export default async function HalamanLayout({ children }: Readonly<{ children: R
     <>
       <PageHeader
         title="Halaman"
-        description="Susun halaman dari section siap pakai — tanpa page builder berat."
+        description="Susun halaman dari section, atau buat halaman baru dengan Visual Builder."
         actions={
           <Link
             href="/admin/halaman/baru/"

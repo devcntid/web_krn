@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { EmptyState } from "@/components/admin/EmptyState";
 import { PageEditor } from "@/components/admin/halaman/PageEditor";
+import { isVisualPage } from "@/lib/visual-page";
 import { STATIC_ROUTES } from "@/config/routes";
 import { can, requireUser } from "@/server/permissions";
 import { listCategoryOptions } from "@/server/repos/admin-posts";
@@ -16,6 +17,8 @@ export default async function HalamanEditPage({ params }: { params: Promise<{ id
 
   const [page, categories] = await Promise.all([getEditorPage(Number(id)), listCategoryOptions()]);
   if (!page || page.status === "trashed") notFound();
+
+  if (isVisualPage(page.sections)) redirect(`/admin/halaman/${page.id}/visual/`);
 
   if (SYSTEM_PAGE_PATHS.has(page.path)) {
     return (
