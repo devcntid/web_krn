@@ -192,17 +192,14 @@ export function AdminShell({ nav, user, logoutAction, children }: Props) {
             >
               {initials(user.name)}
             </span>
-            <span className="min-w-0 flex-1">
-              <span
-                className="block truncate text-[13px] font-bold text-white"
-                title={user.email}
-              >
+            <Link href="/admin/profil/" className="min-w-0 flex-1 rounded-lg focus-visible:outline-2 focus-visible:outline-accent" title={user.email}>
+              <span className="block truncate text-[13px] font-bold text-white hover:underline">
                 {user.name}
               </span>
               <span className="block text-xs text-admin-sidebar-muted">
                 {user.roleLabel}
               </span>
-            </span>
+            </Link>
             <form action={logoutAction}>
               <button
                 type="submit"

@@ -6,7 +6,7 @@ import { and, desc, eq, gt, isNull, ne, sql } from "drizzle-orm";
 
 import type { AbilityRow, AdminUser, PendingInvite, UserRole, UsersResult } from "@/types/admin-users";
 import { logActivity } from "./activity";
-import { MIN_PASSWORD_LENGTH, hashPassword } from "./auth/password";
+import { MIN_PASSWORD_LENGTH, hashPassword, verifyPassword } from "./auth/password";
 import { getDb, schema } from "./db";
 import type { AuthUser } from "./permissions";
 import { type Ability, ROLE_ABILITIES, TOTP_REQUIRED_ROLES } from "./roles";
@@ -212,6 +212,105 @@ export function resetTotp(admin: AuthUser, id: string) {
     await getDb().update(users).set({ totpSecret: null, totpEnabledAt: null, totpLastStep: null }).where(eq(users.id, id));
     await logActivity({ userId: admin.id, action: "reset_2fa", entity: "user", entityId: id, summary: `Mereset 2FA ${u.email}` });
     return { ok: true, message: `2FA ${u.email} direset. Ia akan mendaftarkan ulang saat masuk berikutnya.` };
+  });
+}
+
+export type OwnProfile = {
+  name: string;
+  email: string;
+  role: UserRole;
+  hasPassword: boolean;
+  totpEnabled: boolean;
+};
+
+/** Profil akun yang sedang masuk. Tidak mengirim hash password. */
+export async function ownProfile(user: AuthUser): Promise<OwnProfile> {
+  const [row] = await getDb()
+    .select({ name: users.name, email: users.email, role: users.role, passwordHash: users.passwordHash, totpEnabledAt: users.totpEnabledAt })
+    .from(users)
+    .where(eq(users.id, user.id))
+    .limit(1);
+  if (!row) throw new UError("Pengguna tidak ditemukan.");
+  return { name: row.name ?? "", email: row.email, role: row.role, hasPassword: Boolean(row.passwordHash), totpEnabled: Boolean(row.totpEnabledAt) };
+}
+
+/** Ubah nama dan, bila diisi, password akun sendiri. Email dan peran tidak diubah dari sini. */
+export function updateOwnProfile(user: AuthUser, input: { name: string; currentPassword: string; newPassword: string; confirmPassword: string }) {
+  return run(async () => {
+    const name = input.name.trim().replace(/\s+/g, " ").slice(0, 120);
+    if (!name) throw new UError("Nama wajib diisi.");
+    const currentPassword = input.currentPassword;
+    const newPassword = input.newPassword;
+    const confirmPassword = input.confirmPassword;
+    const wantsPassword = Boolean(currentPassword || newPassword || confirmPassword);
+    const [row] = await getDb().select({ name: users.name, email: users.email, passwordHash: users.passwordHash }).from(users).where(eq(users.id, user.id)).limit(1);
+    if (!row) throw new UError("Pengguna tidak ditemukan.");
+
+    let passwordHash = row.passwordHash;
+    if (wantsPassword) {
+      if (newPassword.length < MIN_PASSWORD_LENGTH) throw new UError(`Password baru minimal ${MIN_PASSWORD_LENGTH} karakter.`);
+      if (newPassword.length > 200) throw new UError("Password terlalu panjang.");
+      if (newPassword !== confirmPassword) throw new UError("Password baru tidak sama.");
+      if (row.passwordHash) {
+        if (!currentPassword) throw new UError("Masukkan password saat ini.");
+        if (!(await verifyPassword(row.passwordHash, currentPassword))) throw new UError("Password saat ini salah.");
+        if (await verifyPassword(row.passwordHash, newPassword)) throw new UError("Password baru harus berbeda dari password saat ini.");
+      }
+      passwordHash = await hashPassword(newPassword);
+    }
+
+    const nameChanged = name !== (row.name ?? "");
+    if (!nameChanged && !wantsPassword) return { ok: true, message: "Tidak ada perubahan." };
+    await getDb().update(users).set({ name, ...(wantsPassword ? { passwordHash } : {}) }).where(eq(users.id, user.id));
+    await logActivity({
+      userId: user.id,
+      action: "edit",
+      entity: "user",
+      entityId: user.id,
+      summary: wantsPassword ? `Memperbarui profil dan password ${row.email}` : `Memperbarui nama profil ${row.email}`,
+      diff: nameChanged ? { name: [row.name ?? "", name] } : null,
+    });
+    return { ok: true, message: wantsPassword ? "Profil dan password disimpan." : "Profil disimpan." };
+  });
+}
+
+/** Super Admin mengubah nama, email, atau password pengguna lain. Akun sendiri diubah lewat Profil. */
+export function updateOtherUser(admin: AuthUser, id: string, input: { name: string; email: string; newPassword: string; confirmPassword: string }) {
+  return run(async () => {
+    if (id === admin.id) throw new UError("Akun sendiri diubah dari halaman Profil.");
+    const name = input.name.trim().replace(/\s+/g, " ").slice(0, 120);
+    const email = input.email.trim().toLowerCase();
+    if (!name) throw new UError("Nama wajib diisi.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 200) throw new UError("Alamat email tidak sah.");
+    const newPassword = input.newPassword;
+    const confirmPassword = input.confirmPassword;
+    const wantsPassword = Boolean(newPassword || confirmPassword);
+    if (wantsPassword) {
+      if (newPassword.length < MIN_PASSWORD_LENGTH) throw new UError(`Password baru minimal ${MIN_PASSWORD_LENGTH} karakter.`);
+      if (newPassword.length > 200) throw new UError("Password terlalu panjang.");
+      if (newPassword !== confirmPassword) throw new UError("Password baru tidak sama.");
+    }
+    const u = await target(id);
+    const [taken] = await getDb().select({ id: users.id }).from(users).where(sql`lower(${users.email}) = ${email}`).limit(1);
+    if (taken && taken.id !== id) throw new UError("Email ini sudah dipakai akun lain.");
+    const diff: Record<string, unknown> = {};
+    if (name !== (u.name ?? "")) diff.name = [u.name ?? "", name];
+    if (email !== u.email.toLowerCase()) diff.email = [u.email, email];
+    if (!Object.keys(diff).length && !wantsPassword) return { ok: true, message: "Tidak ada perubahan." };
+    const passwordHash = wantsPassword ? await hashPassword(newPassword) : undefined;
+    await getDb()
+      .update(users)
+      .set({ name, email, ...(passwordHash ? { passwordHash } : {}) })
+      .where(eq(users.id, id));
+    await logActivity({
+      userId: admin.id,
+      action: "edit",
+      entity: "user",
+      entityId: id,
+      summary: wantsPassword ? `Mengubah profil dan password ${u.email}` : `Mengubah profil ${u.email}`,
+      diff,
+    });
+    return { ok: true, message: wantsPassword ? `Profil dan password ${email} disimpan.` : `Profil ${email} disimpan.` };
   });
 }
 

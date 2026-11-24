@@ -28,3 +28,12 @@ export const changeRoleAction = async (id: string, role: string) => act((a) => s
 export const setDisabledAction = async (id: string, disabled: boolean) => act((a) => svc.setDisabled(a, String(id), disabled === true));
 export const resetTotpAction = async (id: string) => act((a) => svc.resetTotp(a, String(id)));
 export const deleteUserAction = async (id: string) => act((a) => svc.deleteUser(a, String(id)));
+export const updateUserAction = async (id: string, input: { name: string; email: string; newPassword: string; confirmPassword: string }) =>
+  act((a) =>
+    svc.updateOtherUser(a, String(id), {
+      name: String(input?.name ?? ""),
+      email: String(input?.email ?? ""),
+      newPassword: String(input?.newPassword ?? ""),
+      confirmPassword: String(input?.confirmPassword ?? ""),
+    }),
+  );

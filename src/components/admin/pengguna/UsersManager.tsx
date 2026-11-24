@@ -4,7 +4,7 @@ import { Check, Minus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 
-import { changeRoleAction, deleteUserAction, inviteUserAction, resetTotpAction, revokeInviteAction, setDisabledAction } from "@/app/admin/(panel)/pengguna/actions";
+import { changeRoleAction, deleteUserAction, inviteUserAction, resetTotpAction, revokeInviteAction, setDisabledAction, updateUserAction } from "@/app/admin/(panel)/pengguna/actions";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { Dialog } from "@/components/admin/Dialog";
 import { PageHeader } from "@/components/admin/PageHeader";
@@ -30,6 +30,7 @@ export function UsersManager({ users, invites, matrix }: { users: AdminUser[]; i
   const router = useRouter();
   const toast = useToast();
   const [inviting, setInviting] = useState(false);
+  const [editing, setEditing] = useState<AdminUser | null>(null);
   const [confirm, setConfirm] = useState<Confirm | null>(null);
   const [busy, setBusy] = useState(false);
   const activeSupers = users.filter((u) => u.role === "super_admin" && !u.disabled).length;
@@ -129,6 +130,9 @@ export function UsersManager({ users, invites, matrix }: { users: AdminUser[]; i
                   </td>
                   <td className="px-4.5 py-2 whitespace-nowrap text-admin-text">{u.lastActiveAt ? dateFmt.format(new Date(u.lastActiveAt)) : "Belum pernah"}</td>
                   <td className="px-4.5 py-1 text-right whitespace-nowrap">
+                    <button type="button" className={linkBtn} disabled={busy || u.isSelf} title={u.isSelf ? "Ubah akun sendiri dari Profil" : undefined} onClick={() => setEditing(u)}>
+                      Ubah<span className="sr-only"> {u.email}</span>
+                    </button>
                     <button
                       type="button"
                       className={linkBtn}
@@ -168,6 +172,20 @@ export function UsersManager({ users, invites, matrix }: { users: AdminUser[]; i
         </div>
         {activeSupers <= 1 ? <p className="border-t border-admin-line px-4.5 py-2 text-xs text-admin-text">Super Admin aktif terakhir tidak bisa diturunkan, dinonaktifkan, atau dihapus.</p> : null}
       </section>
+
+      <Dialog open={editing !== null} title={editing ? `Ubah ${editing.email}` : "Ubah pengguna"} onClose={() => setEditing(null)}>
+        {editing ? (
+          <EditUserForm
+            user={editing}
+            onClose={() => setEditing(null)}
+            onSave={async (input) => {
+              const result = await run(updateUserAction(editing.id, input));
+              if (result?.ok) setEditing(null);
+              return result;
+            }}
+          />
+        ) : null}
+      </Dialog>
 
       {invites.length ? (
         <section aria-labelledby="inv-h" className={`${card} p-4.5`}>
@@ -248,6 +266,94 @@ export function UsersManager({ users, invites, matrix }: { users: AdminUser[]; i
         onCancel={() => setConfirm(null)}
       />
     </>
+  );
+}
+
+function EditUserForm({
+  user,
+  onSave,
+  onClose,
+}: {
+  user: AdminUser;
+  onSave: (input: { name: string; email: string; newPassword: string; confirmPassword: string }) => Promise<UsersResult | null>;
+  onClose: () => void;
+}) {
+  const id = useId();
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const mismatch = confirmPassword.length > 0 && confirmPassword !== newPassword;
+
+  return (
+    <form
+      onSubmit={async (event) => {
+        event.preventDefault();
+        if (mismatch) return;
+        setBusy(true);
+        setError("");
+        const result = await onSave({ name, email, newPassword, confirmPassword });
+        if (result && !result.ok) setError(result.error);
+        setBusy(false);
+      }}
+      className="flex flex-col gap-4"
+    >
+      <div>
+        <label htmlFor={`${id}-n`} className={labelClass}>
+          Nama
+        </label>
+        <input id={`${id}-n`} value={name} onChange={(event) => setName(event.target.value)} required maxLength={120} autoComplete="off" className={`${field} mt-1`} />
+      </div>
+      <div>
+        <label htmlFor={`${id}-e`} className={labelClass}>
+          Email
+        </label>
+        <input id={`${id}-e`} type="email" value={email} onChange={(event) => setEmail(event.target.value)} required maxLength={200} autoComplete="off" className={`${field} mt-1`} />
+      </div>
+      <div>
+        <label htmlFor={`${id}-p`} className={labelClass}>
+          Password baru
+        </label>
+        <input id={`${id}-p`} type="password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} autoComplete="new-password" maxLength={200} className={`${field} mt-1`} />
+        <p className="mt-1 text-xs text-admin-text">Kosongkan bila password tidak diubah. Minimal 12 karakter.</p>
+      </div>
+      <div>
+        <label htmlFor={`${id}-c`} className={labelClass}>
+          Ulangi password baru
+        </label>
+        <input
+          id={`${id}-c`}
+          type="password"
+          value={confirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          autoComplete="new-password"
+          maxLength={200}
+          aria-invalid={mismatch ? true : undefined}
+          aria-describedby={mismatch ? `${id}-m` : undefined}
+          className={`${field} mt-1`}
+        />
+        {mismatch ? (
+          <p id={`${id}-m`} className="mt-1 text-xs font-semibold text-admin-danger">
+            Password tidak sama.
+          </p>
+        ) : null}
+      </div>
+      {error ? (
+        <p role="alert" className="rounded-admin bg-admin-danger-bg p-3 text-sm font-semibold text-admin-danger">
+          {error}
+        </p>
+      ) : null}
+      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+        <button type="button" className={ghostBtn} onClick={onClose}>
+          Batal
+        </button>
+        <button type="submit" className={primaryBtn} disabled={busy || mismatch}>
+          {busy ? "Menyimpan…" : "Simpan"}
+        </button>
+      </div>
+    </form>
   );
 }
 
