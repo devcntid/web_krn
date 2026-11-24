@@ -39,7 +39,8 @@ export function MediaDropzone({
 
   const send = async (file: File) => {
     const key = `u${counter.current++}`;
-    const problem = only && mediaKindOf(file.type) !== only ? `Hanya file ${only.toUpperCase()} yang bisa diunggah di sini.` : uploadProblem(file);
+    const kindLabel = { image: "gambar", pdf: "PDF", video: "video" } as const;
+    const problem = only && mediaKindOf(file.type) !== only ? `Hanya ${kindLabel[only]} yang bisa diunggah di sini.` : uploadProblem(file);
     setJobs((list) => [...list.slice(-7), { key, name: file.name, state: problem ? "error" : "uploading", percent: 0, message: problem ?? undefined }]);
     if (problem) return;
     try {

@@ -381,6 +381,7 @@ function ReportForm({
     <form
       onSubmit={async (e) => {
         e.preventDefault();
+        if (e.target !== e.currentTarget) return;
         setBusy(true);
         await onSave({ ...v, coverMediaId: cover?.id ?? null });
         setBusy(false);
@@ -467,6 +468,7 @@ function AuditForm({ audit, onSave, onCancel }: { audit: AdminAudit | null; onSa
     <form
       onSubmit={async (e) => {
         e.preventDefault();
+        if (e.target !== e.currentTarget) return;
         setBusy(true);
         await onSave({ ...v, pdfMediaId: pdf?.id ?? null });
         setBusy(false);
@@ -524,6 +526,7 @@ function LegalForm({ doc, onSave, onCancel }: { doc: AdminLegalDoc | null; onSav
     <form
       onSubmit={async (e) => {
         e.preventDefault();
+        if (e.target !== e.currentTarget) return;
         setBusy(true);
         await onSave(v);
         setBusy(false);

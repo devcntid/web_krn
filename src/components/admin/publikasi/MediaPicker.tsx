@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useState, useTransition } from "react";
+import { useEffect, useId, useRef, useState, useTransition } from "react";
 
 import { searchMediaAction } from "@/app/admin/(panel)/publikasi/actions";
 import { Dialog } from "@/components/admin/Dialog";
@@ -45,6 +45,14 @@ function PickerBody({ onSelect }: { onSelect: (media: MediaChoice) => void }) {
   const [loading, startTransition] = useTransition();
   const altId = useId();
   const searchId = useId();
+  const uploaded = useRef<MediaChoice[]>([]);
+
+  const withUploads = (page: MediaPage | null): MediaPage | null => {
+    const extra = uploaded.current.filter((item) => !page?.items.some((row) => row.id === item.id));
+    if (!page && extra.length === 0) return null;
+    const base = page ?? { items: [], total: 0, page: 1, pageSize: 24 };
+    return { ...base, items: [...extra, ...base.items], total: Math.max(base.total, extra.length + base.items.length) };
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -52,7 +60,7 @@ function PickerBody({ onSelect }: { onSelect: (media: MediaChoice) => void }) {
       try {
         const result = await searchMediaAction(applied.q, applied.page);
         if (!cancelled) {
-          setData(result);
+          setData(withUploads(result));
           setFailed(false);
         }
       } catch {
@@ -94,11 +102,12 @@ function PickerBody({ onSelect }: { onSelect: (media: MediaChoice) => void }) {
 
       <MediaDropzone
         compact
+        only="image"
         onUploaded={(item) => {
           if (!item.mime.startsWith("image/")) return;
           const choice = { id: item.id, url: item.url, alt: item.alt, width: item.width, height: item.height };
-          // Tampilkan unggahan baru di depan dan langsung pilih; teks alt tetap wajib diisi.
-          setData((d) => (d ? { ...d, items: [choice, ...d.items.filter((x) => x.id !== choice.id)], total: d.total + 1 } : d));
+          uploaded.current = [choice, ...uploaded.current.filter((row) => row.id !== choice.id)];
+          setData((current) => withUploads(current));
           setSelected(choice);
           setAlt(choice.alt);
         }}
