@@ -28,8 +28,12 @@ const imageSrc = z
   .max(500)
   .refine((v) => v === "" || v.startsWith("/wp-content/uploads/") || /^https:\/\/[^\s]+$/i.test(v), "Gambar harus dari pustaka media");
 
+/** Judul tab browser pada beranda. Nilai lama di database belum punya kolom ini. */
+export const DEFAULT_DOCUMENT_TITLE = "Relawan Nusantara - Jembatan Kebaikan untuk Kemanusiaan";
+
 export const identitySchema = z.object({
   name: text(80).min(1, "Nama situs wajib diisi"),
+  documentTitle: text(120).min(1, "Judul tab browser wajib diisi").default(DEFAULT_DOCUMENT_TITLE),
   tagline: text(200),
   logo: z.object({
     src: imageSrc.refine((v) => v !== "", "Logo wajib dipilih"),

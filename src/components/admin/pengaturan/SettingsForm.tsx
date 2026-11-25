@@ -199,6 +199,19 @@ function IdentityCard({ value, onChange }: { value: SiteSettings["identity"]; on
     <Card title="Identitas" className="min-w-0">
       <div className="space-y-4">
         <div>
+          <label htmlFor={`${id}-title`} className={labelClass}>
+            Judul tab browser
+          </label>
+          <input
+            id={`${id}-title`}
+            className={field}
+            value={value.documentTitle}
+            maxLength={120}
+            onChange={(e) => onChange({ ...value, documentTitle: e.target.value })}
+          />
+          <p className="mt-1 text-[13px] leading-relaxed text-admin-text">Tampil di tab browser pada beranda, misalnya “Relawan Nusantara - Jembatan Kebaikan untuk Kemanusiaan”.</p>
+        </div>
+        <div>
           <label htmlFor={`${id}-name`} className={labelClass}>
             Nama situs
           </label>

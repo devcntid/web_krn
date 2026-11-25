@@ -8,7 +8,7 @@
  * Komponen publik tidak boleh membaca `siteDefaults` langsung.
  */
 
-import type { SiteSettings } from "@/lib/site-settings-schema";
+import { DEFAULT_DOCUMENT_TITLE, type SiteSettings } from "@/lib/site-settings-schema";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://relawannusantara.org";
@@ -27,6 +27,7 @@ export const SAFFA_IMAGE = "/wp-content/uploads/2026/09/Saffa.png";
 export const siteDefaults: SiteSettings = {
   identity: {
     name: site.name,
+    documentTitle: DEFAULT_DOCUMENT_TITLE,
     tagline: "Berawal dari Kepedulian, Bergerak Menjadi Jembatan Kebaikan",
     logo: { src: "/wp-content/uploads/2026/05/logo-rn.png", width: 150, height: 34 },
     favicon: "",

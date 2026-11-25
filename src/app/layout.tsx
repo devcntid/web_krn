@@ -11,7 +11,13 @@ import { getSiteSettings } from "@/server/site-settings";
 export async function generateMetadata(): Promise<Metadata> {
   const { identity } = await getSiteSettings();
   const favicon = identity.favicon ? mediaUrl(identity.favicon) : "";
-  return { ...baseMetadata, icons: favicon ? { icon: [{ url: favicon }], apple: [{ url: favicon }] } : siteIcons() };
+  return {
+    ...baseMetadata,
+    applicationName: identity.name,
+    title: { default: identity.documentTitle, template: `%s - ${identity.name}` },
+    openGraph: { ...baseMetadata.openGraph, siteName: identity.name },
+    icons: favicon ? { icon: [{ url: favicon }], apple: [{ url: favicon }] } : siteIcons(),
+  };
 }
 
 const baseMetadata: Metadata = {

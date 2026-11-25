@@ -18,7 +18,7 @@ import { initLocale } from "@/i18n/request";
 import { isHomePreview } from "@/lib/home";
 import { languageAlternates } from "@/lib/seo";
 import { BUILTIN_FRONT_PAGE } from "@/lib/site-settings-schema";
-import { getFrontPagePath } from "@/server/site-settings";
+import { getFrontPagePath, getSiteSettings } from "@/server/site-settings";
 
 type LangProps = { params: Promise<{ lang: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
 
@@ -32,7 +32,6 @@ export const revalidate = 600;
 // "ScrollUntukEksplorasi" diganti; halaman kini punya satu H1.
 const SEO = {
   id: {
-    title: `${site.name} - Jembatan Kebaikan untuk Kemanusiaan`,
     description:
       "Relawan Nusantara adalah lembaga kemanusiaan yang menjadi jembatan kebaikan melalui aksi kemanusiaan, pendidikan, ekonomi, dan lingkungan di Indonesia dan dunia.",
   },
@@ -43,7 +42,9 @@ export async function generateMetadata({ params }: LangProps): Promise<Metadata>
   const locale = await initLocale(params);
   const front = await getFrontPagePath();
   if (front !== BUILTIN_FRONT_PAGE) return chosenFrontMetadata(front);
-  const { title, description } = SEO[locale];
+  const { identity } = await getSiteSettings();
+  const title = locale === "en" ? SEO.en.title : identity.documentTitle;
+  const description = locale === "en" ? SEO.en.description : SEO.id.description;
   const url = locale === "en" ? "/en/" : "/";
   return {
     title: { absolute: title },
@@ -54,10 +55,11 @@ export async function generateMetadata({ params }: LangProps): Promise<Metadata>
 }
 
 export default async function HomePage({ params, searchParams }: LangProps) {
-  await initLocale(params);
+  const locale = await initLocale(params);
   const front = await getFrontPagePath();
   if (front !== BUILTIN_FRONT_PAGE) return <ChosenFront path={front} query={await searchParams} />;
-  const { title } = SEO[await initLocale(params)];
+  const { identity } = await getSiteSettings();
+  const title = locale === "en" ? SEO.en.title : identity.documentTitle;
   return (
     <>
       <h1 className="sr-only">{title}</h1>
