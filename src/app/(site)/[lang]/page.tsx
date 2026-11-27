@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: LangProps): Promise<Metadata>
   if (front !== BUILTIN_FRONT_PAGE) return chosenFrontMetadata(front);
   const { identity } = await getSiteSettings();
   const title = locale === "en" ? SEO.en.title : identity.documentTitle;
+  // Judul tab dari pengaturan; deskripsi meta tetap teks SEO panjang (tagline terlalu pendek untuk meta).
   const description = locale === "en" ? SEO.en.description : SEO.id.description;
   const url = locale === "en" ? "/en/" : "/";
   return {

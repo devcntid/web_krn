@@ -17,5 +17,5 @@ export default async function VisualBuilderPage({ params }: { params: Promise<{ 
   const page = await getEditorPage(Number(id));
   if (!page || page.status === "trashed") notFound();
   if (!isVisualPage(page.sections)) redirect(`/admin/halaman/${page.id}/`);
-  return <VisualBuilder page={page} />;
+  return <VisualBuilder page={page} allowCustomJs={can(user, "system.manage")} />;
 }

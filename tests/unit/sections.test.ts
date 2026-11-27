@@ -44,7 +44,7 @@ describe("sections (Zod)", () => {
     expect(parseSections("x")).toEqual({ sections: [], issues: [] });
   });
 
-  it("25 tipe section terdaftar", () => {
-    expect(SECTION_TYPES.length).toBe(25);
+  it("26 tipe section terdaftar", () => {
+    expect(SECTION_TYPES.length).toBe(26);
   });
 });

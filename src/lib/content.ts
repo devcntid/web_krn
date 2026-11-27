@@ -43,6 +43,9 @@ const allPosts = cache((locale: Locale) =>
 /** Semua post terbit, terbaru dulu. Di versi Inggris, judul & ringkasan memakai terjemahan bila ada. */
 export const getAllPosts = (): Promise<PostSummary[]> => allPosts(getLocale());
 
+/** Semua post terbit untuk locale tertentu (sitemap, hreflang). */
+export const getPostsByLocale = (locale: Locale): Promise<PostSummary[]> => allPosts(locale);
+
 const postBySlug = cache((slug: string, locale: Locale) =>
   unstable_cache(() => findPublishedPost(slug, locale), ["content:post", slug, locale], { tags: [CACHE_TAGS.posts, CACHE_TAGS.post(slug)] })(),
 );

@@ -1,12 +1,15 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { ArrowDown } from "lucide-react";
 
 import { pageLabels } from "@/content/localized";
 import { getLocale } from "@/i18n/request";
-import { Carousel } from "@/components/ui/Carousel";
 import { getHomeContent } from "@/lib/home";
 import { mediaUrl } from "@/lib/media";
 import { activeSlides } from "@/server/home";
+
+/** Embla di-code-split agar JS carousel tidak membebani LCP beranda. */
+const Carousel = dynamic(() => import("@/components/ui/Carousel").then((m) => m.Carousel));
 
 /**
  * Hero beranda: slider desktop (5:3, link kampanye) & slider mobile (potret) terpisah, seperti Smart Slider 3.

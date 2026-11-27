@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 
 import "./globals.css";
 import { manrope, poppins, poppinsExtra } from "./fonts";
@@ -40,9 +41,11 @@ export const viewport: Viewport = {
 };
 
 /** Root layout: hanya <html>, font, dan metadata dasar. Kerangka situs ada di (site)/layout.tsx. */
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  // Locale dari proxy (`x-locale`); default id untuk /admin dan request tanpa header.
+  const lang = (await headers()).get("x-locale") === "en" ? "en" : "id";
   return (
-    <html lang="id" className={`${poppins.variable} ${poppinsExtra.variable} ${manrope.variable}`}>
+    <html lang={lang} className={`${poppins.variable} ${poppinsExtra.variable} ${manrope.variable}`}>
       <body>{children}</body>
     </html>
   );

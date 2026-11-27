@@ -91,6 +91,15 @@ async function frontPagePath(): Promise<string> {
   }
 }
 
+/** Teruskan locale ke root layout (`html lang`) tanpa memaksa seluruh pohon jadi client. */
+function nextWithLocale(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const english = pathname === "/en" || pathname.startsWith("/en/");
+  const headers = new Headers(req.headers);
+  headers.set("x-locale", english ? "en" : "id");
+  return NextResponse.next({ request: { headers } });
+}
+
 export default async function proxy(req: NextRequest, event: NextFetchEvent) {
   const { pathname } = req.nextUrl;
   if (pathname === "/admin" || pathname.startsWith("/admin/")) {
@@ -113,11 +122,11 @@ export default async function proxy(req: NextRequest, event: NextFetchEvent) {
   }
 
   const map = await redirectMap();
-  if (!Object.keys(map).length) return NextResponse.next();
+  if (!Object.keys(map).length) return nextWithLocale(req);
   const english = pathname === "/en" || pathname.startsWith("/en/");
   const path = normalizeRedirectPath(english ? pathname.slice(3) || "/" : pathname);
   const hit = map[path];
-  if (!hit) return NextResponse.next();
+  if (!hit) return nextWithLocale(req);
   const [destination, status] = hit;
   if (status === 410) return new NextResponse("Halaman ini sudah dihapus.", { status: 410, headers: { "content-type": "text/plain; charset=utf-8" } });
   // Tujuan internal di versi Inggris tetap di /en/.

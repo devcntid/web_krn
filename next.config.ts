@@ -30,8 +30,25 @@ const ADMIN_CSP = csp([
   "frame-ancestors 'none'",
 ]);
 
-/** CSP situs publik: konten lama WordPress memuat embed & skrip pihak ketiga, jadi hanya direktif aman. */
-const SITE_CSP = csp(["object-src 'none'", "base-uri 'self'", "frame-ancestors 'self'", "upgrade-insecure-requests"]);
+/**
+ * CSP situs publik (bertahap): allowlist untuk Next inline, GA4, Meta Pixel, YouTube/Drive/Heyzine,
+ * media Blob, plus `unsafe-inline` untuk SiteCode / visual JS (hanya Super Admin yang boleh menulis JS).
+ */
+const SITE_CSP = csp([
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' blob: data: https://*.public.blob.vercel-storage.com https://i.ytimg.com https://www.facebook.com https://www.google-analytics.com https://www.googletagmanager.com",
+  "font-src 'self' data:",
+  `connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com${mediaHost ? ` ${mediaHost.origin}` : ""}${isDev ? " ws: http://localhost:*" : ""}`,
+  "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://heyzine.com https://www.facebook.com",
+  "media-src 'self' blob: https://*.public.blob.vercel-storage.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+  "upgrade-insecure-requests",
+]);
 
 const COMMON_HEADERS = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

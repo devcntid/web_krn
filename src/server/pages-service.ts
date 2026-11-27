@@ -8,7 +8,7 @@ import type { CreatePageInput, CreatePageResult, SavePageInput, SavePageResult }
 import { logActivity } from "./activity";
 import { sanitizeContentHtml } from "./content/sanitize";
 import { getDb, schema } from "./db";
-import type { AuthUser } from "./permissions";
+import { can, type AuthUser } from "./permissions";
 import { SYSTEM_PAGE_PATHS } from "./repos/admin-pages";
 import type { VisualNode } from "@/lib/visual-page";
 import { PAGE_TEMPLATES, type Section, type SectionIssue, parseSections } from "./sections";
@@ -38,13 +38,32 @@ function urlIssues(value: unknown, path: string, out: { path: string; message: s
   }
 }
 
-type Stored = { id?: unknown; type?: unknown; data?: { html?: unknown }; en?: { html?: unknown } };
+type Stored = { id?: unknown; type?: unknown; data?: { html?: unknown; nodes?: unknown }; en?: { html?: unknown } };
+
+/** Ambil JavaScript tersimpan per id node `code` (untuk mempertahankan nilai bila penyimpan tanpa system.manage). */
+function storedCodeJs(nodes: unknown): Map<string, string> {
+  const map = new Map<string, string>();
+  const walk = (list: unknown) => {
+    if (!Array.isArray(list)) return;
+    for (const item of list) {
+      if (!item || typeof item !== "object") continue;
+      const node = item as { id?: unknown; type?: unknown; content?: { javascript?: unknown }; children?: unknown };
+      if (typeof node.id === "string" && node.type === "code" && typeof node.content?.javascript === "string") {
+        map.set(node.id, node.content.javascript);
+      }
+      walk(node.children);
+    }
+  };
+  walk(nodes);
+  return map;
+}
 
 /**
  * Sanitasi HTML di section. Richtext yang TIDAK berubah dari versi tersimpan dibiarkan persis
  * (HTML halaman lama hasil ekspor tidak ditulis ulang hanya karena halaman disimpan).
+ * JavaScript pada node visual `code` hanya boleh diubah oleh `system.manage`.
  */
-function sanitizeSections(sections: Section[], stored: unknown): Section[] {
+function sanitizeSections(sections: Section[], stored: unknown, allowCustomJs: boolean): Section[] {
   const before = new Map<string, Stored>();
   if (Array.isArray(stored)) {
     (stored as Stored[]).forEach((s, i) => before.set(typeof s?.id === "string" ? s.id : `s${i + 1}`, s));
@@ -61,10 +80,16 @@ function sanitizeSections(sections: Section[], stored: unknown): Section[] {
       };
     }
     if (section.type === "visual") {
+      const prev = before.get(section.id);
+      const prevJs = !allowCustomJs && prev?.type === "visual" ? storedCodeJs(prev.data?.nodes) : new Map<string, string>();
       const cleanNodes = (list: VisualNode[]): VisualNode[] =>
         list.map((node) => {
-          const content =
-            node.type === "text" || node.type === "html" ? { ...node.content, html: sanitizeContentHtml(node.content.html) } : node.content;
+          let content = node.content;
+          if (node.type === "text" || node.type === "html") {
+            content = { ...node.content, html: sanitizeContentHtml(node.content.html) };
+          } else if (node.type === "code" && !allowCustomJs) {
+            content = { ...node.content, javascript: prevJs.get(node.id) ?? "" };
+          }
           return { ...node, content, ...(node.children ? { children: cleanNodes(node.children) } : {}) } as VisualNode;
         });
       return { ...section, data: { nodes: cleanNodes(section.data.nodes) } };
@@ -121,7 +146,7 @@ export async function savePage(user: AuthUser, input: SavePageInput): Promise<Sa
     if (!page || page.status === "trashed") return fail("Halaman tidak ditemukan.");
     if (SYSTEM_PAGE_PATHS.has(page.path)) return fail("Halaman ini dirender otomatis dan tidak disusun dari section.");
 
-    const clean = sanitizeSections(sections, page.sections);
+    const clean = sanitizeSections(sections, page.sections, can(user, "system.manage"));
     const seoTitle = input.seoTitle.trim().slice(0, 200) || null;
     const seoDescription = input.seoDescription.trim().slice(0, 500) || null;
     await tx.update(pages).set({ title, status: input.status, template: input.template, sections: clean, seoTitle, seoDescription }).where(eq(pages.id, page.id));

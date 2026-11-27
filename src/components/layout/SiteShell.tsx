@@ -20,7 +20,6 @@ export async function SiteShell({ children, locale = "id" }: Readonly<{ children
   const { identity, contact, menu, integrations, codes } = await getSiteSettings();
   const saffaHref = whatsappHref(contact.whatsapp);
   return (
-    // <html lang> di root layout tetap "id"; versi Inggris ditandai di pembungkus ini.
     <div lang={locale}>
       <a
         href="#konten"
@@ -32,7 +31,13 @@ export async function SiteShell({ children, locale = "id" }: Readonly<{ children
       <main id="konten">{children}</main>
       <Footer />
       {integrations.showSaffa && <FloatingContact href={saffaHref} />}
-      <JsonLd data={organizationJsonLd({ name: identity.name, logo: identity.logo.src })} />
+      <JsonLd
+        data={organizationJsonLd({
+          name: identity.name,
+          logo: identity.logo.src,
+          description: identity.tagline.trim() || undefined,
+        })}
+      />
       <Analytics gaId={integrations.ga4Id} pixelId={integrations.metaPixelId} />
       <SiteCode snippets={codes.snippets} />
     </div>

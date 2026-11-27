@@ -391,7 +391,8 @@ function SectionCard({
   const setEn = (en: JsonObject | undefined) => {
     if (en) onChange({ ...section, en });
     else {
-      const { en: _removed, ...rest } = section;
+      const rest = { ...section };
+      delete rest.en;
       onChange(rest);
     }
   };

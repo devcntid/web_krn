@@ -42,7 +42,7 @@ function readNodes(page: EditorPage): { id: string; nodes: VisualNode[] } {
   return { id: section?.id ?? crypto.randomUUID(), nodes: parseVisualNodes(raw).nodes };
 }
 
-export function VisualBuilder({ page }: { page: EditorPage }) {
+export function VisualBuilder({ page, allowCustomJs = false }: { page: EditorPage; allowCustomJs?: boolean }) {
   const initial = useMemo(() => readNodes(page), [page]);
   const toast = useToast();
   const [title, setTitle] = useState(page.title);
@@ -336,7 +336,7 @@ export function VisualBuilder({ page }: { page: EditorPage }) {
                       }
                     />
                     {device !== "desktop" ? <p className="mb-3 text-xs text-white/70">Nilai kosong di Gaya dan Lanjutan mengikuti perangkat yang lebih besar.</p> : null}
-                    <Inspector node={selected} tab={tab} device={device} onPatch={(recipe) => patch(selected.id, recipe)} onPick={(mode) => setPicker({ id: selected.id, mode })} />
+                    <Inspector node={selected} tab={tab} device={device} allowCustomJs={allowCustomJs} onPatch={(recipe) => patch(selected.id, recipe)} onPick={(mode) => setPicker({ id: selected.id, mode })} />
                   </div>
                 </>
               ) : (
@@ -502,12 +502,14 @@ function Inspector({
   node,
   tab,
   device,
+  allowCustomJs,
   onPatch,
   onPick,
 }: {
   node: VisualNode;
   tab: "content" | "style" | "advanced";
   device: Device;
+  allowCustomJs: boolean;
   onPatch: (recipe: (node: VisualNode) => VisualNode) => void;
   onPick: (mode: "image" | "gallery") => void;
 }) {
@@ -539,9 +541,16 @@ function Inspector({
           <label className="text-xs font-bold">CSS
             <textarea className={`${field} mt-1 min-h-36 font-mono`} spellCheck={false} value={node.content.css} onChange={(event) => onPatch((current) => current.type === "code" ? { ...current, content: { ...current.content, css: clip(event.target.value) } } : current)} />
           </label>
-          <label className="text-xs font-bold">JavaScript
-            <textarea className={`${field} mt-1 min-h-36 font-mono`} spellCheck={false} value={node.content.javascript} onChange={(event) => onPatch((current) => current.type === "code" ? { ...current, content: { ...current.content, javascript: clip(event.target.value) } } : current)} />
-          </label>
+          {allowCustomJs ? (
+            <label className="text-xs font-bold">JavaScript
+              <textarea className={`${field} mt-1 min-h-36 font-mono`} spellCheck={false} value={node.content.javascript} onChange={(event) => onPatch((current) => current.type === "code" ? { ...current, content: { ...current.content, javascript: clip(event.target.value) } } : current)} />
+            </label>
+          ) : (
+            <p className="rounded-md bg-white/10 px-2 py-2 text-xs text-white/80">
+              JavaScript kustom hanya dapat diubah oleh Super Admin. CSS tetap dapat disunting.
+              {node.content.javascript.trim() ? " Skrip yang sudah tersimpan tetap berjalan di situs." : ""}
+            </p>
+          )}
         </div>
       );
     }

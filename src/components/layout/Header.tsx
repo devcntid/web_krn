@@ -69,7 +69,6 @@ export function Header({ shell }: HeaderProps) {
             alt={shell.name}
             width={shell.logo.width}
             height={shell.logo.height}
-            preload
             className="h-[26px] w-auto lg:h-[34px]"
           />
         </Link>

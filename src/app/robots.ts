@@ -6,7 +6,9 @@ export default function robots(): MetadataRoute.Robots {
   // Preview deployment Vercel tidak boleh diindeks.
   const isProduction = process.env.VERCEL_ENV ? process.env.VERCEL_ENV === "production" : true;
   return {
-    rules: isProduction ? { userAgent: "*", allow: "/", disallow: ["/search/"] } : { userAgent: "*", disallow: "/" },
+    rules: isProduction
+      ? { userAgent: "*", allow: "/", disallow: ["/search/", "/admin/", "/api/"] }
+      : { userAgent: "*", disallow: "/" },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

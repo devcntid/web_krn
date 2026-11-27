@@ -32,7 +32,10 @@ export function Dialog({
   const filePicker = useRef(false);
   const titleId = useId();
   const portaled = useSyncExternalStore(subscribe, onClient, onServer);
-  openRef.current = open;
+
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
 
   useEffect(() => {
     const dialog = ref.current;
